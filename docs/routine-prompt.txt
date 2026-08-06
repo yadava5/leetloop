@@ -85,10 +85,10 @@ provably unmodified.
 
    ### Constraints, and what each one forces
    A two-column table: the constraint, and the consequence for the solution.
-   Every row must say what the constraint RULES IN OR OUT — "n up to 1e4 makes
-   O(n^2) about 1e8 operations, too slow in Python", not just the number again.
-   Constraints are facts, so restating them as facts is fine; do not copy
-   LeetCode's prose around them.
+   Use the `constraints` array from the question JSON verbatim in the first
+   column. Every row must say what the constraint RULES IN OR OUT — "n up to 1e4
+   makes O(n^2) about 1e8 operations, too slow in Python", not just the number
+   again.
 
    ## Key insight
    The single idea that unlocks the problem. What you'd want whispered to you if
