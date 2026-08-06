@@ -74,8 +74,8 @@
         "move-pieces-to-obtain-a-string"
       ],
       "codeHash": "d45dc857227663e5c279f63a4255c3853268f0ab6d0fa8e312e59aa672399ad9",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "d45dc857227663e5c279f63a4255c3853268f0ab6d0fa8e312e59aa672399ad9",
+      "annotated": true
     }
   }
 }
