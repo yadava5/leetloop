@@ -6,18 +6,18 @@
  * in the repo carries state, so there is nothing to get out of sync.
  */
 
-import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 export const REPO_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
-export const DATA_DIR = join(REPO_ROOT, 'data');
-export const RAW_DIR = join(DATA_DIR, 'raw');
-export const QUESTIONS_DIR = join(DATA_DIR, 'questions');
-export const PROBLEMS_DIR = join(REPO_ROOT, 'problems');
-export const INDEXES_DIR = join(REPO_ROOT, 'indexes');
-export const MANIFEST_PATH = join(DATA_DIR, 'manifest.json');
+export const DATA_DIR = join(REPO_ROOT, "data");
+export const RAW_DIR = join(DATA_DIR, "raw");
+export const QUESTIONS_DIR = join(DATA_DIR, "questions");
+export const PROBLEMS_DIR = join(REPO_ROOT, "problems");
+export const INDEXES_DIR = join(REPO_ROOT, "indexes");
+export const MANIFEST_PATH = join(DATA_DIR, "manifest.json");
 
 export const MANIFEST_VERSION = 1;
 
@@ -71,7 +71,7 @@ export function emptyManifest(): Manifest {
 
 export function readManifest(): Manifest {
   if (!existsSync(MANIFEST_PATH)) return emptyManifest();
-  const parsed = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8')) as Manifest;
+  const parsed = JSON.parse(readFileSync(MANIFEST_PATH, "utf8")) as Manifest;
   if (parsed.version !== MANIFEST_VERSION) {
     throw new Error(
       `manifest version ${parsed.version} but this build expects ${MANIFEST_VERSION}`,
@@ -87,16 +87,18 @@ export function writeManifest(manifest: Manifest): void {
     ordered[slug] = manifest.problems[slug]!;
   }
   const out: Manifest = { ...manifest, problems: ordered };
-  writeFileSync(MANIFEST_PATH, `${JSON.stringify(out, null, 2)}\n`, 'utf8');
+  writeFileSync(MANIFEST_PATH, `${JSON.stringify(out, null, 2)}\n`, "utf8");
 }
 
 export function sha256(text: string): string {
-  return createHash('sha256').update(text, 'utf8').digest('hex');
+  return createHash("sha256").update(text, "utf8").digest("hex");
 }
 
 /** problems/0001-two-sum — zero-padded so the directory sorts like LeetCode. */
 export function problemFolder(frontendId: string, slug: string): string {
-  const padded = /^\d+$/.test(frontendId) ? frontendId.padStart(4, '0') : frontendId;
+  const padded = /^\d+$/.test(frontendId)
+    ? frontendId.padStart(4, "0")
+    : frontendId;
   return `${padded}-${slug}`;
 }
 

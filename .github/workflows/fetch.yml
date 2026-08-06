@@ -8,15 +8,15 @@ on:
   schedule:
     # 06:13 UTC daily (~02:13 America/New_York). Job 2 runs at 07:41 UTC, so
     # this gets a ~1.5h head start and the two can never race.
-    - cron: '13 6 * * *'
+    - cron: "13 6 * * *"
   workflow_dispatch:
     inputs:
       only:
-        description: 'Re-pull a single problem slug (leave blank to sync everything new)'
+        description: "Re-pull a single problem slug (leave blank to sync everything new)"
         required: false
-        default: ''
+        default: ""
       dry_run:
-        description: 'Read only — write nothing, commit nothing'
+        description: "Read only — write nothing, commit nothing"
         type: boolean
         required: false
         default: false
@@ -42,8 +42,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: "22"
+          cache: "npm"
 
       # --include=dev is explicit on purpose: if NODE_ENV=production is ever
       # present, plain `npm ci` silently skips typescript and the build fails

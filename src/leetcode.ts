@@ -11,7 +11,7 @@
  * holds the LeetCode cookie and nothing else.
  */
 
-const ENDPOINT = 'https://leetcode.com/graphql';
+const ENDPOINT = "https://leetcode.com/graphql";
 
 /** Community-standard safe cadence. LeetCode publishes no numeric limit. */
 const MIN_REQUEST_INTERVAL_MS = 1000;
@@ -24,7 +24,7 @@ const MAX_RETRIES = 5;
 export class SessionExpiredError extends Error {
   constructor(detail: string) {
     super(`LeetCode session rejected: ${detail}`);
-    this.name = 'SessionExpiredError';
+    this.name = "SessionExpiredError";
   }
 }
 
@@ -87,10 +87,10 @@ async function throttle(): Promise<void> {
 function looksLikeAuthFailure(text: string): boolean {
   const lowered = text.toLowerCase();
   return (
-    lowered.includes('authenticat') ||
-    lowered.includes('signed in') ||
-    lowered.includes('permission denied') ||
-    lowered.includes('login')
+    lowered.includes("authenticat") ||
+    lowered.includes("signed in") ||
+    lowered.includes("permission denied") ||
+    lowered.includes("login")
   );
 }
 
@@ -107,13 +107,14 @@ async function graphql<T>(
     let response: Response;
     try {
       response = await fetch(ENDPOINT, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'content-type': 'application/json',
+          "content-type": "application/json",
           cookie: `LEETCODE_SESSION=${creds.session}; csrftoken=${creds.csrfToken}`,
-          'x-csrftoken': creds.csrfToken,
-          referer: 'https://leetcode.com',
-          'user-agent': 'leetcode-portfolio/1.0 (+https://github.com/yadava5/leetcode-portfolio)',
+          "x-csrftoken": creds.csrfToken,
+          referer: "https://leetcode.com",
+          "user-agent":
+            "leetcode-portfolio/1.0 (+https://github.com/yadava5/leetcode-portfolio)",
         },
         body: JSON.stringify({ query, variables }),
       });
@@ -121,7 +122,9 @@ async function graphql<T>(
       // Network-level failure: retry with backoff.
       lastError = error;
       const wait = 3 ** attempt * 1000;
-      console.warn(`  [retry ${attempt + 1}/${MAX_RETRIES}] network error, waiting ${wait}ms`);
+      console.warn(
+        `  [retry ${attempt + 1}/${MAX_RETRIES}] network error, waiting ${wait}ms`,
+      );
       await sleep(wait);
       continue;
     }
@@ -151,7 +154,7 @@ async function graphql<T>(
       if (looksLikeAuthFailure(detail)) throw new SessionExpiredError(detail);
       throw new Error(`GraphQL errors: ${detail}`);
     }
-    if (!payload.data) throw new Error('GraphQL response carried no data');
+    if (!payload.data) throw new Error("GraphQL response carried no data");
     return payload.data;
   }
 
@@ -196,14 +199,15 @@ query questionData($titleSlug: String!) {
  * which is indistinguishable from a quiet day. Checked explicitly instead.
  */
 export async function assertSignedIn(creds: Credentials): Promise<string> {
-  const data = await graphql<{ userStatus: { isSignedIn: boolean; username: string | null } }>(
-    creds,
-    Q_USER_STATUS,
-  );
+  const data = await graphql<{
+    userStatus: { isSignedIn: boolean; username: string | null };
+  }>(creds, Q_USER_STATUS);
   if (!data.userStatus?.isSignedIn) {
-    throw new SessionExpiredError('authenticated query returned isSignedIn=false');
+    throw new SessionExpiredError(
+      "authenticated query returned isSignedIn=false",
+    );
   }
-  return data.userStatus.username ?? '(unknown)';
+  return data.userStatus.username ?? "(unknown)";
 }
 
 /**
@@ -223,13 +227,16 @@ export async function fetchNewAccepted(
 
   for (let page = 0; page < maxPages && !reachedKnownHistory; page += 1) {
     const data = await graphql<{
-      submissionList: { hasNext: boolean; submissions: SubmissionSummary[] } | null;
+      submissionList: {
+        hasNext: boolean;
+        submissions: SubmissionSummary[];
+      } | null;
     }>(creds, Q_SUBMISSION_LIST, { offset, limit: 20 });
 
     const list = data.submissionList;
     if (!list) {
       // An authenticated field coming back null is an auth problem, not silence.
-      throw new SessionExpiredError('submissionList returned null');
+      throw new SessionExpiredError("submissionList returned null");
     }
 
     for (const submission of list.submissions) {
@@ -238,7 +245,7 @@ export async function fetchNewAccepted(
         reachedKnownHistory = true;
         continue;
       }
-      if (submission.statusDisplay !== 'Accepted') continue;
+      if (submission.statusDisplay !== "Accepted") continue;
       const existing = latestPerSlug.get(submission.titleSlug);
       if (!existing || Number(existing.timestamp) < ts) {
         latestPerSlug.set(submission.titleSlug, submission);
@@ -263,15 +270,19 @@ export async function findLatestAcceptedForSlug(
 
   for (let page = 0; page < maxPages; page += 1) {
     const data = await graphql<{
-      submissionList: { hasNext: boolean; submissions: SubmissionSummary[] } | null;
+      submissionList: {
+        hasNext: boolean;
+        submissions: SubmissionSummary[];
+      } | null;
     }>(creds, Q_SUBMISSION_LIST, { offset, limit: 20 });
     const list = data.submissionList;
-    if (!list) throw new SessionExpiredError('submissionList returned null');
+    if (!list) throw new SessionExpiredError("submissionList returned null");
 
     for (const submission of list.submissions) {
       if (submission.titleSlug !== slug) continue;
-      if (submission.statusDisplay !== 'Accepted') continue;
-      if (!best || Number(best.timestamp) < Number(submission.timestamp)) best = submission;
+      if (submission.statusDisplay !== "Accepted") continue;
+      if (!best || Number(best.timestamp) < Number(submission.timestamp))
+        best = submission;
     }
     if (best || !list.hasNext) break;
     offset += 20;
@@ -297,21 +308,26 @@ export async function fetchSubmissionDetail(
   }>(creds, Q_SUBMISSION_DETAILS, { submissionId: Number(submissionId) });
 
   const detail = data.submissionDetails;
-  if (!detail) throw new SessionExpiredError(`submissionDetails(${submissionId}) returned null`);
-  if (!detail.code || detail.code.trim() === '') {
+  if (!detail)
+    throw new SessionExpiredError(
+      `submissionDetails(${submissionId}) returned null`,
+    );
+  if (!detail.code || detail.code.trim() === "") {
     // Unauthenticated callers get metadata with no code, so empty code here
     // means the cookie is not being honoured.
-    throw new SessionExpiredError(`submission ${submissionId} came back with empty code`);
+    throw new SessionExpiredError(
+      `submission ${submissionId} came back with empty code`,
+    );
   }
 
   return {
     code: detail.code,
     timestamp: detail.timestamp,
-    runtimeDisplay: detail.runtimeDisplay ?? 'n/a',
+    runtimeDisplay: detail.runtimeDisplay ?? "n/a",
     runtimePercentile: detail.runtimePercentile ?? null,
-    memoryDisplay: detail.memoryDisplay ?? 'n/a',
+    memoryDisplay: detail.memoryDisplay ?? "n/a",
     memoryPercentile: detail.memoryPercentile ?? null,
-    langVerbose: detail.lang?.verboseName ?? 'unknown',
+    langVerbose: detail.lang?.verboseName ?? "unknown",
   };
 }
 
@@ -338,9 +354,9 @@ export async function fetchQuestionMeta(
   let similar: string[] = [];
   if (question.similarQuestions) {
     try {
-      similar = (JSON.parse(question.similarQuestions) as { titleSlug: string }[]).map(
-        (entry) => entry.titleSlug,
-      );
+      similar = (
+        JSON.parse(question.similarQuestions) as { titleSlug: string }[]
+      ).map((entry) => entry.titleSlug);
     } catch {
       similar = [];
     }
