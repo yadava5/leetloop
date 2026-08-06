@@ -4,8 +4,9 @@ Governed by `~/CLAUDE.md`. This file adds only what is specific to this repo.
 
 ## Mental model
 
-This repo fills itself. Two scheduled jobs do the work, and they are split along
-a secret boundary so that **neither one ever needs an Anthropic API key**:
+This repo fills itself. Two scheduled jobs do the work and two more keep them
+honest. The first two are split along a secret boundary so that **neither one ever
+needs an Anthropic API key**:
 
 | | Job | Holds | Runs as | When |
 |---|---|---|---|---|

@@ -1,6 +1,6 @@
 # Architecture
 
-## Why two jobs
+## Why the work is split
 
 There is no Anthropic API key in this system and there must never be one. That
 constraint, plus one security fact, produces the whole design.

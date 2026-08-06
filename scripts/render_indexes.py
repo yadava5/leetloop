@@ -195,26 +195,37 @@ flowchart LR
         META["data/questions/&lt;slug&gt;.json"]
     end
 
-    subgraph job2["Job 2 · annotate — 18:00 UTC · Claude routine"]
+    subgraph job2["Job 2 · annotate — 2 pm ET · Claude routine"]
         PENDING{"anything with<br/>annotated: false?"}
         WRITE["write solution.py + README.md<br/>comments and prose only"]
         GATE{"AST gate<br/>verify_ast.py"}
         RENDER["render_indexes.py<br/>root README + indexes/"]
         DISCARD["discard output<br/>leave entry pending"]
+        BRANCH["push a feature branch<br/>(cannot push to main)"]
     end
 
-    PAGES["problems/&lt;n&gt;-&lt;slug&gt;/<br/>README.md + solution.py"]
+    subgraph job3["Job 3 · promote — on that push · GitHub Action"]
+        REGATE{"re-run the gate<br/>where the annotator<br/>has no influence"}
+        REJECT["refuse · file an issue<br/>branch left for inspection"]
+    end
+
+    PAGES["main<br/>problems/&lt;n&gt;-&lt;slug&gt;/"]
     MANIFEST[("data/manifest.json<br/>the only shared state")]
+    WATCH{{"Job 4 · watchdog — 4 pm ET<br/>anything pending 30 h+? file an issue"}}
 
     SOLVE --> FETCH --> HYDRATE --> STRIP --> RAW & META
     RAW & META --> MANIFEST
     MANIFEST --> PENDING
     PENDING -- "no" --> STOP["stop · commit nothing"]
     PENDING -- "yes" --> WRITE --> GATE
-    GATE -- "AST equal — comments only" --> RENDER --> PAGES
+    GATE -- "AST equal — comments only" --> RENDER --> BRANCH
     GATE -- "anything else changed" --> DISCARD
+    BRANCH --> REGATE
+    REGATE -- "passes again" --> PAGES
+    REGATE -- "fails" --> REJECT
     PAGES --> MANIFEST
     PAGES --> REVISE --> SOLVE
+    MANIFEST -.-> WATCH
 
     classDef human fill:#1f6feb22,stroke:#1f6feb,stroke-width:1px
     classDef gate fill:#2ea44f22,stroke:#2ea44f,stroke-width:1px
@@ -326,12 +337,22 @@ def render_root(problems) -> str:
             "",
             "</details>",
             "",
-            "Two scheduled jobs, and the split between them is the interesting part.",
+            "Two scheduled jobs do the work, and two more keep them honest. The split",
+            "between the first two is the interesting part.",
             "",
-            "| | Job | Runs on | Holds | Daily at |",
+            "| | Job | Runs on | Holds | When |",
             "| --- | --- | --- | --- | --- |",
-            "| **1** | **fetch** — pull new submissions, commit raw code | GitHub Action, no model involved | the LeetCode cookie | `17:00 UTC` |",
-            "| **2** | **annotate** — write the notes, verify, commit | Claude scheduled routine | no credentials at all | `18:00 UTC` |",
+            "| **1** | **fetch** — pull new submissions, commit raw code | GitHub Action, no model involved | the LeetCode cookie | 1 pm ET daily |",
+            "| **2** | **annotate** — write the notes, verify, push a branch | Claude scheduled routine | no credentials at all | 2 pm ET daily |",
+            "| **3** | **promote** — re-verify, then fast-forward `main` | GitHub Action | nothing | when Job 2 pushes |",
+            "| **4** | **watchdog** — open an issue if anything is stuck | GitHub Action | nothing | 4 pm ET daily |",
+            "",
+            "Jobs 3 and 4 exist because of two things the first version got wrong. A Claude",
+            "routine **cannot push to `main`** — its environment pins it to a feature branch —",
+            "so `promote` does the last mile, and re-runs the AST gate while it's there. And a",
+            "green routine run turned out not to mean the work had landed, which is a failure",
+            "you cannot see; the watchdog looks every day and files an issue if anything sat",
+            "un-annotated for more than 30 hours.",
             "",
             "Each job holds exactly one of the two sensitive things and never needs the",
             "other's. Job 1 keeps the session cookie in GitHub's encrypted secret store and",
@@ -356,6 +377,11 @@ def render_root(problems) -> str:
             "[`scripts/test_verify_ast.py`](scripts/test_verify_ast.py) asserts 3 cases that",
             "must pass and 5 that must fail, plus the README's inline copy of each solution,",
             "and CI runs it on every fetch.",
+            "",
+            "And it runs **twice**: once inside the routine, and again in `promote`, on GitHub's",
+            "infrastructure where the thing being checked has no influence over the checker.",
+            "An annotation that quietly edited my code would have to defeat the same gate in",
+            "two places, one of which it cannot reach.",
             "",
             "```",
             "  [ok] gate said PASS, expected PASS   comments and blank lines only",
