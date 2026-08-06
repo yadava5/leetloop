@@ -98,6 +98,29 @@ provably unmodified.
    A numbered walk-through of how the solution works. Call out any step whose
    ORDER is load-bearing.
 
+   ### Why it's correct
+   Include this section for anything that is not obviously correct by inspection —
+   in practice, most Medium and every Hard problem, and skip it on an Easy where
+   it would be padding.
+
+   State the **invariant**: the thing that is true before and after every
+   iteration, and which is exactly what makes the answer right at the end. For a
+   sliding window, what does the window always contain. For a monotonic stack,
+   what order does it always hold and why can a popped element never be needed
+   again. For a DP, what does the state mean and why is the recurrence exhaustive.
+   For a greedy, why does taking the locally best option never forfeit a better
+   global one — a greedy with no exchange argument is a guess that happened to
+   pass.
+
+   Then say what makes the **termination** and the **edge of the range** right:
+   why the loop ends, why the bounds are `<` and not `<=` or vice versa, and what
+   the last iteration actually does. Off-by-ones live here, and this is the
+   section that makes them visible.
+
+   Be honest if the reason is subtle and you're reconstructing it rather than
+   certain — say which step you are least sure of. A page that flags its own weak
+   point is worth more than one that sounds uniformly confident.
+
    ## Solution
    The annotated solution inline, in a ```python fence, byte-identical to the
    solution.py you just wrote. Link to solution.py and to
@@ -122,6 +145,12 @@ provably unmodified.
    The off-by-ones, the empty-input case, the thing that makes it TLE, the wrong
    answer that looks right. Concrete, with counterexamples where possible.
 
+   Prefer a concrete failing input over a description of a failure: "returns 3 on
+   [1,1,2] because the second 1 is counted twice" beats "watch out for
+   duplicates". If the code handles a nasty case correctly but non-obviously,
+   say so here — a reader redoing this cold will otherwise "simplify" it back
+   into a bug.
+
    ## Redo from scratch
    A short checklist to rebuild the solution cold without reading the code, plus
    one or two things he should be able to justify out loud. This section is the
@@ -137,6 +166,12 @@ provably unmodified.
    Write it for someone who solved this once and has forgotten it. Explain the
    reasoning, don't just narrate the code. Prose over bullet fragments where the
    reasoning is connected. No filler.
+
+   Scale the depth to the problem. An Easy with a one-line insight does not need
+   six paragraphs of ceremony, and padding it makes the page worse. A Medium with
+   a real invariant, or a Hard, deserves the room — that is where a revision page
+   earns its keep, because those are the ones that will be genuinely gone from
+   memory in three months.
 
 5. Run the gate on everything:
 
