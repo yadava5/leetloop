@@ -63,10 +63,16 @@ jobs:
       - name: Self-test the AST gate
         run: python3 scripts/test_verify_ast.py
 
+      # Identity comes from repository variables so a fork works untouched.
+      # Defaults are the repo owner and their GitHub noreply address, which is
+      # always valid and never leaks a personal email.
       - name: Configure git
+        env:
+          COMMITTER_NAME: ${{ vars.COMMITTER_NAME }}
+          COMMITTER_EMAIL: ${{ vars.COMMITTER_EMAIL }}
         run: |
-          /usr/bin/git config user.name "Ayush Yadav"
-          /usr/bin/git config user.email "yadava5@miamioh.edu"
+          /usr/bin/git config user.name "${COMMITTER_NAME:-${{ github.repository_owner }}}"
+          /usr/bin/git config user.email "${COMMITTER_EMAIL:-${{ github.repository_owner }}@users.noreply.github.com}"
           # Hook path is local config, so it is not inherited from the clone.
           # Unattended commits are exactly where the secret scan matters most.
           /usr/bin/git config core.hooksPath .githooks

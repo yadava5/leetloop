@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-label="leetloop pipeline: Ayush solves on leetcode.com, Job 1 fetches with the session cookie, Job 2 annotates with no credentials, an AST gate accepts or discards, and the loop returns to Ayush">
+  <title>leetloop pipeline</title>
+  <style>
+    text { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @keyframes flow { to { stroke-dashoffset: -13; } }
+    .flow { animation: flow 1.6s linear infinite; }
+    @keyframes halo { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.45; } }
+    .halo { animation: halo 3.6s ease-in-out infinite; }
+    .runner { opacity: 0; }
+    @supports (offset-path: path("M0 0 L4 4")) {
+      .runner {
+        opacity: 1;
+        offset-path: path("M1106 274 L1106 424 Q1106 440 1090 440 L146 440 Q130 440 130 424 L130 296");
+        animation: run 16s linear infinite;
+      }
+    }
+    @keyframes run {
+      0% { offset-distance: 0%; opacity: 0; }
+      6% { opacity: 1; }
+      94% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flow, .halo, .runner { animation: none; }
+      .runner { opacity: 0; }
+    }
+  </style>
+  <defs>
+    <marker id="m-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#ffa116"/></marker>
+    <marker id="m-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#58a6ff"/></marker>
+    <marker id="m-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#a371f7"/></marker>
+    <marker id="m-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#3fb950"/></marker>
+    <marker id="m-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#ff5c7c"/></marker>
+  </defs>
+
+  <rect x="1" y="1" width="1198" height="518" rx="16" fill="#0d1117" stroke="#30363d"/>
+  <text x="40" y="52" font-size="12" letter-spacing="2.5" fill="#8b949e"><tspan fill="#e6edf3" font-weight="600">LEETLOOP</tspan><tspan> · A REVISION LOOP WITH NO HUMAN IN IT</tspan></text>
+
+  <!-- human -->
+  <rect x="40" y="170" width="180" height="120" rx="12" fill="#161b22" stroke="#30363d"/>
+  <circle cx="68" cy="200" r="5" fill="#ffa116"/>
+  <text x="82" y="205" font-size="16" font-weight="600" fill="#e6edf3">Ayush</text>
+  <text x="63" y="231" font-size="11.5" fill="#8b949e">solves a problem on</text>
+  <text x="63" y="248" class="mono" font-size="11.5" fill="#ffa116">leetcode.com</text>
+  <rect x="63" y="258" width="62" height="20" rx="10" fill="#ffa116" fill-opacity="0.12" stroke="#ffa116" stroke-opacity="0.4"/>
+  <text x="94" y="272" text-anchor="middle" class="mono" font-size="10" fill="#ffa116">Python</text>
+
+  <path d="M224 222 L262 222" class="flow" fill="none" stroke="#ffa116" stroke-width="1.75" stroke-dasharray="7 6" marker-end="url(#m-amber)"/>
+  <text x="244" y="210" text-anchor="middle" font-size="10" fill="#8b949e">solution</text>
+
+  <!-- job 1 region -->
+  <rect x="270" y="80" width="280" height="260" rx="14" fill="#1f6feb" fill-opacity="0.08" stroke="#1f6feb" stroke-opacity="0.5" stroke-width="1.5"/>
+  <circle cx="294" cy="111" r="5" fill="#58a6ff"/>
+  <text x="306" y="116" font-size="15" font-weight="600" fill="#79c0ff">Job 1 · fetch</text>
+  <text x="530" y="116" text-anchor="end" class="mono" font-size="11" fill="#8b949e">17:00 UTC</text>
+  <text x="290" y="140" font-size="11" fill="#8b949e">GitHub Action · calls no AI model</text>
+  <rect x="290" y="156" width="240" height="34" rx="17" fill="#1f6feb" fill-opacity="0.15" stroke="#1f6feb" stroke-opacity="0.45"/>
+  <g stroke="#79c0ff" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <circle cx="306" cy="173" r="4.5"/>
+    <path d="M310.5 173 L326 173 M321 173 L321 178 M326 173 L326 178"/>
+  </g>
+  <text x="334" y="177" class="mono" font-size="10.5" fill="#79c0ff">holds LeetCode session cookie</text>
+  <rect x="290" y="206" width="240" height="108" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <text x="306" y="234" font-size="12.5" font-weight="600" fill="#e6edf3">commits the submission</text>
+  <text x="306" y="258" class="mono" font-size="10.5" fill="#3fb950">+ data/raw/two-sum.py</text>
+  <text x="306" y="280" class="mono" font-size="10.5" fill="#8b949e">verbatim · byte-for-byte</text>
+
+  <!-- security boundary -->
+  <path d="M570 78 L570 196 M570 240 L570 352" fill="none" stroke="#8b949e" stroke-opacity="0.5" stroke-width="1.25" stroke-dasharray="3 6"/>
+  <text x="570" y="66" text-anchor="middle" font-size="10" letter-spacing="2" fill="#8b949e">SECURITY BOUNDARY</text>
+  <text x="570" y="372" text-anchor="middle" class="mono" font-size="10" fill="#8b949e">the cookie never crosses</text>
+  <path d="M552 222 L582 222" class="flow" fill="none" stroke="#58a6ff" stroke-width="1.75" stroke-dasharray="7 6" marker-end="url(#m-blue)"/>
+  <text x="570" y="212" text-anchor="middle" class="mono" font-size="10" fill="#8b949e">commit</text>
+
+  <!-- job 2 region -->
+  <rect x="590" y="80" width="280" height="260" rx="14" fill="#8957e5" fill-opacity="0.09" stroke="#8957e5" stroke-opacity="0.5" stroke-width="1.5"/>
+  <circle cx="614" cy="111" r="5" fill="#a371f7"/>
+  <text x="626" y="116" font-size="15" font-weight="600" fill="#d2a8ff">Job 2 · annotate</text>
+  <text x="850" y="116" text-anchor="end" class="mono" font-size="11" fill="#8b949e">18:00 UTC</text>
+  <text x="610" y="140" font-size="11" fill="#8b949e">scheduled Claude · the agent is the model</text>
+  <rect x="610" y="156" width="240" height="34" rx="17" fill="#8957e5" fill-opacity="0.16" stroke="#8957e5" stroke-opacity="0.45"/>
+  <g stroke="#d2a8ff" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <circle cx="626" cy="173" r="4.5"/>
+    <path d="M630.5 173 L646 173 M641 173 L641 178 M646 173 L646 178"/>
+  </g>
+  <path d="M619 181 L651 165" stroke="#ff5c7c" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="658" y="177" class="mono" font-size="10.5" fill="#d2a8ff">no credentials · no API key</text>
+  <rect x="610" y="206" width="240" height="108" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <text x="626" y="234" font-size="12.5" font-weight="600" fill="#e6edf3">writes a revision page</text>
+  <text x="626" y="258" class="mono" font-size="10.5" fill="#a371f7"># insight · pitfalls · redo cold</text>
+  <text x="626" y="280" class="mono" font-size="10.5" fill="#8b949e">problems/0001-two-sum/</text>
+
+  <path d="M874 222 L892 222" class="flow" fill="none" stroke="#a371f7" stroke-width="1.75" stroke-dasharray="7 6" marker-end="url(#m-purple)"/>
+
+  <!-- AST gate -->
+  <text x="952" y="152" text-anchor="middle" class="mono" font-size="10" fill="#8b949e">ast(raw) == ast(new)</text>
+  <path class="halo" d="M952 168 L1012 222 L952 276 L892 222 Z" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+  <path d="M952 176 L1004 222 L952 268 L900 222 Z" fill="#2ea44f" fill-opacity="0.14" stroke="#3fb950" stroke-width="1.75"/>
+  <text x="952" y="218" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3fb950">AST</text>
+  <text x="952" y="234" text-anchor="middle" font-size="10" letter-spacing="1" fill="#3fb950">gate</text>
+
+  <path d="M1008 222 L1028 222" class="flow" fill="none" stroke="#3fb950" stroke-width="1.75" stroke-dasharray="7 6" marker-end="url(#m-green)"/>
+
+  <!-- accepted -->
+  <rect x="1036" y="170" width="140" height="104" rx="10" fill="#161b22" stroke="#30363d"/>
+  <path d="M1052 197 L1058 203 L1069 190" fill="none" stroke="#3fb950" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1078" y="202" font-size="12.5" font-weight="600" fill="#e6edf3">revision page</text>
+  <text x="1052" y="228" class="mono" font-size="10" fill="#3fb950">comments only</text>
+  <text x="1052" y="248" class="mono" font-size="10" fill="#8b949e">committed to repo</text>
+
+  <!-- rejected -->
+  <path d="M952 272 L952 316" fill="none" stroke="#ff5c7c" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#m-red)"/>
+  <text x="966" y="298" class="mono" font-size="10" fill="#ff5c7c">trees differ</text>
+  <rect x="886" y="324" width="132" height="56" rx="10" fill="#ff375f" fill-opacity="0.08" stroke="#ff5c7c" stroke-opacity="0.55"/>
+  <text x="952" y="347" text-anchor="middle" font-size="12" font-weight="600" fill="#ff5c7c">discarded</text>
+  <text x="952" y="366" text-anchor="middle" class="mono" font-size="9.5" fill="#8b949e">nothing committed</text>
+
+  <!-- the loop closes -->
+  <path d="M1106 274 L1106 424 Q1106 440 1090 440 L146 440 Q130 440 130 424 L130 296" class="flow" fill="none" stroke="#ffa116" stroke-opacity="0.9" stroke-width="1.75" stroke-dasharray="7 6" marker-end="url(#m-amber)"/>
+  <text x="620" y="426" text-anchor="middle" font-size="11.5" fill="#8b949e">Ayush reopens the page and solves it again · cold</text>
+  <circle class="runner" r="4" fill="#ffa116"/>
+</svg>

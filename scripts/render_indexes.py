@@ -17,6 +17,9 @@ Run: /usr/bin/python3 scripts/render_indexes.py
 """
 
 import json
+import os
+import re
+import subprocess
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -87,31 +90,76 @@ def by_number(problems):
     )
 
 
-REPO_SLUG = "yadava5/leetloop"
 BADGE = "https://img.shields.io/badge"
+FALLBACK_SLUG = "yadava5/leetloop"
+
+
+def repo_slug() -> str:
+    """`owner/name`, read from git rather than hardcoded.
+
+    A fork gets working CI badges and links with no edit to this file, which is
+    one less thing for someone to have to notice.
+    """
+    env = os.environ.get("GITHUB_REPOSITORY")
+    if env and "/" in env:
+        return env
+    try:
+        url = subprocess.run(
+            ["/usr/bin/git", "remote", "get-url", "origin"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return FALLBACK_SLUG
+    # git@github.com:owner/name.git  or  https://github.com/owner/name.git
+    match = re.search(r"[:/]([^/:]+/[^/]+?)(?:\.git)?$", url)
+    return match.group(1) if match else FALLBACK_SLUG
+
+
+REPO_SLUG = repo_slug()
 
 
 def badges(problems) -> list:
-    """Shields.io badges. Static ones are regenerated here, so counts stay true."""
+    """Shields.io badges as raw HTML.
+
+    HTML, not markdown image syntax, because these sit inside a centred
+    `<p align="center">` block and GitHub does not parse markdown inside a
+    block-level HTML element — the markdown version renders as literal text.
+
+    The counts are computed from the manifest on every run, so they cannot drift
+    away from what the repo actually contains.
+    """
     counts = defaultdict(int)
     for entry in problems.values():
         counts[entry["difficulty"]] += 1
     topics = {topic for entry in problems.values() for topic in entry["topics"]}
 
+    # No `str | None` annotation here: the local interpreter is Python 3.9, where
+    # PEP 604 unions in annotations are evaluated at runtime and raise TypeError.
+    def img(alt, src, href=""):
+        tag = '<img alt="%s" src="%s">' % (alt, src)
+        return '<a href="%s">%s</a>' % (href, tag) if href else tag
+
+    workflow = "https://github.com/%s/actions/workflows/fetch.yml" % REPO_SLUG
+
     return [
-        "[![daily fetch](https://github.com/%s/actions/workflows/fetch.yml/badge.svg)]"
-        "(https://github.com/%s/actions/workflows/fetch.yml)" % (REPO_SLUG, REPO_SLUG),
-        "[![code unmodified: AST-verified](%s/code%%20unmodified-AST--verified-2ea44f)]"
-        "(scripts/verify_ast.py)" % BADGE,
-        "![problems solved](%s/problems-%d-1f6feb)" % (BADGE, len(problems)),
-        "![difficulty split](%s/easy-%d-00b8a3) ![](%s/medium-%d-ffb800) "
-        "![](%s/hard-%d-ff375f)"
-        % (BADGE, counts["Easy"], BADGE, counts["Medium"], BADGE, counts["Hard"]),
-        "![topics](%s/topics-%d-8957e5)" % (BADGE, len(topics)),
-        "![language](%s/solutions-Python%%203-3572A5) "
-        "![pipeline](%s/pipeline-TypeScript-3178c6)" % (BADGE, BADGE),
-        "![api keys required](%s/Anthropic%%20API%%20keys-0-lightgrey)" % BADGE,
-        "[![license](%s/license-MIT-blue)](LICENSE)" % BADGE,
+        img("daily fetch status", workflow + "/badge.svg", workflow),
+        img(
+            "code unmodified: AST-verified",
+            "%s/code%%20unmodified-AST--verified-2ea44f" % BADGE,
+            "scripts/verify_ast.py",
+        ),
+        img("problems solved", "%s/problems-%d-1f6feb" % (BADGE, len(problems))),
+        img("easy", "%s/easy-%d-00b8a3" % (BADGE, counts["Easy"])),
+        img("medium", "%s/medium-%d-ffb800" % (BADGE, counts["Medium"])),
+        img("hard", "%s/hard-%d-ff375f" % (BADGE, counts["Hard"])),
+        img("topics covered", "%s/topics-%d-8957e5" % (BADGE, len(topics))),
+        img("solutions in Python 3", "%s/solutions-Python%%203-3572A5" % BADGE),
+        img("pipeline in TypeScript", "%s/pipeline-TypeScript-3178c6" % BADGE),
+        img("Anthropic API keys required: 0", "%s/Anthropic%%20API%%20keys-0-lightgrey" % BADGE),
+        img("MIT license", "%s/license-MIT-blue" % BADGE, "LICENSE"),
     ]
 
 
@@ -190,16 +238,26 @@ def render_root(problems) -> str:
 
     return "\n".join(
         [
-            "# leetloop",
-            "",
             GENERATED_NOTE,
             "",
-            "**A LeetCode revision surface that fills itself.** I solve a problem; by the",
-            "next afternoon this repo contains a page that gets me back into that problem",
-            "months later — the idea that unlocks it, why this approach beats the obvious",
-            "one, the traps, and a checklist for rebuilding it from nothing.",
+            '<p align="center">',
+            "  <picture>",
+            '    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">',
+            '    <source media="(prefers-color-scheme: light)" srcset="assets/logo-light.svg">',
+            '    <img alt="leetloop" src="assets/logo-light.svg" width="420">',
+            "  </picture>",
+            "</p>",
             "",
-            *badges(problems),
+            '<p align="center">',
+            "  <strong>A LeetCode revision surface that fills itself.</strong><br>",
+            "  I solve a problem; by the next afternoon this repo holds a page that gets me",
+            "  back into it months later — the idea that unlocks it, why this approach beats",
+            "  the obvious one, the traps, and a checklist for rebuilding it from nothing.",
+            "</p>",
+            "",
+            '<p align="center">',
+            "  " + " ".join(badges(problems)),
+            "</p>",
             "",
             "**%d problem%s** — %s. Solutions in Python."
             % (len(problems), "" if len(problems) == 1 else "s", tally or "none yet"),
@@ -208,7 +266,27 @@ def render_root(problems) -> str:
             "",
             "## The loop",
             "",
+            '<p align="center">',
+            "  <picture>",
+            '    <source media="(prefers-color-scheme: dark)" srcset="assets/pipeline-dark.svg">',
+            '    <source media="(prefers-color-scheme: light)" srcset="assets/pipeline-light.svg">',
+            '    <img alt="Ayush solves a problem on leetcode.com. Job 1, a GitHub Action at '
+            "17:00 UTC holding the LeetCode session cookie and calling no AI model, commits "
+            "the submission verbatim to data/raw. Across a security boundary the cookie never "
+            "crosses, Job 2, a scheduled Claude routine at 18:00 UTC holding no credentials "
+            "and no API key, writes a revision page. An AST gate then checks ast(raw) == "
+            "ast(new): equal trees commit the page, differing trees discard it and commit "
+            'nothing. Ayush reopens the page later and solves it again, cold." '
+            'src="assets/pipeline-light.svg">',
+            "  </picture>",
+            "</p>",
+            "",
+            "<details>",
+            "<summary>Same thing as a Mermaid flowchart, if you'd rather read the graph</summary>",
+            "",
             PIPELINE_DIAGRAM,
+            "",
+            "</details>",
             "",
             "Two scheduled jobs, and the split between them is the interesting part.",
             "",
@@ -298,6 +376,31 @@ def render_root(problems) -> str:
             "",
             "Anything marked GENERATED is rewritten on every run; hand edits vanish.",
             "",
+            "## Fork it and point it at your own account",
+            "",
+            "It is built to be forked — nothing about the pipeline is specific to me except",
+            "the contents of `data/`. **[docs/FORKING.md](docs/FORKING.md) is the full",
+            "walkthrough**; the shape of it is:",
+            "",
+            "1. **Fork**, then wipe my data — `data/`, `problems/`, `indexes/` — and reset the",
+            "   manifest to empty. One block of commands in the guide.",
+            "2. **Add two secrets** from your own browser: `LEETCODE_SESSION` and",
+            "   `LEETCODE_CSRF_TOKEN`. This is the only credential in the system.",
+            "3. **Enable Actions.** GitHub disables scheduled workflows in forks until you turn",
+            "   them on, so this step is easy to miss and looks like a silent failure.",
+            "4. **Create the annotation routine** at <https://claude.ai/code/routines>, pasting",
+            "   [`docs/routine-prompt.txt`](docs/routine-prompt.txt). Needs a Claude plan that",
+            "   includes scheduled routines — this is the one part you can't substitute without",
+            "   reintroducing an API key.",
+            "5. **Solve something** and wait for the next 17:00 UTC.",
+            "",
+            "You do not need to edit any code: the CI badge and links derive the repo slug from",
+            "your git remote, and the committer name and email come from repository variables",
+            "with sensible defaults. **If you solve in a language other than Python, read the",
+            "gate section of the guide first** — AST equality is exact only because Python",
+            "discards comments at parse time, and the gate deliberately refuses to guess for",
+            "other languages.",
+            "",
             "## Docs",
             "",
             "- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — the secret boundary, the",
@@ -308,6 +411,15 @@ def render_root(problems) -> str:
             "  files a GitHub issue and emails me. Fixing it is two commands.",
             "- **[docs/ROUTINE.md](docs/ROUTINE.md)** — how Job 2 is scheduled and how to",
             "  change its prompt safely.",
+            "- **[docs/FORKING.md](docs/FORKING.md)** — running your own copy end to end.",
+            "",
+            "## Credits",
+            "",
+            "The logo and the pipeline diagram in this README are original SVGs — animated with",
+            "CSS inside the file, one variant per colour scheme, no JavaScript, since GitHub",
+            "sanitises scripts out of rendered markdown. They live in",
+            "[`assets/`](assets) and are MIT-licensed along with everything else here, so reuse",
+            "them if they're useful.",
             "",
             "## On copyright",
             "",

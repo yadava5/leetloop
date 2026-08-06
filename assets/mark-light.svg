@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="leetloop mark">
+  <title>leetloop</title>
+  <style>
+    @keyframes llgate { 0%, 100% { opacity: 1; } 50% { opacity: 0.68; } }
+    .gate { animation: llgate 4.5s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .gate { animation: none; } }
+  </style>
+  <rect x="0" y="0" width="256" height="256" rx="58" fill="#f6f8fa"/>
+  <rect x="1" y="1" width="254" height="254" rx="57" fill="none" stroke="#d0d7de" stroke-width="2"/>
+  <!-- job 1 arc: human up to the gate -->
+  <path d="M94.7 196.3 A76 76 0 0 1 94.7 59.7" fill="none" stroke="#1f6feb" stroke-width="24" stroke-linecap="round"/>
+  <!-- job 2 arc: gate back down to the human -->
+  <path d="M161.3 59.7 A76 76 0 0 1 161.3 196.3" fill="none" stroke="#8957e5" stroke-width="24" stroke-linecap="round"/>
+  <!-- AST gate -->
+  <path class="gate" d="M128 32 L148 52 L128 72 L108 52 Z" fill="#2ea44f"/>
+  <!-- the human -->
+  <circle cx="128" cy="204" r="15" fill="#e8940c"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-label="leetloop logo">
+  <title>leetloop</title>
+  <style>
+    text { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    @keyframes llgate { 0%, 100% { opacity: 1; } 50% { opacity: 0.68; } }
+    .gate { animation: llgate 4.5s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .gate { animation: none; } }
+  </style>
+  <g transform="translate(110 110) scale(0.92) translate(-128 -128)">
+    <path d="M94.7 196.3 A76 76 0 0 1 94.7 59.7" fill="none" stroke="#1f6feb" stroke-width="24" stroke-linecap="round"/>
+    <path d="M161.3 59.7 A76 76 0 0 1 161.3 196.3" fill="none" stroke="#8957e5" stroke-width="24" stroke-linecap="round"/>
+    <path class="gate" d="M128 32 L148 52 L128 72 L108 52 Z" fill="#2ea44f"/>
+    <circle cx="128" cy="204" r="15" fill="#e8940c"/>
+  </g>
+  <text x="228" y="146" font-size="100" font-weight="650" letter-spacing="-2"><tspan fill="#1f2328">leet</tspan><tspan fill="#1f6feb">loop</tspan></text>
+</svg>
