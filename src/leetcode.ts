@@ -55,10 +55,10 @@ export interface SubmissionDetail {
 /**
  * Question metadata AFTER stripping LeetCode's own prose.
  *
- * `content` (the problem statement) and `hints` are fetched — they are needed
- * to decide nothing, so they are simply never returned. This repo is public and
- * those fields are copyrighted. The pre-commit hook enforces the same rule
- * mechanically in case this ever regresses.
+ * `content` (the problem statement) is fetched, mined for the constraint bounds,
+ * and then discarded — it is never returned and never written to disk. `hints`
+ * are not requested at all. This repo is public and both are copyrighted; the
+ * pre-commit hook enforces the same rule mechanically in case this regresses.
  */
 export interface QuestionMeta {
   readonly questionId: string;
@@ -68,6 +68,82 @@ export interface QuestionMeta {
   readonly difficulty: string;
   readonly topics: readonly string[];
   readonly similar: readonly string[];
+  /**
+   * The bounds only — e.g. "2 <= nums.length <= 10^4".
+   *
+   * Job 2 runs in a sandbox with no egress to leetcode.com, so without this it
+   * has to recall constraints from memory, and the constraints are what dictate
+   * the required complexity. So Job 1, which does have network, extracts them
+   * here.
+   *
+   * These are mathematical facts about the input, not LeetCode's prose:
+   * `extractConstraints` keeps only list items that look like bounds and drops
+   * anything long enough to be a sentence. See docs/ARCHITECTURE.md.
+   */
+  readonly constraints: readonly string[];
+}
+
+/** Longest a constraint may be before it is assumed to be prose, not a bound. */
+const MAX_CONSTRAINT_LENGTH = 120;
+const MAX_CONSTRAINTS = 12;
+
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&le;/g, "<=")
+    .replace(/&ge;/g, ">=")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&");
+}
+
+/**
+ * Pull the bounds out of a LeetCode problem statement's Constraints list.
+ *
+ * Deliberately conservative: anything that doesn't look like a numeric or
+ * structural bound is discarded, so a prose sentence that happens to live in
+ * that list never reaches the repo.
+ */
+export function extractConstraints(html: string): string[] {
+  if (!html) return [];
+
+  // Superscripts must become `^` BEFORE tags are stripped, or `10<sup>4</sup>`
+  // silently turns into "104" instead of "10^4" — a wrong bound is worse than a
+  // missing one.
+  const withCarets = html.replace(/<sup>\s*([^<]*?)\s*<\/sup>/gi, "^$1");
+
+  const marker = withCarets.search(/constraints\s*:?\s*(<\/[a-z]+>)?/i);
+  if (marker === -1) return [];
+  const tail = withCarets.slice(marker);
+
+  const items: string[] = [];
+  for (const match of tail.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)) {
+    const text = decodeEntities((match[1] ?? "").replace(/<[^>]+>/g, " "))
+      .replace(/\s+/g, " ")
+      // Stripping inline tags leaves gaps before punctuation: "'()[]{}' ."
+      .replace(/\s+([.,;:])/g, "$1")
+      .trim();
+    if (!text) continue;
+    if (text.length > MAX_CONSTRAINT_LENGTH) continue;
+
+    // Must look like a bound: a comparison, or a digit alongside a structural
+    // word. "1 <= n <= 100" and "s consists of parentheses only '()[]{}'" pass;
+    // "Follow-up: can you do it in one pass?" does not.
+    const looksLikeBound =
+      /[<>]=?|==|\^/.test(text) ||
+      (/\d/.test(text) &&
+        /length|size|node|char|digit|element|value|\bn\b/i.test(text)) ||
+      /^[a-z]+ consists of/i.test(text) ||
+      /^[a-z]+ contains only/i.test(text);
+    if (!looksLikeBound) continue;
+
+    items.push(text);
+    if (items.length >= MAX_CONSTRAINTS) break;
+  }
+
+  return items;
 }
 
 let lastRequestAt = 0;
@@ -182,12 +258,16 @@ query submissionDetails($submissionId: Int!) {
   }
 }`;
 
+// `content` is requested but NEVER stored. Only the bounds are kept, via
+// extractConstraints; the statement itself is dropped on the floor because the
+// repo is public and it is LeetCode's copyrighted prose.
 const Q_QUESTION = `
 query questionData($titleSlug: String!) {
   question(titleSlug: $titleSlug) {
     questionId questionFrontendId title titleSlug difficulty
     topicTags { name slug }
     similarQuestions
+    content
   }
 }`;
 
@@ -344,6 +424,7 @@ export async function fetchQuestionMeta(
       difficulty: string;
       topicTags: { name: string; slug: string }[];
       similarQuestions: string | null;
+      content: string | null;
     } | null;
   }>(creds, Q_QUESTION, { titleSlug: slug });
 
@@ -369,5 +450,7 @@ export async function fetchQuestionMeta(
     difficulty: question.difficulty,
     topics: question.topicTags.map((tag) => tag.name),
     similar,
+    // `question.content` goes no further than this line.
+    constraints: extractConstraints(question.content ?? ""),
   };
 }

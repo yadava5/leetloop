@@ -1,0 +1,94 @@
+name: watchdog
+
+# The one failure mode this system had left was the silent one: Job 1 green,
+# Job 2 reporting success, and the work still not on main - because the routine
+# pushed to a branch that `promote` then rejected, or because the routine never
+# fired. Nothing surfaced that unless somebody went looking.
+#
+# This looks. Daily, an hour after Job 2, it asks the only question that matters:
+# is anything still un-annotated long after it was solved? If so it files an
+# issue, which GitHub emails. Silence from this workflow means the loop is closed.
+
+on:
+  schedule:
+    # 20:00 UTC = 4 pm America/New_York while EDT is in effect. Two hours after
+    # Job 2's 2 pm, so a slow routine run is not mistaken for a broken one.
+    - cron: "0 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check for overdue annotations
+        id: check
+        run: |
+          set +e
+          OUTPUT=$(python3 scripts/check_pending.py 2>&1)
+          CODE=$?
+          echo "$OUTPUT"
+          {
+            echo "report<<REPORT_EOF"
+            echo "$OUTPUT"
+            echo "REPORT_EOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "code=$CODE" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: File an issue if something is stuck
+        if: steps.check.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Annotation is not completing"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "The watchdog found work that was fetched but never annotated on"
+            echo "\`main\`. Job 1 and Job 2 can both look green while this is true —"
+            echo "the routine pushes to a branch, and \`promote\` refuses to merge"
+            echo "anything it cannot verify."
+            echo ""
+            echo '```'
+            echo "${{ steps.check.outputs.report }}"
+            echo '```'
+            echo ""
+            echo "Nothing is lost. The manifest on \`origin\` still says un-annotated,"
+            echo "so the next routine run retries it. This issue means the retries are"
+            echo "not succeeding."
+            echo ""
+            echo "Watchdog run: $RUN_URL"
+          } > /tmp/issue-body.md
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file /tmp/issue-body.md
+          else
+            gh issue create --title "$TITLE" --body-file /tmp/issue-body.md
+          fi
+
+      - name: Close the issue once everything is current
+        if: steps.check.outputs.code == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Annotation is not completing"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "Everything is annotated and current again. Closed by the watchdog."
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### watchdog"
+            echo ""
+            echo '```'
+            echo "${{ steps.check.outputs.report }}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

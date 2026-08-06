@@ -44,8 +44,8 @@
         "count-pairs-whose-sum-is-less-than-target"
       ],
       "codeHash": "ef54d677816a41e70a3900e179822698be5c3a887c8f46616f58be3a83d0c023",
-      "annotationHash": "ef54d677816a41e70a3900e179822698be5c3a887c8f46616f58be3a83d0c023",
-      "annotated": true
+      "annotationHash": null,
+      "annotated": false
     },
     "valid-parentheses": {
       "frontendId": "20",
@@ -74,8 +74,8 @@
         "move-pieces-to-obtain-a-string"
       ],
       "codeHash": "d45dc857227663e5c279f63a4255c3853268f0ab6d0fa8e312e59aa672399ad9",
-      "annotationHash": "d45dc857227663e5c279f63a4255c3853268f0ab6d0fa8e312e59aa672399ad9",
-      "annotated": true
+      "annotationHash": null,
+      "annotated": false
     }
   }
 }

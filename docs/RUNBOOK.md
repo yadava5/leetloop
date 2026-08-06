@@ -89,12 +89,37 @@ If `--all` fails, the annotation is the thing that is wrong.
 offending `problems/<n>-<slug>/` directory, mark the problem `annotated: false`,
 and let it regenerate.
 
-## Where the two jobs live
+## An issue appeared saying "Annotation is not completing"
+
+The watchdog files that when something was fetched but never annotated on `main`
+more than 30 hours later. Job 1 and Job 2 can both look green while this is true,
+because the routine pushes to a branch and `promote` refuses to merge output it
+cannot verify.
+
+Look in this order:
+
+1. **the routine's run log** at <https://claude.ai/code/routines> — did it run at
+   all, and did it push a branch?
+2. **the `promote` workflow** — if it rejected the branch it will have filed its
+   own issue saying which check failed.
+3. `/usr/bin/python3 scripts/verify_ast.py --all` on that branch locally.
+
+Nothing is lost while this is open: the manifest on `origin` still says
+un-annotated, so each run retries. The issue means the retries aren't working.
+The watchdog closes it by itself once everything is current again.
+
+```
+/usr/bin/python3 scripts/check_pending.py     # the same check, locally
+```
+
+## Where the jobs live
 
 | Job | Where | Schedule (UTC) | Holds |
 |---|---|---|---|
 | 1 — fetch | `.github/workflows/fetch.yml` | `0 17 * * *` (1 pm ET) | the LeetCode cookie |
 | 2 — annotate | <https://claude.ai/code/routines> | 2:00 PM ET (local, DST-aware) | nothing |
+| 3 — promote | `.github/workflows/promote.yml` | when Job 2 pushes a branch | nothing |
+| 4 — watchdog | `.github/workflows/watchdog.yml` | `0 20 * * *` (4 pm ET) | nothing |
 
 Both crons are UTC and do not follow daylight saving, so from November to March
 they fire an hour earlier in Eastern terms — noon and 1 pm instead of 1 pm and

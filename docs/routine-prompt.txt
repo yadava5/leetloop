@@ -22,23 +22,30 @@ provably unmodified.
 
 2. For each such problem, read:
    - data/raw/<slug>.py            — his exact submitted code
-   - data/questions/<slug>.json    — title, frontendId, difficulty, topics, similar
+   - data/questions/<slug>.json    — title, frontendId, difficulty, topics,
+                                     similar, AND `constraints`
 
    The manifest entry also has runtime, memory and percentiles.
 
-   The question metadata deliberately does NOT contain the problem statement.
-   This repo is PUBLIC and LeetCode's statements are copyrighted. To get the
-   statement, query LeetCode's PUBLIC GraphQL endpoint — no cookie needed:
+   **Use the `constraints` array. It is authoritative.** Job 1 extracted those
+   bounds from the live problem statement, so they are read, not remembered.
+   Quote each one verbatim in the constraints table and explain what it forces.
+   Do NOT paraphrase a bound, and do NOT substitute a number you recall.
 
-     POST https://leetcode.com/graphql
-     {"query":"query q($titleSlug:String!){question(titleSlug:$titleSlug){content hints}}",
-      "variables":{"titleSlug":"<slug>"}}
+   The metadata deliberately does NOT contain the problem statement itself —
+   this repo is PUBLIC and LeetCode's prose is copyrighted. You have everything
+   you need without it: the title, the bounds, the topic tags and the code.
+   Restate the problem in your own words from those.
 
-   Read it, then write only your own restatement. NEVER copy any of it into the
-   repo — not the statement, not the examples, not the hints, not one sentence.
-   If that request fails (no network egress), restate from the title, topic tags
-   and the code itself, and add a line to the README noting that the constraints
-   were recalled rather than read.
+   If `constraints` is missing or empty for a problem (an older entry, or a
+   problem whose statement has no constraints list), then and only then fall
+   back to recalling the bounds — and add a line to the README's constraints
+   section saying they were recalled rather than read, so the page never
+   silently passes off a guess as a fact.
+
+   Do NOT try to reach leetcode.com. The sandbox blocks it, and that is fine —
+   the bounds are already in the JSON. Spending the run on a blocked CONNECT is
+   wasted time.
 
 3. Write problems/<paddedFrontendId>-<slug>/solution.py — 4-digit zero-padded,
    e.g. problems/0001-two-sum/. It must be his code with comments added AND

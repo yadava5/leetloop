@@ -15,6 +15,11 @@ a real downgrade from a proper secret store, so the work is split instead:
 |---|---|---|---|---|
 | 1 | fetch | the LeetCode cookie, in GitHub's encrypted secret store | a plain TypeScript script, no model | `0 17 * * *` |
 | 2 | annotate + render | no credentials at all | Claude — the agent *is* the model, so nothing is called | 2:00 PM ET |
+| 3 | promote | nothing | a GitHub Action that re-verifies and fast-forwards `main` | on Job 2's push |
+| 4 | watchdog | nothing | a GitHub Action that files an issue if anything is stuck | `0 20 * * *` |
+
+Jobs 3 and 4 exist because Job 2 is the only part that can neither push to `main`
+nor be trusted blindly. See [How Job 2's work reaches main](#how-job-2s-work-reaches-main).
 
 Each job holds exactly one of the two sensitive things and never needs the
 other's. Job 2 starts an hour after Job 1 so they cannot race — GitHub can
@@ -144,8 +149,22 @@ Ayush solves exclusively in Python, so this is a note, not a plan.
 
 The repo is public and LeetCode's problem statements are copyrighted. Therefore:
 
-- Job 1 **never persists** `content` or `hints`. `src/leetcode.ts` fetches only
-  what it needs and `QuestionMeta` has no field for them.
+- Job 1 fetches `content`, mines the **constraint bounds** out of it, and then
+  discards it. The statement is never written to disk and `hints` are never even
+  requested.
+- The bounds *are* kept, in `data/questions/<slug>.json` as `constraints`:
+  `"2 <= nums.length <= 10^4"` and the like. This is a deliberate line, and the
+  reasoning is that a mathematical bound on an input is a **fact about the
+  problem, not creative expression** — the same way "water boils at 100°C" isn't
+  the copyright of the textbook it appears in. `extractConstraints` enforces the
+  line mechanically: it keeps only list items that look like bounds, discards
+  anything longer than 120 characters, and caps the list at 12. The pre-commit
+  hook independently rejects any entry over that length, so a sentence that
+  slipped through the extractor still cannot be committed.
+- Why bother: Job 2's sandbox **cannot reach leetcode.com**, and the constraints
+  are precisely what dictate the required complexity. Without this, every page
+  would say "recalled, not read" and the bounds would come from a model's memory.
+  Job 1 has network; Job 2 has judgement. Each does the part it can actually do.
 - `.githooks/pre-commit` blocks any `data/questions/*.json` that contains
   `content`, `hints`, `mysqlSchemas` or `exampleTestcases`, so a regression is
   caught mechanically rather than noticed later.

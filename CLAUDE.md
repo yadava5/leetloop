@@ -11,6 +11,8 @@ a secret boundary so that **neither one ever needs an Anthropic API key**:
 |---|---|---|---|---|
 | 1 | **fetch** — pull new submissions, commit raw data | the LeetCode cookie | GitHub Action, no model involved | `0 17 * * *` |
 | 2 | **annotate** — write the revision docs | no credentials at all | Claude cloud routine (Claude *is* the runtime) | 2:00 PM ET |
+| 3 | **promote** — re-verify Job 2's branch, fast-forward `main` | nothing | GitHub Action | on Job 2's push |
+| 4 | **watchdog** — file an issue if anything is stuck | nothing | GitHub Action | 4:00 PM ET |
 
 Both are UTC: 17:00 and 18:00, which is 1 pm and 2 pm Eastern while EDT is
 in effect, an hour earlier in winter. Job 2 runs an hour after Job 1 so the
@@ -78,7 +80,17 @@ running in the cloud must be pasted over to match, at
 `https://claude.ai/code/routines`. Nothing syncs them automatically.
 `docs/ROUTINE.md` explains the setup around it.
 
-### 5. Change the AST gate
+### 5. Something was fetched but no page appeared
+
+```
+/usr/bin/python3 scripts/check_pending.py                       # what is overdue
+/opt/homebrew/bin/gh run list --workflow promote.yml            # did promote reject it?
+```
+
+Job 2 pushes to a branch; `promote` verifies and fast-forwards `main`. A green
+routine run alone does not mean the work landed.
+
+### 6. Change the AST gate
 
 `scripts/verify_ast.py`, then `npm run test:gate`. The test asserts both
 directions and must keep doing so.

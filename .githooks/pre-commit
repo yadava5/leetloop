@@ -69,6 +69,27 @@ for f in $staged; do
         echo "         (content/hints are copyrighted; strip them in hydrate)"
         fail=1
       fi
+      # `constraints` is allowed: bounds like "1 <= n <= 100" are mathematical
+      # facts, not creative expression. But a long entry means a sentence slipped
+      # through extractConstraints, and a sentence IS prose.
+      if printf '%s' "$blob" | /usr/bin/python3 -c '
+import json, sys
+try:
+    data = json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+bad = [c for c in data.get("constraints", []) if len(c) > 120]
+if bad:
+    print("         long entry: %s..." % bad[0][:70])
+    sys.exit(1)
+sys.exit(0)
+'; then
+        :
+      else
+        echo "BLOCKED  $f  - a constraints entry is long enough to be prose"
+        echo "         (bounds only; fix extractConstraints in src/leetcode.ts)"
+        fail=1
+      fi
       ;;
   esac
 done

@@ -17,6 +17,7 @@ on:
 
 permissions:
   contents: write
+  issues: write # to report a rejected annotation rather than just going red
 
 concurrency:
   group: promote-${{ github.ref }}
@@ -118,6 +119,40 @@ jobs:
       - name: Delete the promoted branch
         if: steps.shape.outputs.promote == 'true'
         run: /usr/bin/git push origin --delete "${GITHUB_REF#refs/heads/}"
+
+      # A red X on a scheduled job nobody is watching is the same as silence.
+      # If an annotation is rejected, say so somewhere that emails.
+      - name: Report a rejected annotation
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Annotation rejected by the promote gate"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "\`promote\` refused to merge \`${GITHUB_REF#refs/heads/}\` into main."
+            echo ""
+            echo "This is the gate doing its job, not a bug. One of these failed:"
+            echo ""
+            echo "- the AST gate — the annotation changed more than comments"
+            echo "- \`data/raw\` moved, which would void the whole guarantee"
+            echo "- a path outside \`problems/\`, \`indexes/\`, \`README.md\` or the manifest changed"
+            echo "- the committed README/indexes don't match \`render_indexes.py\`"
+            echo "- the commit carried a \`Co-Authored-By\` trailer"
+            echo ""
+            echo "**Nothing was merged and nothing is lost.** The branch is still there"
+            echo "for inspection, and the manifest on \`main\` still says un-annotated, so"
+            echo "the next run retries. Read the failing step, then decide whether to"
+            echo "fix the prompt or delete the branch and let it regenerate."
+            echo ""
+            echo "Failing run: $RUN_URL"
+          } > /tmp/issue-body.md
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file /tmp/issue-body.md
+          else
+            gh issue create --title "$TITLE" --body-file /tmp/issue-body.md
+          fi
 
       - name: Summary
         if: always()
