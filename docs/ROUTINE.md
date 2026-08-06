@@ -59,7 +59,13 @@ EOF
 /usr/bin/git push origin main
 ```
 
-Then trigger the routine and confirm four things:
+Then trigger the routine and confirm five things:
+
+0. **It could push at all.** This is the most likely first-run failure: a routine
+   that can clone the repo but has no write credential will do all the work and
+   then fail at `git push`. Nothing is lost if so — the manifest on `origin` still
+   says un-annotated, so the next run redoes it — but the routine needs write
+   access to this repo before it can ever succeed.
 
 1. It committed `docs: annotate 1 problem` — and **not** a
    `Co-Authored-By: Claude` trailer:

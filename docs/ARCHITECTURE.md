@@ -59,6 +59,16 @@ three ways: HTTP 401/403, `userStatus.isSignedIn` coming back false before any
 fetching happens, and an authenticated field returning `null` or empty `code`
 (unauthenticated callers get metadata with no code).
 
+### If a push loses a race
+
+Both jobs commit and push to `main`, 1.5 h apart, so a collision is unlikely but
+not impossible. Neither job pulls, rebases or merges — deliberately. If a push is
+rejected the run fails loudly and **nothing is lost**, because the state that
+matters (`lastSyncedTimestamp`, and `annotated` / `annotationHash`) only advances
+on `origin` once a push succeeds. The next scheduled run starts from a fresh
+clone and redoes exactly the work that didn't land. Self-healing beats clever git
+logic running unattended at 2am.
+
 ## The guarantee: the code is provably unmodified
 
 - `data/raw/<slug>.py` — the submitted code, verbatim. Written only by Job 1.
@@ -70,11 +80,11 @@ fetching happens, and an authenticated field returning `null` or empty `code`
 - `scripts/verify_ast.py` — parses each and compares
   `ast.dump(tree, annotate_fields=True, include_attributes=False)`.
 
-The README's inline copy is gated too: any ```python fence containing
+The README's inline copy is gated too: any fenced `python` block containing
 `class Solution` is treated as a claim to be the real submission and verified as
 one. An ungated second copy would be free to drift, which would quietly turn the
 guarantee into a half-guarantee. Code fragments quoted in prose therefore use
-inline backticks or a non-`python` fence.
+inline backticks or a fence tagged something other than `python`.
 
 Python's parser discards comments and blank lines entirely, so they cannot appear
 in an AST. Equal dumps therefore mean the two files describe the identical
