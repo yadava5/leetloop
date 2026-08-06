@@ -52,8 +52,8 @@ p.write_text(json.dumps(m, indent=2) + "\n")
 EOF
 ```
 
-Then run Job 2's prompt (`docs/ROUTINE.md`) in a Claude session pointed at this
-repo, or wait for the nightly routine.
+Then run Job 2's prompt (`docs/routine-prompt.txt`) in a Claude session pointed
+at this repo, or wait for the nightly routine.
 
 ### 2. Sync now, without waiting for the cron
 
@@ -69,11 +69,12 @@ See `docs/RUNBOOK.md`. Two `gh secret set` commands, under a minute.
 
 ### 4. Change what a problem README looks like
 
-Edit the template section of `docs/ROUTINE.md`, then mark problems
-`annotated: false` (recipe 1) so they regenerate. `docs/ROUTINE.md` is the
-routine's prompt, version-controlled precisely so it is reviewable and
-diffable — the copy running in the cloud must be updated to match at
-`https://claude.ai/code/routines`.
+Edit the template section of `docs/routine-prompt.txt`, then mark problems
+`annotated: false` (recipe 1) so they regenerate. That file is Job 2's entire
+prompt, version-controlled so it is reviewable and diffable — and the copy
+running in the cloud must be pasted over to match, at
+`https://claude.ai/code/routines`. Nothing syncs them automatically.
+`docs/ROUTINE.md` explains the setup around it.
 
 ### 5. Change the AST gate
 

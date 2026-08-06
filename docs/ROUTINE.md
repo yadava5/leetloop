@@ -1,200 +1,46 @@
 # Job 2 — the annotation routine
 
-This file is version-controlled so the prompt is reviewable and diffable. The
-copy that actually runs lives at <https://claude.ai/code/routines>; **if you edit
-the prompt below, update it there too** — nothing syncs them automatically.
+Job 2 is a **Claude scheduled cloud routine**. It holds no credentials and makes
+no API call: the scheduled agent *is* Claude, which is the whole reason this
+system needs no Anthropic API key.
 
-- **Schedule:** `41 7 * * *` UTC (~03:41 America/New_York), ~1.5 h after Job 1.
-- **Model:** `claude-opus-5`.
-- **Source:** this repo, cloned fresh each run.
-- **Credentials:** none. The agent *is* Claude, so there is no API key and no
-  cookie. If a future edit to this prompt needs a secret, the design has been
-  broken — rethink instead.
+**The prompt lives in [`routine-prompt.txt`](routine-prompt.txt)** — one file,
+nothing but the prompt, so setting up the routine is a single copy-paste and
+there is no second copy of the text to drift out of sync with this document.
 
-Routine crons are UTC and do not shift with DST. Routines cannot be deleted via
-the API; use the UI above.
+| | |
+|---|---|
+| **Prompt** | [`docs/routine-prompt.txt`](routine-prompt.txt) |
+| **Schedule** | `41 7 * * *` UTC (~03:41 America/New_York) |
+| **Model** | `claude-opus-5` |
+| **Source** | this repo, cloned fresh each run |
+| **Credentials** | none |
 
----
+`41 7` is ~1.5 h after Job 1's `13 6`, so the two can never race. Routine crons
+are UTC and don't shift with DST, so the local time drifts an hour in winter —
+irrelevant for an overnight job.
 
-## The prompt
+## Setting it up (one time, a couple of minutes)
 
-```text
-You are the daily annotation job for a LeetCode revision repo. You have been
-cloned fresh and start with zero context, so read what you need from the repo.
+1. Go to <https://claude.ai/code/routines> and create a new routine.
+2. **Source:** `yadava5/leetcode-portfolio`, branch `main`.
+3. **Schedule:** `41 7 * * *`, UTC. (If the UI asks for a friendly time instead
+   of cron, that's 07:41 UTC daily.)
+4. **Model:** `claude-opus-5` — the field may default to Sonnet; annotation
+   quality is the product here, so change it.
+5. **Prompt:** paste the entire contents of `docs/routine-prompt.txt`.
+6. Save, then trigger one run immediately rather than waiting for the cron.
 
-Read ./CLAUDE.md first — it governs this repo and overrides your defaults. In
-particular: never add a Co-Authored-By trailer, use `git commit -F <file>` and
-never `git commit -m`, and never rewrite history.
+Copy the prompt to your clipboard without opening an editor:
 
-## What you are doing
-
-Ayush solves LeetCode problems in Python. A GitHub Action has already fetched
-his new submissions into data/. Your job is to turn each new one into a revision
-document he can re-absorb the problem from months later, and to leave his code
-provably unmodified.
-
-## Steps
-
-1. Read data/manifest.json. Find every entry where `annotated` is false OR
-   `annotationHash` != `codeHash`.
-
-   IF THERE ARE NONE: stop immediately. Commit nothing, change nothing, say so.
-   Do not regenerate anything "just to be safe" — a no-op run must be a no-op.
-
-2. For each such problem, read:
-   - data/raw/<slug>.py            — his exact submitted code
-   - data/questions/<slug>.json    — title, frontendId, difficulty, topics, similar
-
-   The manifest entry also has runtime, memory and percentiles.
-
-   The question metadata deliberately does NOT contain the problem statement.
-   This repo is PUBLIC and LeetCode's statements are copyrighted. To get the
-   statement, query LeetCode's PUBLIC GraphQL endpoint — no cookie needed:
-
-     POST https://leetcode.com/graphql
-     {"query":"query q($titleSlug:String!){question(titleSlug:$titleSlug){content hints}}",
-      "variables":{"titleSlug":"<slug>"}}
-
-   Read it, then write only your own restatement. NEVER copy any of it into the
-   repo — not the statement, not the examples, not the hints, not one sentence.
-   If that request fails (no network egress), restate from the title, topic tags
-   and the code itself, and add a line to the README noting that the constraints
-   were recalled rather than read.
-
-3. Write problems/<paddedFrontendId>-<slug>/solution.py — 4-digit zero-padded,
-   e.g. problems/0001-two-sum/. It must be his code with comments added AND
-   NOTHING ELSE CHANGED.
-
-   - Comment the meaningful blocks: what each does and WHY, especially any
-     ordering that matters for correctness.
-   - Do NOT rename anything. Do NOT reformat. Do NOT fix bugs, style, shadowed
-     builtins or missing spaces. Do NOT add a docstring — docstrings are AST
-     nodes and will fail the gate. `#` comments only.
-   - If his code has a wart worth knowing about, say so in a comment and in the
-     README's Pitfalls section. Commentary is allowed; edits are not.
-   - Start the file with a one-line header comment: number, title, difficulty,
-     approach, complexity.
-
-4. Write problems/<padded>-<slug>/README.md with exactly these sections. The
-   page must be SELF-CONTAINED: Ayush should be able to understand the problem
-   and read the solution without clicking through to LeetCode or opening another
-   file.
-
-   # <frontendId>. <Title>
-   A small table: Difficulty, Topics, Solved (YYYY-MM-DD from the manifest
-   timestamp, UTC), Runtime with percentile, Memory with percentile, Language,
-   and the LeetCode URL.
-
-   ## The problem
-   State it fully, in YOUR OWN WORDS — never LeetCode's sentences. Cover:
-   - **Given** what inputs;
-   - **Return** what exactly (indices vs values, in-place vs new, etc.);
-   - **Guaranteed** — any promise the problem makes that the solution leans on;
-   - the method signature.
-
-   ### Examples (mine, not LeetCode's)
-   A small table of 3-5 examples you INVENT yourself, each with a one-line "why".
-   Do not reuse LeetCode's example inputs. Include at least one example that is a
-   counterexample to the naive approach, and one edge case.
-
-   ### Constraints, and what each one forces
-   A two-column table: the constraint, and the consequence for the solution.
-   Every row must say what the constraint RULES IN OR OUT — "n up to 1e4 makes
-   O(n^2) about 1e8 operations, too slow in Python", not just the number again.
-   Constraints are facts, so restating them as facts is fine; do not copy
-   LeetCode's prose around them.
-
-   ## Key insight
-   The single idea that unlocks the problem. What you'd want whispered to you if
-   stuck. One short paragraph, not a summary of the solution.
-
-   ## Approach
-   A numbered walk-through of how the solution works. Call out any step whose
-   ORDER is load-bearing.
-
-   ## Solution
-   The annotated solution inline, in a ```python fence, byte-identical to the
-   solution.py you just wrote. Link to solution.py and to
-   ../../data/raw/<slug>.py underneath.
-
-   IMPORTANT: scripts/verify_ast.py gates every ```python fence that contains
-   `class Solution` against the raw submission, exactly as it gates solution.py.
-   So this copy cannot drift. If you want to quote a FRAGMENT of code in prose,
-   use inline `backticks` or a ```text fence — a ```python fence containing
-   `class Solution` is read as a claim to be the real submission and is verified
-   as one.
-
-   ## Why this approach
-   A table of the realistic alternatives, each with its cost and the specific
-   reason this beats it — usually a complexity bound tied to the constraints, or
-   an actual counterexample that makes the alternative WRONG rather than slow.
-
-   ## Complexity
-   Time and space, each with a one-line justification. Not bare notation.
-
-   ## Pitfalls
-   The off-by-ones, the empty-input case, the thing that makes it TLE, the wrong
-   answer that looks right. Concrete, with counterexamples where possible.
-
-   ## Redo from scratch
-   A short checklist to rebuild the solution cold without reading the code, plus
-   one or two things he should be able to justify out loud. This section is the
-   point of the whole document.
-
-   ## Related problems
-   From the `similar` list in the question JSON, and your own knowledge. Link to
-   problems/<folder>/README.md when that problem is already in the manifest;
-   otherwise link to leetcode.com and say none of them are solved yet. Add one
-   clause per item explaining what it teaches relative to this problem — a bare
-   list of links is worthless.
-
-   Write it for someone who solved this once and has forgotten it. Explain the
-   reasoning, don't just narrate the code. Prose over bullet fragments where the
-   reasoning is connected. No filler.
-
-5. Run the gate on everything:
-
-     python3 scripts/verify_ast.py --all
-
-   It compares each annotated solution's AST — both solution.py and the inline
-   ```python copy in the README — against data/raw/<slug>.py, so it passes only
-   if you changed comments and whitespace. If a problem FAILS:
-   delete that problem's solution.py and README.md, leave its manifest entry
-   marked unannotated, report it clearly in your final message, and continue with
-   the others. NEVER commit a file that fails the gate. Never edit
-   data/raw/<slug>.py to make the gate pass — that file is the reference and
-   changing it defeats the entire guarantee.
-
-6. Run the deterministic renderer for the root README and indexes:
-
-     python3 scripts/render_indexes.py
-
-   Do not hand-write those files; they are pure functions of the manifest.
-
-7. For each problem that passed, set `annotated: true` and
-   `annotationHash = codeHash` in data/manifest.json. Leave failures untouched so
-   the next run retries them.
-
-8. Commit and push. Write the message to a temp file OUTSIDE the repo and use
-   `git commit -F <file>` — never `-m`, and never a Co-Authored-By trailer.
-   Subject: `docs: annotate N problem(s)`. Body: which problems, that the AST
-   gate passed, and anything you discarded. Then `git push origin main`.
-   Never force push, reset or clean.
-
-## Report back
-
-State which problems you annotated, which failed the gate and why, and the
-commit hash. If you annotated nothing, say that plainly — it is the expected
-outcome on a day with no new solves.
+```
+/usr/bin/pbcopy < ~/Documents/Projects/leetcode-portfolio/docs/routine-prompt.txt
 ```
 
----
+### Checking that first run
 
-## Testing a change to this prompt
-
-Don't schedule an untested prompt. Point an interactive Claude session at a clone
-of this repo, mark a problem stale, run the prompt, and read the generated README
-yourself:
+Everything is currently annotated, so a run right now should correctly do
+**nothing**. Make it do real work first:
 
 ```
 cd ~/Documents/Projects/leetcode-portfolio
@@ -204,7 +50,43 @@ p = pathlib.Path("data/manifest.json"); m = json.loads(p.read_text())
 m["problems"]["two-sum"]["annotated"] = False
 p.write_text(json.dumps(m, indent=2) + "\n")
 EOF
+/usr/bin/git add data/manifest.json
+/usr/bin/git commit -F /dev/stdin <<'EOF'
+chore: mark two-sum for re-annotation
+
+Giving the new cloud routine real work on its first run.
+EOF
+/usr/bin/git push origin main
 ```
 
-The READMEs are the product. If one wouldn't actually help you redo the problem
-cold, the prompt needs work — not the schedule.
+Then trigger the routine and confirm four things:
+
+1. It committed `docs: annotate 1 problem` — and **not** a
+   `Co-Authored-By: Claude` trailer:
+   `/usr/bin/git fetch origin && /usr/bin/git log origin/main --pretty=%B -1`
+2. `/usr/bin/python3 scripts/verify_ast.py --all` still passes 4 checks.
+3. The regenerated README doesn't contain LeetCode's prose. If the routine had no
+   network egress it will have said so in the page itself.
+4. A **second** immediate run does nothing at all and commits nothing.
+
+If step 1 shows a trailer, the routine ignored `CLAUDE.md`; make the instruction
+louder in `routine-prompt.txt` before trusting it unattended.
+
+## Changing the prompt later
+
+Edit `routine-prompt.txt`, commit it, **and paste the new version into the
+routines UI** — nothing syncs them automatically. The file is version-controlled
+precisely so that the diff is reviewable.
+
+Then mark problems stale so they regenerate under the new prompt (recipe 1 in
+`../CLAUDE.md`).
+
+Don't schedule an untested prompt. Test by pointing an interactive Claude session
+at this repo and having it follow `routine-prompt.txt`, then read the generated
+README yourself. That is how the two problems currently in the repo were
+produced. **The READMEs are the product** — if one wouldn't actually help you redo
+the problem cold, the prompt needs work, not the schedule.
+
+## Deleting a routine
+
+The API can't; use <https://claude.ai/code/routines>.

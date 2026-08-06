@@ -62,7 +62,7 @@ node dist/cli.js --only two-sum
 ## Re-annotate a problem
 
 Mark it stale, then let tonight's routine pick it up (or run the prompt in
-`docs/ROUTINE.md` in a Claude session pointed at this repo):
+`docs/routine-prompt.txt` in a Claude session pointed at this repo):
 
 ```
 cd ~/Documents/Projects/leetcode-portfolio
