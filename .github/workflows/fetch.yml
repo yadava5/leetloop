@@ -1,0 +1,132 @@
+name: fetch
+
+# Job 1 of two. Holds the LeetCode cookie, calls no model, needs no Anthropic
+# API key. Job 2 (annotation) is a Claude cloud routine and lives outside this
+# repo's CI entirely — see docs/ROUTINE.md.
+
+on:
+  schedule:
+    # 06:13 UTC daily (~02:13 America/New_York). Job 2 runs at 07:41 UTC, so
+    # this gets a ~1.5h head start and the two can never race.
+    - cron: '13 6 * * *'
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Re-pull a single problem slug (leave blank to sync everything new)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Read only — write nothing, commit nothing'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write # to commit fetched data
+  issues: write # to report an expired cookie
+
+# Never let two syncs interleave; they both write data/manifest.json.
+concurrency:
+  group: leetcode-fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # --include=dev is explicit on purpose: if NODE_ENV=production is ever
+      # present, plain `npm ci` silently skips typescript and the build fails
+      # with "tsc: command not found".
+      - name: Install
+        run: npm ci --include=dev
+
+      - name: Build
+        run: npm run build
+
+      # The gate guards the promise that Ayush's code is never modified. If it
+      # ever stops working in both directions, fail here rather than let Job 2
+      # commit annotations against a broken check.
+      - name: Self-test the AST gate
+        run: python3 scripts/test_verify_ast.py
+
+      - name: Configure git
+        run: |
+          /usr/bin/git config user.name "Ayush Yadav"
+          /usr/bin/git config user.email "yadava5@miamioh.edu"
+          # Hook path is local config, so it is not inherited from the clone.
+          # Unattended commits are exactly where the secret scan matters most.
+          /usr/bin/git config core.hooksPath .githooks
+
+      - name: Sync submissions
+        id: sync
+        env:
+          LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
+          LEETCODE_CSRF_TOKEN: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+        run: |
+          set +e
+          ARGS=""
+          if [ -n "${{ inputs.only }}" ]; then ARGS="--only ${{ inputs.only }}"; fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          node dist/cli.js $ARGS
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          # Exit code 2 means the cookie is dead. That is a known, expected,
+          # roughly fortnightly event with a 60-second fix, so it is reported as
+          # an issue rather than as a red X nobody reads. Any other non-zero
+          # code is a real failure and is allowed to fail the run.
+          if [ "$code" = "2" ]; then
+            echo "session_expired=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          exit $code
+
+      - name: Report expired session
+        if: steps.sync.outputs.session_expired == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="LeetCode session expired"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          {
+            echo "The daily fetch could not authenticate to LeetCode, so no new"
+            echo "submissions were pulled. This is expected every 1-2 weeks:"
+            echo "LEETCODE_SESSION cannot be refreshed programmatically."
+            echo ""
+            echo "Nothing has been lost. LeetCode keeps full submission history,"
+            echo "so the next successful run picks up everything since"
+            echo "lastSyncedTimestamp. Downtime costs recency, not data."
+            echo ""
+            echo "Fix (about a minute): docs/RUNBOOK.md"
+            echo ""
+            echo "Failing run: $RUN_URL"
+          } > /tmp/issue-body.md
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file /tmp/issue-body.md
+          else
+            gh issue create --title "$TITLE" --body-file /tmp/issue-body.md
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Job 1 — fetch"
+            echo ""
+            if [ "${{ steps.sync.outputs.session_expired }}" = "true" ]; then
+              echo "**Cookie expired.** An issue was filed. See docs/RUNBOOK.md."
+            else
+              echo "Exit code: \`${{ steps.sync.outputs.exit_code }}\`"
+              echo ""
+              echo "Latest commit: \`$(/usr/bin/git log -1 --pretty='%h %s')\`"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
