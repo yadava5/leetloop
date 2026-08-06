@@ -1,0 +1,34 @@
+{
+  "questionId": "1",
+  "frontendId": "1",
+  "title": "Two Sum",
+  "slug": "two-sum",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Hash Table"
+  ],
+  "similar": [
+    "3sum",
+    "4sum",
+    "two-sum-ii-input-array-is-sorted",
+    "two-sum-iii-data-structure-design",
+    "subarray-sum-equals-k",
+    "two-sum-iv-input-is-a-bst",
+    "two-sum-less-than-k",
+    "max-number-of-k-sum-pairs",
+    "count-good-meals",
+    "count-number-of-pairs-with-absolute-difference-k",
+    "number-of-pairs-of-strings-with-concatenation-equal-to-target",
+    "find-all-k-distant-indices-in-an-array",
+    "first-letter-to-appear-twice",
+    "number-of-excellent-pairs",
+    "number-of-arithmetic-triplets",
+    "node-with-highest-edge-score",
+    "check-distances-between-same-letters",
+    "find-subarrays-with-equal-sum",
+    "largest-positive-integer-that-exists-with-its-negative",
+    "number-of-distinct-averages",
+    "count-pairs-whose-sum-is-less-than-target"
+  ]
+}

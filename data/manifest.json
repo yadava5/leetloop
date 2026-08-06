@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "lastSyncedTimestamp": 1785974009,
+  "lastSyncedAt": "2026-08-06T02:44:59.275Z",
+  "problems": {
+    "two-sum": {
+      "frontendId": "1",
+      "title": "Two Sum",
+      "slug": "two-sum",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Hash Table"
+      ],
+      "url": "https://leetcode.com/problems/two-sum/",
+      "submissionId": "2095951203",
+      "timestamp": 1785973514,
+      "lang": "Python3",
+      "runtime": "3 ms",
+      "runtimePercentile": 53.8336,
+      "memory": "20.5 MB",
+      "memoryPercentile": 17.524399999999993,
+      "similar": [
+        "3sum",
+        "4sum",
+        "two-sum-ii-input-array-is-sorted",
+        "two-sum-iii-data-structure-design",
+        "subarray-sum-equals-k",
+        "two-sum-iv-input-is-a-bst",
+        "two-sum-less-than-k",
+        "max-number-of-k-sum-pairs",
+        "count-good-meals",
+        "count-number-of-pairs-with-absolute-difference-k",
+        "number-of-pairs-of-strings-with-concatenation-equal-to-target",
+        "find-all-k-distant-indices-in-an-array",
+        "first-letter-to-appear-twice",
+        "number-of-excellent-pairs",
+        "number-of-arithmetic-triplets",
+        "node-with-highest-edge-score",
+        "check-distances-between-same-letters",
+        "find-subarrays-with-equal-sum",
+        "largest-positive-integer-that-exists-with-its-negative",
+        "number-of-distinct-averages",
+        "count-pairs-whose-sum-is-less-than-target"
+      ],
+      "codeHash": "ef54d677816a41e70a3900e179822698be5c3a887c8f46616f58be3a83d0c023",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "valid-parentheses": {
+      "frontendId": "20",
+      "title": "Valid Parentheses",
+      "slug": "valid-parentheses",
+      "difficulty": "Easy",
+      "topics": [
+        "String",
+        "Stack",
+        "Bracket Sequences"
+      ],
+      "url": "https://leetcode.com/problems/valid-parentheses/",
+      "submissionId": "2095953375",
+      "timestamp": 1785974009,
+      "lang": "Python3",
+      "runtime": "4 ms",
+      "runtimePercentile": 12.3687,
+      "memory": "19.4 MB",
+      "memoryPercentile": 23.973900000000015,
+      "similar": [
+        "generate-parentheses",
+        "longest-valid-parentheses",
+        "remove-invalid-parentheses",
+        "check-if-word-is-valid-after-substitutions",
+        "check-if-a-parentheses-string-can-be-valid",
+        "move-pieces-to-obtain-a-string"
+      ],
+      "codeHash": "d45dc857227663e5c279f63a4255c3853268f0ab6d0fa8e312e59aa672399ad9",
+      "annotationHash": null,
+      "annotated": false
+    }
+  }
+}
