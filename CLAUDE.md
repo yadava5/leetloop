@@ -7,10 +7,10 @@ Governed by `~/CLAUDE.md`. This file adds only what is specific to this repo.
 This repo fills itself. Two scheduled jobs do the work, and they are split along
 a secret boundary so that **neither one ever needs an Anthropic API key**:
 
-| | Job | Holds | Runs as | When (UTC) |
+| | Job | Holds | Runs as | When |
 |---|---|---|---|---|
 | 1 | **fetch** — pull new submissions, commit raw data | the LeetCode cookie | GitHub Action, no model involved | `0 17 * * *` |
-| 2 | **annotate** — write the revision docs | no credentials at all | Claude cloud routine (Claude *is* the runtime) | `0 18 * * *` |
+| 2 | **annotate** — write the revision docs | no credentials at all | Claude cloud routine (Claude *is* the runtime) | 2:00 PM ET |
 
 Both are UTC: 17:00 and 18:00, which is 1 pm and 2 pm Eastern while EDT is
 in effect, an hour earlier in winter. Job 2 runs an hour after Job 1 so the

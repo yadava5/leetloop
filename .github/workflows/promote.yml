@@ -1,0 +1,133 @@
+name: promote
+
+# Job 2 cannot push to main. A Claude cloud routine is pinned to a feature
+# branch by its own environment policy, so it commits there and stops. This
+# workflow is the missing half: it re-verifies the annotation on GitHub's
+# infrastructure and fast-forwards main only if everything passes.
+#
+# That is a feature rather than a workaround. The AST gate now runs twice, in
+# two places, and the second run is somewhere the annotator has no control over.
+# An annotation that modified Ayush's code would have to defeat the gate inside
+# the routine AND here, in a job it cannot influence, to reach main.
+
+on:
+  push:
+    branches:
+      - "yadav/**" # the branch pattern the cloud routine is given
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the pushed branch
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # need main too, to fast-forward it
+
+      # --- is this actually an annotation commit? -------------------------
+      # Only Job 2's output is auto-promoted. A human feature branch pushed by
+      # accident must never be silently merged into main.
+      - name: Check the commit is an annotation
+        id: shape
+        run: |
+          SUBJECT=$(/usr/bin/git log -1 --pretty=%s)
+          echo "subject: $SUBJECT"
+          case "$SUBJECT" in
+            "docs: annotate"*) ;;
+            *)
+              echo "::notice::subject is not 'docs: annotate ...' — not promoting"
+              echo "promote=false" >> "$GITHUB_OUTPUT"
+              exit 0
+              ;;
+          esac
+          if /usr/bin/git log -1 --pretty=%B | /usr/bin/grep -qi 'co-authored-by'; then
+            echo "::error::commit carries a Co-Authored-By trailer"
+            exit 1
+          fi
+          echo "promote=true" >> "$GITHUB_OUTPUT"
+
+      # --- only generated files may change -------------------------------
+      # Job 2's remit is problems/, indexes/, the root README and the two
+      # annotation fields in the manifest. If a run touched src/, scripts/, the
+      # workflows or - worst of all - data/raw, that is not an annotation and
+      # must not be promoted unreviewed.
+      - name: Check only generated paths changed
+        if: steps.shape.outputs.promote == 'true'
+        run: |
+          CHANGED=$(/usr/bin/git diff --name-only origin/main...HEAD)
+          echo "$CHANGED"
+          BAD=$(echo "$CHANGED" | /usr/bin/grep -Ev '^(problems/|indexes/|README\.md$|data/manifest\.json$)' || true)
+          if [ -n "$BAD" ]; then
+            echo "::error::these paths are outside Job 2's remit:"
+            echo "$BAD"
+            exit 1
+          fi
+
+      - name: data/raw must be untouched
+        if: steps.shape.outputs.promote == 'true'
+        run: |
+          # The gate's reference copy. If this moved, the guarantee is void:
+          # the gate would be comparing the annotation against something that is
+          # no longer the submitted code.
+          if ! /usr/bin/git diff --quiet origin/main...HEAD -- data/raw; then
+            echo "::error::data/raw changed — the gate's reference copy must never move"
+            /usr/bin/git diff --stat origin/main...HEAD -- data/raw
+            exit 1
+          fi
+
+      # --- the gate, run where the annotator has no influence -------------
+      - name: Gate self-test
+        if: steps.shape.outputs.promote == 'true'
+        run: python3 scripts/test_verify_ast.py
+
+      - name: AST gate on every annotation
+        if: steps.shape.outputs.promote == 'true'
+        run: python3 scripts/verify_ast.py --all
+
+      # --- generated files must really be generated -----------------------
+      - name: Renderer output must match what was committed
+        if: steps.shape.outputs.promote == 'true'
+        run: |
+          python3 scripts/render_indexes.py
+          if ! /usr/bin/git diff --quiet; then
+            echo "::error::README/indexes differ from what render_indexes.py produces"
+            /usr/bin/git diff --stat
+            exit 1
+          fi
+
+      # --- fast-forward main ---------------------------------------------
+      - name: Promote to main
+        if: steps.shape.outputs.promote == 'true'
+        run: |
+          COMMITTER_NAME="${{ vars.COMMITTER_NAME }}"
+          COMMITTER_EMAIL="${{ vars.COMMITTER_EMAIL }}"
+          /usr/bin/git config user.name "${COMMITTER_NAME:-${{ github.repository_owner }}}"
+          /usr/bin/git config user.email "${COMMITTER_EMAIL:-${{ github.repository_owner }}@users.noreply.github.com}"
+          # No --force anywhere. If this is not a fast-forward, something else
+          # moved main and a human should look at it.
+          /usr/bin/git push origin HEAD:main
+          echo "promoted $(/usr/bin/git rev-parse --short HEAD) to main"
+
+      - name: Delete the promoted branch
+        if: steps.shape.outputs.promote == 'true'
+        run: /usr/bin/git push origin --delete "${GITHUB_REF#refs/heads/}"
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### promote"
+            echo ""
+            if [ "${{ steps.shape.outputs.promote }}" = "true" ]; then
+              echo "Gate re-verified on CI and \`main\` fast-forwarded."
+            else
+              echo "Not an annotation commit — left on the branch."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

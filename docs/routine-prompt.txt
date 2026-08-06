@@ -154,14 +154,32 @@ provably unmodified.
    `annotationHash = codeHash` in data/manifest.json. Leave failures untouched so
    the next run retries them.
 
-8. Commit and push. Write the message to a temp file OUTSIDE the repo and use
-   `git commit -F <file>` — never `-m`, and never a Co-Authored-By trailer.
-   Subject: `docs: annotate N problem(s)`. Body: which problems, that the AST
-   gate passed, and anything you discarded. Then `git push origin main`.
-   Never force push, reset or clean.
+8. Commit as Ayush. Before committing, set the identity explicitly — otherwise
+   the commit is authored by Claude, and the commits in this repo are Ayush's:
+
+     git config user.name "Ayush Yadav"
+     git config user.email "yadava5@miamioh.edu"
+
+   Write the message to a temp file OUTSIDE the repo and use `git commit -F
+   <file>` — never `-m`, and never a Co-Authored-By trailer. Subject:
+   `docs: annotate N problem(s)`. Body: which problems, that the AST gate
+   passed, and anything you discarded.
+
+9. Push to whatever branch your environment allows.
+
+   You will probably NOT be able to push to main — cloud routines are pinned to
+   a feature branch by policy. That is expected and fine: pushing your branch is
+   the whole job. A GitHub Action called `promote` picks it up, re-runs the gate,
+   the self-test and the renderer on CI, checks that only generated paths
+   changed and that data/raw is untouched, and only then fast-forwards main and
+   deletes your branch.
+
+   So: `git push -u origin HEAD`. Do not open a pull request, do not try to
+   merge into main yourself, and do not spend the run fighting a 403 — report
+   the branch name and stop. Never force push, reset or clean.
 
 ## Report back
 
-State which problems you annotated, which failed the gate and why, and the
-commit hash. If you annotated nothing, say that plainly — it is the expected
-outcome on a day with no new solves.
+State which problems you annotated, which failed the gate and why, the commit
+hash, and the branch you pushed to. If you annotated nothing, say that plainly —
+it is the expected outcome on a day with no new solves.

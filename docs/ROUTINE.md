@@ -11,26 +11,32 @@ there is no second copy of the text to drift out of sync with this document.
 | | |
 |---|---|
 | **Prompt** | [`docs/routine-prompt.txt`](routine-prompt.txt) |
-| **Schedule** | `0 18 * * *` UTC = 2 pm Eastern (1 pm in winter) |
-| **Model** | `claude-opus-5` |
+| **Schedule** | daily at **2:00 PM** America/New_York |
+| **Model** | **Opus 5** |
 | **Source** | this repo, cloned fresh each run |
 | **Credentials** | none |
 
-`0 18` is an hour after Job 1's `0 17`, so the two can never race. Both are UTC
-and neither follows daylight saving, so both drift an hour earlier in Eastern
-terms from November to March. If you'd rather they stayed pinned to 1 pm and
-2 pm Eastern year-round, change `0 17`/`0 18` to `0 18`/`0 19` when the clocks
-go back.
+2:00 PM is an hour after Job 1's 17:00 UTC (1:00 PM Eastern in summer), so the
+two cannot race.
+
+Note the asymmetry: the routines UI schedules in **local time and follows
+daylight saving**, while a GitHub cron is **UTC and does not**. So in winter Job 1
+slides to noon Eastern while Job 2 stays at 2 PM — the gap widens to two hours,
+which is harmless. The ordering, which is the only thing that matters, never
+inverts.
 
 ## Setting it up (one time, a couple of minutes)
 
 1. Go to <https://claude.ai/code/routines> and create a new routine.
 2. **Source:** `yadava5/leetloop`, branch `main`.
-3. **Schedule:** `0 18 * * *`, UTC. (If the UI wants a plain time instead of a
-   cron expression, that's 18:00 UTC daily — 2 pm Eastern in summer, 1 pm in
-   winter, because cron does not follow daylight saving.)
-4. **Model:** `claude-opus-5` — the field may default to Sonnet; annotation
-   quality is the product here, so change it.
+3. **Trigger:** Schedule → **Daily**, at **02:00 PM**. The UI schedules in your
+   local timezone and follows daylight saving.
+4. **Model:** **Opus 5** — the field defaults to Opus 4.5; annotation quality is
+   the product here, so change it.
+   **Remove every connector.** The form pre-attaches whatever you have connected
+   (Gmail, Drive, Supabase, Vercel…). This routine needs none of them, and an
+   unattended agent should not hold your inbox and database. They come back on
+   save — remove them again via Edit and save a second time.
 5. **Prompt:** paste the entire contents of `docs/routine-prompt.txt`.
 6. Save, then trigger one run immediately rather than waiting for the cron.
 
@@ -62,17 +68,32 @@ EOF
 /usr/bin/git push origin main
 ```
 
+### Two things the first real run taught us
+
+Both are now handled, but they explain why the setup looks the way it does.
+
+**It needs Anthropic's Claude GitHub App installed, with write access.** Without
+it the routine clones fine (public repo) and then fails `git push` with a bare
+`403`, having done all the work. Install at
+<https://github.com/apps/claude/installations/new> and scope it to this
+repository only. Symptom to recognise: the run reports success on the annotation
+and then hands you a patch file.
+
+**It pushes to a feature branch, never to `main`.** The routine's environment
+pins it to a branch, so `.github/workflows/promote.yml` does the last mile —
+re-running the gate on CI and fast-forwarding `main`. A green run therefore does
+**not** mean the work landed; check the `promote` workflow if a page is missing.
+
+**LeetCode is unreachable from the routine.** The sandbox refuses `CONNECT
+leetcode.com:443`. Every page carries a "recalled, not read" note under
+Constraints. Honest, but it means the exact bounds come from memory.
+
 Then trigger the routine and confirm five things:
 
-0. **It could push at all.** This is the most likely first-run failure: a routine
-   that can clone the repo but has no write credential will do all the work and
-   then fail at `git push`. Nothing is lost if so — the manifest on `origin` still
-   says un-annotated, so the next run redoes it — but the routine needs write
-   access to this repo before it can ever succeed.
-
-1. It committed `docs: annotate 1 problem` — and **not** a
+1. The `promote` workflow ran and `main` moved — and the commit carries no
    `Co-Authored-By: Claude` trailer:
-   `/usr/bin/git fetch origin && /usr/bin/git log origin/main --pretty=%B -1`
+   `/opt/homebrew/bin/gh run list --workflow promote.yml --repo yadava5/leetloop`
+   then `/usr/bin/git fetch origin && /usr/bin/git log origin/main --pretty='%an %s' -1`
 2. `/usr/bin/python3 scripts/verify_ast.py --all` still passes 4 checks.
 3. The regenerated README doesn't contain LeetCode's prose. If the routine had no
    network egress it will have said so in the page itself.

@@ -11,10 +11,10 @@ would be its own prompt text — which stores a live credential as plaintext
 config, visible in the routines UI and echoed into every run transcript. That is
 a real downgrade from a proper secret store, so the work is split instead:
 
-| | Job | Holds | Is | Schedule (UTC) |
+| | Job | Holds | Is | Runs daily at |
 |---|---|---|---|---|
 | 1 | fetch | the LeetCode cookie, in GitHub's encrypted secret store | a plain TypeScript script, no model | `0 17 * * *` |
-| 2 | annotate + render | no credentials at all | Claude — the agent *is* the model, so nothing is called | `0 18 * * *` |
+| 2 | annotate + render | no credentials at all | Claude — the agent *is* the model, so nothing is called | 2:00 PM ET |
 
 Each job holds exactly one of the two sensitive things and never needs the
 other's. Job 2 starts an hour after Job 1 so they cannot race — GitHub can
@@ -62,6 +62,30 @@ An expired cookie is **never** allowed to look like a quiet day. It is detected
 three ways: HTTP 401/403, `userStatus.isSignedIn` coming back false before any
 fetching happens, and an authenticated field returning `null` or empty `code`
 (unauthenticated callers get metadata with no code).
+
+### How Job 2's work reaches main
+
+Job 2 **cannot push to main.** A Claude cloud routine is pinned to a feature
+branch by its own environment policy, so it commits there and stops. The missing
+half is `.github/workflows/promote.yml`, which fires on a push to `yadav/**` and:
+
+1. confirms the subject is `docs: annotate ...` and carries no `Co-Authored-By`
+   trailer — a human branch pushed by accident is never silently merged;
+2. confirms only `problems/`, `indexes/`, the root `README.md` and
+   `data/manifest.json` changed, and that **`data/raw` is byte-identical** — if
+   the gate's reference copy moved, the guarantee is void;
+3. re-runs `test_verify_ast.py` and `verify_ast.py --all`;
+4. re-runs `render_indexes.py` and fails if the committed README or indexes
+   differ from what the script produces;
+5. fast-forwards `main` (never `--force`) and deletes the branch.
+
+This is better than a direct push, not a workaround for one. **The gate now runs
+twice, in two places, and the second run is somewhere the annotator has no
+influence over.** An annotation that modified Ayush's code would have to defeat
+the gate inside the routine *and* again in a CI job it cannot touch.
+
+The consequence to remember: a green routine run is not the same as work landing
+on `main`. Check the `promote` workflow if a problem page doesn't appear.
 
 ### If a push loses a race
 

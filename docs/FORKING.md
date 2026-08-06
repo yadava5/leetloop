@@ -103,11 +103,12 @@ Two related GitHub behaviours worth knowing now rather than in six weeks:
 - Scheduled runs can be **delayed by tens of minutes** under load. That's why Job
   2 is an hour behind Job 1 rather than a few minutes.
 
-If you want a different time, edit the two crons. They're UTC and do not follow
-daylight saving:
+If you want a different time, there are two places, and they behave differently:
 
-- `.github/workflows/fetch.yml` → `cron: "0 17 * * *"`
-- your routine's schedule → `0 18 * * *`
+- `.github/workflows/fetch.yml` → `cron: "0 17 * * *"`. **UTC, ignores daylight
+  saving**, so its local time shifts by an hour twice a year.
+- your routine's schedule, set in the routines UI. **Local time, follows daylight
+  saving.**
 
 Keep Job 2 after Job 1. If they ever invert, Job 2 finds nothing pending and
 stops, so the annotation just lands a day late — late, never wrong.
@@ -137,21 +138,39 @@ At <https://claude.ai/code/routines>, create a routine with:
 | Field | Value |
 |---|---|
 | Source | your fork, branch `main` |
-| Schedule | `0 18 * * *` UTC |
+| Schedule | daily, an hour after Job 1 (local time in the UI) |
 | Model | an Opus-class model — annotation quality *is* the product |
 | Prompt | paste `docs/routine-prompt.txt` |
 
-The routine needs **write access** to your fork. A routine that can clone but not
-push will do all the work and fail on the last step, which reads like a content
-problem and isn't. See [docs/ROUTINE.md](ROUTINE.md) for the first-run checklist.
+Two things about this that cost me a run each, so they're worth doing up front:
+
+**Install Anthropic's Claude GitHub App and scope it to this repo**, at
+<https://github.com/apps/claude/installations/new>. Without it the routine clones
+happily — your fork is public — and then fails `git push` with a bare `403` after
+doing all the work. Choose "Only select repositories" so an unattended agent
+can't write to anything else you own.
+
+**Remove every connector from the routine.** The form pre-attaches whatever your
+account has connected — Gmail, Drive, Supabase, Vercel. This job needs none of
+them. They reappear when you save, so remove them again via Edit and save twice.
+
+The routine will push to a feature branch rather than `main`; that's expected, and
+`.github/workflows/promote.yml` handles the last mile. See
+[docs/ROUTINE.md](ROUTINE.md) for the first-run checklist.
 
 ## 6. Solve something, then wait
 
 Solve any problem in Python. At the next 17:00 UTC the Action commits your code
-verbatim to `data/raw/`; at 18:00 UTC the routine writes
-`problems/<id>-<slug>/README.md` and `solution.py`, verifies them, and commits.
+verbatim to `data/raw/`. An hour later the routine writes
+`problems/<id>-<slug>/README.md` and `solution.py`, runs the gate, and commits to
+a feature branch. The `promote` workflow then re-runs the gate on CI and
+fast-forwards `main`.
 
 Impatient? `gh workflow run fetch.yml` and then trigger the routine by hand.
+
+**Three runs, three places to look** if a page doesn't appear: the `fetch` Action,
+the routine's own run log, and the `promote` Action. A green routine run alone
+does not mean the work landed.
 
 ---
 

@@ -94,7 +94,7 @@ and let it regenerate.
 | Job | Where | Schedule (UTC) | Holds |
 |---|---|---|---|
 | 1 — fetch | `.github/workflows/fetch.yml` | `0 17 * * *` (1 pm ET) | the LeetCode cookie |
-| 2 — annotate | <https://claude.ai/code/routines> | `0 18 * * *` (2 pm ET) | nothing |
+| 2 — annotate | <https://claude.ai/code/routines> | 2:00 PM ET (local, DST-aware) | nothing |
 
 Both crons are UTC and do not follow daylight saving, so from November to March
 they fire an hour earlier in Eastern terms — noon and 1 pm instead of 1 pm and
