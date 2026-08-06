@@ -72,10 +72,13 @@ fetching happens, and an authenticated field returning `null` or empty `code`
 
 Job 2 **cannot push to main.** A Claude cloud routine is pinned to a feature
 branch by its own environment policy, so it commits there and stops. The missing
-half is `.github/workflows/promote.yml`, which fires on a push to `yadav/**` and:
+half is `.github/workflows/promote.yml`, which fires on a push to any branch
+other than `main` and:
 
 1. confirms the subject is `docs: annotate ...` and carries no `Co-Authored-By`
-   trailer — a human branch pushed by accident is never silently merged;
+   trailer — a human branch pushed by accident is never silently merged, which is
+   also why the trigger can safely be "every branch but main" rather than a
+   branch-name pattern the routine never promised to keep;
 2. confirms only `problems/`, `indexes/`, the root `README.md` and
    `data/manifest.json` changed, and that **`data/raw` is byte-identical** — if
    the gate's reference copy moved, the guarantee is void;

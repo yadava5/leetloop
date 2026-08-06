@@ -27,6 +27,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / "data" / "manifest.json"
 INDEXES = REPO / "indexes"
+PROBLEMS_DIR = REPO / "problems"
 
 DIFFICULTY_ORDER = {"Easy": 0, "Medium": 1, "Hard": 2}
 
@@ -58,7 +59,21 @@ def folder(entry) -> str:
     return "%s-%s" % (padded, entry["slug"])
 
 
+def has_page(entry) -> bool:
+    """Does this problem actually have a generated page on disk?
+
+    A manifest entry can legitimately exist without one: Job 1 commits the raw
+    submission at 17:00 and Job 2 writes the page an hour later, and if the AST
+    gate rejects an annotation the entry deliberately stays page-less until a
+    later run gets it right. Linking to it regardless put a broken link on the
+    front page, which is how this function came to exist.
+    """
+    return (PROBLEMS_DIR / folder(entry) / "README.md").is_file()
+
+
 def link(entry) -> str:
+    if not has_page(entry):
+        return "%s. %s — _awaiting annotation_" % (entry["frontendId"], entry["title"])
     return "[%s. %s](problems/%s/README.md)" % (
         entry["frontendId"],
         entry["title"],
@@ -67,6 +82,8 @@ def link(entry) -> str:
 
 
 def index_link(entry) -> str:
+    if not has_page(entry):
+        return "%s. %s — _awaiting annotation_" % (entry["frontendId"], entry["title"])
     return "[%s. %s](../problems/%s/README.md)" % (
         entry["frontendId"],
         entry["title"],
@@ -208,6 +225,26 @@ flowchart LR
 ```"""
 
 
+def pending_notice(problems) -> list:
+    """A short banner when some problems are fetched but not yet annotated.
+
+    Says so on the page rather than leaving a reader to wonder why a row has no
+    link. Empty list when everything is current, so the banner appears only when
+    it is true.
+    """
+    pending = sum(1 for entry in problems.values() if not has_page(entry))
+    if not pending:
+        return []
+    return [
+        "> **%d problem%s fetched but not annotated yet.** Job 1 commits the code at"
+        % (pending, "" if pending == 1 else "s"),
+        "> 17:00 UTC and Job 2 writes the page an hour later, so a gap here is normal in"
+        " between runs. If it persists, the watchdog opens an issue — see"
+        " [docs/RUNBOOK.md](docs/RUNBOOK.md).",
+        "",
+    ]
+
+
 def render_root(problems) -> str:
     rows = []
     for entry in by_number(problems):
@@ -259,6 +296,7 @@ def render_root(problems) -> str:
             "  " + " ".join(badges(problems)),
             "</p>",
             "",
+            *pending_notice(problems),
             "**%d problem%s** — %s. Solutions in Python."
             % (len(problems), "" if len(problems) == 1 else "s", tally or "none yet"),
             "",

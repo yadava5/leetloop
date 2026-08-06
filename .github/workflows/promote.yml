@@ -12,8 +12,17 @@ name: promote
 
 on:
   push:
-    branches:
-      - "yadav/**" # the branch pattern the cloud routine is given
+    # Every branch except main. NOT a specific prefix: the routine's branch names
+    # are generated (`yadav/zen-mayer-2n70ny`), the prefix is not documented
+    # anywhere, and a fork's would differ — so matching a pattern would mean this
+    # silently never fires and every annotation quietly stalled.
+    #
+    # Firing on all branches is safe because nothing is promoted on the trigger
+    # alone: the checks below require the subject to be `docs: annotate ...` and
+    # require that only generated paths changed. A human feature branch simply
+    # falls through them.
+    branches-ignore:
+      - main
 
 permissions:
   contents: write

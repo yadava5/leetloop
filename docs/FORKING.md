@@ -155,7 +155,11 @@ account has connected — Gmail, Drive, Supabase, Vercel. This job needs none of
 them. They reappear when you save, so remove them again via Edit and save twice.
 
 The routine will push to a feature branch rather than `main`; that's expected, and
-`.github/workflows/promote.yml` handles the last mile. See
+`.github/workflows/promote.yml` handles the last mile. It triggers on any branch
+except `main` — deliberately not on a branch-name pattern, because the routine's
+generated names are undocumented and would differ in your fork, and a pattern that
+stopped matching would stall every annotation silently. Nothing is promoted on the
+trigger alone: the commit subject and the changed paths are both checked. See
 [docs/ROUTINE.md](ROUTINE.md) for the first-run checklist.
 
 ## 6. Solve something, then wait
