@@ -16,5 +16,9 @@
     "check-if-word-is-valid-after-substitutions",
     "check-if-a-parentheses-string-can-be-valid",
     "move-pieces-to-obtain-a-string"
+  ],
+  "constraints": [
+    "1 <= s.length <= 10^4",
+    "s consists of parentheses only '()[]{}'."
   ]
 }
