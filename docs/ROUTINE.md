@@ -11,21 +11,24 @@ there is no second copy of the text to drift out of sync with this document.
 | | |
 |---|---|
 | **Prompt** | [`docs/routine-prompt.txt`](routine-prompt.txt) |
-| **Schedule** | `41 7 * * *` UTC (~03:41 America/New_York) |
+| **Schedule** | `0 18 * * *` UTC = 2 pm Eastern (1 pm in winter) |
 | **Model** | `claude-opus-5` |
 | **Source** | this repo, cloned fresh each run |
 | **Credentials** | none |
 
-`41 7` is ~1.5 h after Job 1's `13 6`, so the two can never race. Routine crons
-are UTC and don't shift with DST, so the local time drifts an hour in winter —
-irrelevant for an overnight job.
+`0 18` is an hour after Job 1's `0 17`, so the two can never race. Both are UTC
+and neither follows daylight saving, so both drift an hour earlier in Eastern
+terms from November to March. If you'd rather they stayed pinned to 1 pm and
+2 pm Eastern year-round, change `0 17`/`0 18` to `0 18`/`0 19` when the clocks
+go back.
 
 ## Setting it up (one time, a couple of minutes)
 
 1. Go to <https://claude.ai/code/routines> and create a new routine.
 2. **Source:** `yadava5/leetcode-portfolio`, branch `main`.
-3. **Schedule:** `41 7 * * *`, UTC. (If the UI asks for a friendly time instead
-   of cron, that's 07:41 UTC daily.)
+3. **Schedule:** `0 18 * * *`, UTC. (If the UI wants a plain time instead of a
+   cron expression, that's 18:00 UTC daily — 2 pm Eastern in summer, 1 pm in
+   winter, because cron does not follow daylight saving.)
 4. **Model:** `claude-opus-5` — the field may default to Sonnet; annotation
    quality is the product here, so change it.
 5. **Prompt:** paste the entire contents of `docs/routine-prompt.txt`.

@@ -9,10 +9,12 @@ a secret boundary so that **neither one ever needs an Anthropic API key**:
 
 | | Job | Holds | Runs as | When (UTC) |
 |---|---|---|---|---|
-| 1 | **fetch** — pull new submissions, commit raw data | the LeetCode cookie | GitHub Action, no model involved | `13 6 * * *` |
-| 2 | **annotate** — write the revision docs | no credentials at all | Claude cloud routine (Claude *is* the runtime) | `41 7 * * *` |
+| 1 | **fetch** — pull new submissions, commit raw data | the LeetCode cookie | GitHub Action, no model involved | `0 17 * * *` |
+| 2 | **annotate** — write the revision docs | no credentials at all | Claude cloud routine (Claude *is* the runtime) | `0 18 * * *` |
 
-Job 2 runs ~1.5 h after Job 1 so the two never race.
+Both are UTC: 17:00 and 18:00, which is 1 pm and 2 pm Eastern while EDT is
+in effect, an hour earlier in winter. Job 2 runs an hour after Job 1 so the
+two never race, with margin for GitHub delaying scheduled runs under load.
 
 **There is no Anthropic API key anywhere in this system, and there must never be
 one.** Job 2 needs no key because the scheduled agent is itself Claude. If you

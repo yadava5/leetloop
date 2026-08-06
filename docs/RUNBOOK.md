@@ -41,7 +41,7 @@ of downtime costs recency, not data.
 immediately, which is the one way to turn a fortnightly annoyance into a daily
 one.
 
-## Sync now instead of waiting for 06:13 UTC
+## Sync now instead of waiting for 17:00 UTC
 
 ```
 /opt/homebrew/bin/gh workflow run fetch.yml --repo yadava5/leetcode-portfolio
@@ -93,9 +93,10 @@ and let it regenerate.
 
 | Job | Where | Schedule (UTC) | Holds |
 |---|---|---|---|
-| 1 — fetch | `.github/workflows/fetch.yml` | `13 6 * * *` | the LeetCode cookie |
-| 2 — annotate | <https://claude.ai/code/routines> | `41 7 * * *` | nothing |
+| 1 — fetch | `.github/workflows/fetch.yml` | `0 17 * * *` (1 pm ET) | the LeetCode cookie |
+| 2 — annotate | <https://claude.ai/code/routines> | `0 18 * * *` (2 pm ET) | nothing |
 
-Routine crons are UTC and do not shift with DST, so the local run time drifts an
-hour in winter. Irrelevant for an overnight job. Routines cannot be deleted via
-the API — manage them in that UI.
+Both crons are UTC and do not follow daylight saving, so from November to March
+they fire an hour earlier in Eastern terms — noon and 1 pm instead of 1 pm and
+2 pm. Harmless; bump both by an hour if it bothers you. Routines cannot be
+deleted via the API — manage them at the URL above.

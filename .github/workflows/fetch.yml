@@ -6,9 +6,12 @@ name: fetch
 
 on:
   schedule:
-    # 06:13 UTC daily (~02:13 America/New_York). Job 2 runs at 07:41 UTC, so
-    # this gets a ~1.5h head start and the two can never race.
-    - cron: "13 6 * * *"
+    # 17:00 UTC daily = 1:00 pm America/New_York while EDT is in effect.
+    # Crons are UTC and do NOT follow daylight saving, so this becomes noon
+    # Eastern from November to March. Job 2 runs at 18:00 UTC, an hour later,
+    # because GitHub delays scheduled workflows under load and a 30-minute gap
+    # could be eaten by that.
+    - cron: "0 17 * * *"
   workflow_dispatch:
     inputs:
       only:

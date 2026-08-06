@@ -13,11 +13,15 @@ a real downgrade from a proper secret store, so the work is split instead:
 
 | | Job | Holds | Is | Schedule (UTC) |
 |---|---|---|---|---|
-| 1 | fetch | the LeetCode cookie, in GitHub's encrypted secret store | a plain TypeScript script, no model | `13 6 * * *` |
-| 2 | annotate + render | no credentials at all | Claude — the agent *is* the model, so nothing is called | `41 7 * * *` |
+| 1 | fetch | the LeetCode cookie, in GitHub's encrypted secret store | a plain TypeScript script, no model | `0 17 * * *` |
+| 2 | annotate + render | no credentials at all | Claude — the agent *is* the model, so nothing is called | `0 18 * * *` |
 
 Each job holds exactly one of the two sensitive things and never needs the
-other's. Job 2 starts ~1.5 h after Job 1 so they cannot race.
+other's. Job 2 starts an hour after Job 1 so they cannot race — GitHub can
+delay a scheduled workflow by tens of minutes under load, so the gap is margin
+rather than decoration. If Job 1 were ever so late that Job 2 ran first, Job 2
+would find nothing pending and stop; the annotation would simply land the next
+day. Late, never wrong.
 
 ## Job 1 stages
 
@@ -61,13 +65,13 @@ fetching happens, and an authenticated field returning `null` or empty `code`
 
 ### If a push loses a race
 
-Both jobs commit and push to `main`, 1.5 h apart, so a collision is unlikely but
+Both jobs commit and push to `main` an hour apart, so a collision is unlikely but
 not impossible. Neither job pulls, rebases or merges — deliberately. If a push is
 rejected the run fails loudly and **nothing is lost**, because the state that
 matters (`lastSyncedTimestamp`, and `annotated` / `annotationHash`) only advances
 on `origin` once a push succeeds. The next scheduled run starts from a fresh
 clone and redoes exactly the work that didn't land. Self-healing beats clever git
-logic running unattended at 2am.
+logic running unattended with nobody watching.
 
 ## The guarantee: the code is provably unmodified
 
