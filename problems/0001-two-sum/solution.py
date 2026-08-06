@@ -15,20 +15,22 @@ class Solution:
 
             # ORDER IS LOAD-BEARING: look up comp BEFORE inserting num.
             # If num were inserted first, an element would find itself whenever
-            # target == 2 * num (e.g. nums = [3, 1], target = 6 would wrongly
-            # return [0, 0]). Checking first makes self-pairing impossible.
+            # target == 2 * num. On nums = [5, 3, 7], target = 10 the insert
+            # first version returns [0, 0] at i = 0, because the 5 it just
+            # stored answers its own lookup - and never reaches the real pair
+            # 3 + 7 at indices 1 and 2. Checking first makes that impossible.
             if comp in seen:
                 # seen[comp] is the earlier index, i is the current one, so the
                 # pair comes back in ascending order. Returning here also means
-                # the loop stops at the first valid pair, which is fine because
-                # the problem promises exactly one answer exists.
+                # the loop stops at the first valid pair, which the constraints
+                # state is safe: "Only one valid answer exists."
                 return[seen[comp], i]
             # Insert AFTER the check. A duplicate value overwrites the older
             # index; harmless, because if the older index were part of the
             # answer the loop would already have returned at that point.
             seen[num] = i
-        # WART worth knowing: unreachable for any valid LeetCode input, since a
-        # solution is guaranteed to exist. It is here to satisfy the declared
-        # -> List[int] return type on the fall-through path. If this ever fires
-        # in your own testing, the input violated the problem's guarantee.
+        # WART worth knowing: unreachable for any valid LeetCode input, since
+        # the constraints guarantee an answer exists. It is here to satisfy the
+        # declared -> List[int] return type on the fall-through path. If this
+        # ever fires in your own testing, the input violated that guarantee.
         return []

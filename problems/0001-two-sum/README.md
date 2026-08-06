@@ -20,12 +20,13 @@ to `target`, as a list of two integers. Either order is accepted. You return
 positions into the original array, so sorting the input destroys the very thing
 you are asked to report.
 
-**Guaranteed**: exactly one valid pair exists, and the same element may not be
-used twice (the two indices must be distinct). Note these two promises are not
-in the `constraints` array fetched from the problem — they are recalled, not
-read — but the solution leans on both: the "exactly one" promise is what makes
-returning on the first hit correct rather than greedy, and the distinct-index
-rule is what the lookup-before-insert ordering enforces.
+**Guaranteed**: `Only one valid answer exists.` — that one is quoted from the
+problem's own constraints, and the solution leans on it directly: it is what
+makes returning on the first hit correct rather than greedy, and it is why the
+fall-through `return []` can never fire. A second promise, that the same element
+may not be used twice, is *recalled* rather than read — it is phrased as prose
+in the statement and so is not in the fetched `constraints` array. It is what
+the lookup-before-insert ordering enforces.
 
 ```text
 def twoSum(self, nums: List[int], target: int) -> List[int]
@@ -33,21 +34,24 @@ def twoSum(self, nums: List[int], target: int) -> List[int]
 
 ### Examples (mine, not LeetCode's)
 
+Every row below respects the guarantee: exactly one pair sums to the target.
+
 | `nums` | `target` | Returns | Why |
 |---|---|---|---|
 | `[8, 2, 5, 1]` | `7` | `[1, 2]` | The ordinary case: the partner of `2` shows up later, at index 2. |
-| `[4, 4]` | `8` | `[0, 1]` | Two *equal* values are a legal pair as long as the indices differ. Insert-before-check would break here in a different way — see the next row. |
-| `[3, 9, 6]` | `6` | `[0, 2]` | **Counterexample to insert-before-check.** `3 + 3 == 6`, so if index 0 were stored before looking up its complement, it would match itself and wrongly return `[0, 0]`. |
+| `[4, 4]` | `8` | `[0, 1]` | Two *equal* values are a legal pair as long as the indices differ. A `set` instead of a dict loses the index; refusing to overwrite a repeated key loses nothing here, but see the duplicates pitfall. |
+| `[5, 3, 7]` | `10` | `[1, 2]` | **Counterexample to insert-before-check.** `10 == 2 × 5`, so if index 0 were stored before its complement was looked up, the `5` would answer its own query and return `[0, 0]` — never even reaching the real pair at indices 1 and 2. |
 | `[-4, 11, 1]` | `-3` | `[0, 2]` | Negatives work unchanged — the complement is arithmetic, not magnitude, so no `abs` or sign handling is needed. |
-| `[6, 1]` | `7` | `[0, 1]` | **Edge case:** the minimum legal input size. The loop finds the answer on its second and final iteration. |
+| `[6, 1]` | `7` | `[0, 1]` | **Edge case:** the minimum legal input size, `nums.length == 2`. The loop finds the answer on its second and final iteration. |
 
 ### Constraints, and what each one forces
 
 | Constraint | What it forces |
 |---|---|
 | `2 <= nums.length <= 10^4` | The lower bound means you never handle an empty or single-element array — no special-casing. The upper bound is the real signal: brute force is ~10^4 × 10^4 / 2 = 5×10^7 pair checks, which Python does in seconds rather than milliseconds. It would likely squeak past the judge, but it is the wrong answer to the question being asked; O(n) is expected. |
-| `-10^9 <= nums[i] <= 10^9` | Values are negative, so no counting-array or bucket trick indexed by value. Python ints are arbitrary precision, so `target - num` cannot overflow — a genuine hazard in C++/Java, where the difference can reach 2×10^9 and escape a signed 32-bit int. Nothing here needs a wider type. |
-| `-10^9 <= target <= 10^9` | Same story: the complement `target - num` ranges over ±2×10^9 and is safe in Python. It also rules out assuming a positive target and pruning by "value already exceeds target". |
+| `-10^9 <= nums[i] <= 10^9` | Values can be negative, so no counting-array or bucket trick indexed by value. Python ints are arbitrary precision, so `target - num` cannot overflow — a genuine hazard in C++/Java, where the difference reaches 2×10^9 and escapes a signed 32-bit int. Nothing here needs a wider type. |
+| `-10^9 <= target <= 10^9` | Same story: the complement `target - num` ranges over ±2×10^9 and is safe in Python. It also rules out assuming a positive target and pruning by "this value already exceeds target". |
+| `Only one valid answer exists.` | The most load-bearing line on the page. Because the answer is unique, the *first* pair the loop finds is *the* pair — no collecting candidates, no tie-break, no "best" pair to choose between. It also means there is no not-found case to design, which is why the trailing `return []` is dead code rather than a real branch. Drop this promise and the problem becomes [Max Number of K-Sum Pairs](https://leetcode.com/problems/max-number-of-k-sum-pairs/), where the bookkeeping this problem lets you skip is the entire exercise. |
 
 ## Key insight
 
@@ -95,22 +99,24 @@ class Solution:
 
             # ORDER IS LOAD-BEARING: look up comp BEFORE inserting num.
             # If num were inserted first, an element would find itself whenever
-            # target == 2 * num (e.g. nums = [3, 1], target = 6 would wrongly
-            # return [0, 0]). Checking first makes self-pairing impossible.
+            # target == 2 * num. On nums = [5, 3, 7], target = 10 the insert
+            # first version returns [0, 0] at i = 0, because the 5 it just
+            # stored answers its own lookup - and never reaches the real pair
+            # 3 + 7 at indices 1 and 2. Checking first makes that impossible.
             if comp in seen:
                 # seen[comp] is the earlier index, i is the current one, so the
                 # pair comes back in ascending order. Returning here also means
-                # the loop stops at the first valid pair, which is fine because
-                # the problem promises exactly one answer exists.
+                # the loop stops at the first valid pair, which the constraints
+                # state is safe: "Only one valid answer exists."
                 return[seen[comp], i]
             # Insert AFTER the check. A duplicate value overwrites the older
             # index; harmless, because if the older index were part of the
             # answer the loop would already have returned at that point.
             seen[num] = i
-        # WART worth knowing: unreachable for any valid LeetCode input, since a
-        # solution is guaranteed to exist. It is here to satisfy the declared
-        # -> List[int] return type on the fall-through path. If this ever fires
-        # in your own testing, the input violated the problem's guarantee.
+        # WART worth knowing: unreachable for any valid LeetCode input, since
+        # the constraints guarantee an answer exists. It is here to satisfy the
+        # declared -> List[int] return type on the fall-through path. If this
+        # ever fires in your own testing, the input violated that guarantee.
         return []
 ```
 
@@ -122,7 +128,7 @@ class Solution:
 |---|---|---|
 | Nested loops over every pair `(i, j)` | O(n²) time, O(1) space | At `n = 10^4` that is 5×10^7 comparisons — seconds in Python, versus milliseconds. It is not *wrong*, just the answer the problem is designed to move you off of. The hash map trades O(n) memory for the whole inner loop. |
 | Sort, then two pointers from both ends | O(n log n) time, O(n) space | **Wrong as stated**, not merely slower. Sorting destroys the indices you were asked to return, so you must first pair each value with its original position and sort the pairs — at which point you have paid O(n log n), used O(n) space anyway, and written more code than the dict version. It is the right tool for [Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/), where the input arrives sorted and the O(1) space actually materialises. |
-| Two passes: build the whole dict, then scan for complements | O(n) time, O(n) space | Same asymptotics, but now every value is in the map before you query it, so `target == 2 * num` matches an element with itself. You have to add an explicit `seen[comp] != i` guard — and that guard is *also* subtly wrong when the value is duplicated, because the map only kept one of the two indices. One pass sidesteps both bugs by construction. |
+| Two passes: build the whole dict, then scan for complements | O(n) time, O(n) space | Same asymptotics, and it *is* correct — but only once you add an explicit `seen[comp] != i` guard, because every value is now in the map before you query it, so `target == 2 * num` matches an element with itself. Without the guard, `[-3, -4, -2]` with `target = -6` returns `[0, 0]` instead of `[1, 2]`. With the guard it is fine, including on duplicates like `[4, 4]`/`8` — the map keeps the *later* index, so scanning from the left finds `[1, 0]`, and either order is accepted. The one-pass version wins not on complexity but because it needs no guard at all: the ordering makes self-pairing unreachable rather than detected-and-rejected, and there is one traversal instead of two. |
 | `collections.Counter` / frequency map | O(n) time, O(n) space | Counts tell you a complement *exists* but not *where*. You would have to scan again to recover the index, which is the two-pass approach with extra steps. |
 
 ## Complexity
@@ -138,10 +144,11 @@ class Solution:
 
 ## Pitfalls
 
-- **Inserting before checking.** The single classic bug. `nums = [3, 1]`,
-  `target = 6`: insert `3` at index 0, then look up `6 - 3 == 3`, find it, and
-  return `[0, 0]` — one element used twice. Always look up the complement first.
-- **Returning values instead of indices.** `[2, 5]` instead of `[1, 2]`. The
+- **Inserting before checking.** The single classic bug. `nums = [5, 3, 7]`,
+  `target = 10`: insert `5` at index 0, then look up `10 - 5 == 5`, find the
+  entry you just wrote, and return `[0, 0]` — one element used twice, and the
+  genuine answer `[1, 2]` never reached. Always look up the complement first.
+- **Returning values instead of indices.** `[3, 7]` instead of `[1, 2]`. The
   return type is the same shape, so it passes the type checker and fails the
   judge.
 - **Adding a needless `i != j` guard.** Not wrong, but it signals you have not
@@ -150,6 +157,12 @@ class Solution:
 - **Assuming values are distinct.** `[4, 4]` with `target = 8` is legal input.
   Storing values in a set instead of a dict, or refusing to overwrite an existing
   key, breaks the duplicate case.
+- **"Simplifying" the overwrite away.** `seen[num] = i` deliberately clobbers an
+  earlier index for the same value, and that looks like a lost answer. It is not:
+  if the earlier index had been half the answer, the loop would have returned
+  before reaching this element. Guarding the write with `if num not in seen` is
+  also correct, but only by accident — it is extra code defending against a case
+  the ordering already rules out.
 - **Breaking out of the loop and returning after it.** Works, but you then have
   to keep the two indices in variables and reason about the not-found case.
   Returning inside the loop is shorter and has fewer states.
@@ -171,8 +184,8 @@ Be able to justify out loud:
 
 - **Why no `i != j` check is needed.** Because `seen` only ever contains indices
   strictly less than the current `i`, so a hit is always two different positions.
-  Then give the concrete input that breaks if you insert first: `[3, 1]`,
-  `target = 6`.
+  Then give the concrete input that breaks if you insert first: `[5, 3, 7]`,
+  `target = 10`.
 - **Why sorting is disqualified rather than just slow.** The answer is indices
   into the original array, and sorting throws those away.
 
@@ -182,7 +195,7 @@ Be able to justify out loud:
 - [3Sum](https://leetcode.com/problems/3sum/) — not solved yet. The natural escalation: fix one element, then run a two-sum on the rest. It adds the duplicate-skipping problem, which this version dodges entirely because only one answer exists.
 - [4Sum](https://leetcode.com/problems/4sum/) — not solved yet. Generalises 3Sum to k-sum recursion; teaches when the hash-map trick stops paying and sorting takes over.
 - [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) — not solved yet. The most valuable follow-up here. It is the same "store what I have seen, look up the complement" move, but over *prefix sums* rather than raw values — the step that turns this trick from a one-problem gimmick into a general technique.
-- [Max Number of K-Sum Pairs](https://leetcode.com/problems/max-number-of-k-sum-pairs/) — not solved yet. Drops the "exactly one answer" guarantee and asks you to consume pairs greedily, so the count-and-decrement bookkeeping this problem lets you skip becomes the whole exercise.
+- [Max Number of K-Sum Pairs](https://leetcode.com/problems/max-number-of-k-sum-pairs/) — not solved yet. Drops the "Only one valid answer exists." guarantee and asks you to consume pairs greedily, so the count-and-decrement bookkeeping this problem lets you skip becomes the whole exercise.
 - [Two Sum IV — Input Is a BST](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/) — not solved yet. Same complement-lookup idea over a tree traversal; good for checking whether you learned the *pattern* or just memorised the array loop.
 - [Two Sum III — Data Structure Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/) — not solved yet. Reframes it as an API where adds and queries interleave, forcing you to decide which of the two operations should carry the cost.
 
