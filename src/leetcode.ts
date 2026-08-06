@@ -137,7 +137,18 @@ export function extractConstraints(html: string): string[] {
         /length|size|node|char|digit|element|value|\bn\b/i.test(text)) ||
       /^[a-z]+ consists of/i.test(text) ||
       /^[a-z]+ contains only/i.test(text);
-    if (!looksLikeBound) continue;
+
+    // Short guarantees about the input are facts too, and they matter: "Only one
+    // valid answer exists" is what makes returning on the first hit correct
+    // rather than greedy. Kept short deliberately — a guarantee is a clause, and
+    // anything longer is a paragraph, which would be prose.
+    const looksLikeGuarantee =
+      text.length <= 80 &&
+      /^(only |all |each |every |no two |there (is|are) |it is guaranteed|the (answer|input|array|string|list) is)/i.test(
+        text,
+      );
+
+    if (!looksLikeBound && !looksLikeGuarantee) continue;
 
     items.push(text);
     if (items.length >= MAX_CONSTRAINTS) break;
