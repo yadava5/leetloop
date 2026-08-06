@@ -1,0 +1,13 @@
+node_modules/
+dist/
+
+# Secrets. Real values live in GitHub Actions secrets; local runs use ~/.leetcode.env
+.env
+.env.*
+!.env.example
+
+# Scratch copies handed to an agent, never part of the repo
+.handoff/
+
+.DS_Store
+*.log

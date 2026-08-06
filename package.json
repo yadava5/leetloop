@@ -1,0 +1,23 @@
+{
+  "name": "leetcode-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-updating LeetCode revision notes. Job 1 fetches, Job 2 annotates, the AST gate proves the code was never modified.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "sync": "node dist/cli.js",
+    "sync:dry": "node dist/cli.js --dry-run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:gate": "python3 scripts/test_verify_ast.py"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}

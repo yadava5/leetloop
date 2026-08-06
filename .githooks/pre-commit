@@ -1,0 +1,83 @@
+#!/bin/sh
+# Pre-commit guard for a PUBLIC repo. Two jobs:
+#   1. no credentials ever get committed
+#   2. no verbatim LeetCode problem statements ever get committed (copyright)
+#
+# Absolute paths throughout: interactive aliases (ls->eza, cat->bat, grep
+# variants) must never be able to change what this hook concludes.
+#
+# Never bypass this with --no-verify.
+
+set -u
+
+GIT=/usr/bin/git
+GREP=/usr/bin/grep
+
+fail=0
+staged=$($GIT diff --cached --name-only --diff-filter=ACMR)
+
+if [ -z "$staged" ]; then
+  exit 0
+fi
+
+for f in $staged; do
+  # --- env files ---------------------------------------------------------
+  case "$f" in
+    .env.example) ;;
+    .env | .env.* | *.env)
+      echo "BLOCKED  $f  - env files are never committed"
+      fail=1
+      continue
+      ;;
+  esac
+
+  # File may be staged-but-deleted from the worktree; read the staged blob.
+  blob=$($GIT show ":$f" 2>/dev/null) || continue
+
+  # --- credential patterns ----------------------------------------------
+  if [ "$f" != ".env.example" ] && [ "$f" != ".githooks/pre-commit" ]; then
+    if printf '%s' "$blob" | $GREP -Eq 'LEETCODE_SESSION[=:][[:space:]]*["'"'"']?[A-Za-z0-9_.-]{20,}'; then
+      echo "BLOCKED  $f  - contains something shaped like a LEETCODE_SESSION cookie"
+      fail=1
+    fi
+    if printf '%s' "$blob" | $GREP -Eq 'csrftoken[=:][[:space:]]*["'"'"']?[A-Za-z0-9]{24,}'; then
+      echo "BLOCKED  $f  - contains something shaped like a csrftoken"
+      fail=1
+    fi
+    if printf '%s' "$blob" | $GREP -Eq 'gh[pousr]_[A-Za-z0-9]{30,}'; then
+      echo "BLOCKED  $f  - contains something shaped like a GitHub token"
+      fail=1
+    fi
+    if printf '%s' "$blob" | $GREP -Eq 'sk-ant-[A-Za-z0-9_-]{20,}'; then
+      echo "BLOCKED  $f  - contains something shaped like an Anthropic API key"
+      fail=1
+    fi
+    if printf '%s' "$blob" | $GREP -q 'BEGIN OPENSSH PRIVATE KEY'; then
+      echo "BLOCKED  $f  - contains a private key"
+      fail=1
+    fi
+  fi
+
+  # --- copyright guard ---------------------------------------------------
+  # LeetCode problem statements are copyrighted and this repo is public.
+  # Job 1 must strip `content` and `hints` before writing question metadata;
+  # this is the mechanical backstop for that rule.
+  case "$f" in
+    data/questions/*.json)
+      if printf '%s' "$blob" | $GREP -Eq '"(content|hints|mysqlSchemas|exampleTestcases)"[[:space:]]*:'; then
+        echo "BLOCKED  $f  - question metadata still carries LeetCode's own prose"
+        echo "         (content/hints are copyrighted; strip them in hydrate)"
+        fail=1
+      fi
+      ;;
+  esac
+done
+
+if [ "$fail" -ne 0 ]; then
+  echo ""
+  echo "pre-commit refused the commit. Fix the files above."
+  echo "Do NOT rerun with --no-verify."
+  exit 1
+fi
+
+exit 0
