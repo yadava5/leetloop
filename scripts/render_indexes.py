@@ -87,11 +87,89 @@ def by_number(problems):
     )
 
 
+REPO_SLUG = "yadava5/leetloop"
+BADGE = "https://img.shields.io/badge"
+
+
+def badges(problems) -> list:
+    """Shields.io badges. Static ones are regenerated here, so counts stay true."""
+    counts = defaultdict(int)
+    for entry in problems.values():
+        counts[entry["difficulty"]] += 1
+    topics = {topic for entry in problems.values() for topic in entry["topics"]}
+
+    return [
+        "[![daily fetch](https://github.com/%s/actions/workflows/fetch.yml/badge.svg)]"
+        "(https://github.com/%s/actions/workflows/fetch.yml)" % (REPO_SLUG, REPO_SLUG),
+        "[![code unmodified: AST-verified](%s/code%%20unmodified-AST--verified-2ea44f)]"
+        "(scripts/verify_ast.py)" % BADGE,
+        "![problems solved](%s/problems-%d-1f6feb)" % (BADGE, len(problems)),
+        "![difficulty split](%s/easy-%d-00b8a3) ![](%s/medium-%d-ffb800) "
+        "![](%s/hard-%d-ff375f)"
+        % (BADGE, counts["Easy"], BADGE, counts["Medium"], BADGE, counts["Hard"]),
+        "![topics](%s/topics-%d-8957e5)" % (BADGE, len(topics)),
+        "![language](%s/solutions-Python%%203-3572A5) "
+        "![pipeline](%s/pipeline-TypeScript-3178c6)" % (BADGE, BADGE),
+        "![api keys required](%s/Anthropic%%20API%%20keys-0-lightgrey)" % BADGE,
+        "[![license](%s/license-MIT-blue)](LICENSE)" % BADGE,
+    ]
+
+
+PIPELINE_DIAGRAM = """```mermaid
+flowchart LR
+    subgraph you["you"]
+        SOLVE["solve a problem<br/>on leetcode.com"]
+        REVISE["open the problem page<br/>and redo it cold"]
+    end
+
+    subgraph job1["Job 1 · fetch — 17:00 UTC · GitHub Action"]
+        FETCH["submissionList<br/>since lastSyncedTimestamp"]
+        HYDRATE["submissionDetails + question<br/>1 req/sec, 3ⁿ backoff"]
+        STRIP["drop content + hints<br/>copyrighted, repo is public"]
+        RAW["data/raw/&lt;slug&gt;.py<br/>verbatim · source of truth"]
+        META["data/questions/&lt;slug&gt;.json"]
+    end
+
+    subgraph job2["Job 2 · annotate — 18:00 UTC · Claude routine"]
+        PENDING{"anything with<br/>annotated: false?"}
+        WRITE["write solution.py + README.md<br/>comments and prose only"]
+        GATE{"AST gate<br/>verify_ast.py"}
+        RENDER["render_indexes.py<br/>root README + indexes/"]
+        DISCARD["discard output<br/>leave entry pending"]
+    end
+
+    PAGES["problems/&lt;n&gt;-&lt;slug&gt;/<br/>README.md + solution.py"]
+    MANIFEST[("data/manifest.json<br/>the only shared state")]
+
+    SOLVE --> FETCH --> HYDRATE --> STRIP --> RAW & META
+    RAW & META --> MANIFEST
+    MANIFEST --> PENDING
+    PENDING -- "no" --> STOP["stop · commit nothing"]
+    PENDING -- "yes" --> WRITE --> GATE
+    GATE -- "AST equal — comments only" --> RENDER --> PAGES
+    GATE -- "anything else changed" --> DISCARD
+    PAGES --> MANIFEST
+    PAGES --> REVISE --> SOLVE
+
+    classDef human fill:#1f6feb22,stroke:#1f6feb,stroke-width:1px
+    classDef gate fill:#2ea44f22,stroke:#2ea44f,stroke-width:1px
+    classDef bad fill:#ff375f22,stroke:#ff375f,stroke-width:1px
+    class SOLVE,REVISE human
+    class GATE,PENDING gate
+    class DISCARD bad
+```"""
+
+
 def render_root(problems) -> str:
     rows = []
     for entry in by_number(problems):
+        pct = (
+            " (top %d%%)" % round(100 - entry["runtimePercentile"])
+            if entry.get("runtimePercentile")
+            else ""
+        )
         rows.append(
-            "| %s | %s | %s | %s | %s | %s |"
+            "| %s | %s | %s | %s | %s | %s%s |"
             % (
                 entry["frontendId"],
                 link(entry),
@@ -99,6 +177,7 @@ def render_root(problems) -> str:
                 ", ".join(entry["topics"]),
                 solved_date(entry),
                 entry["runtime"],
+                pct,
             )
         )
 
@@ -111,37 +190,134 @@ def render_root(problems) -> str:
 
     return "\n".join(
         [
-            "# LeetCode revision notes",
+            "# leetloop",
             "",
             GENERATED_NOTE,
             "",
-            "Not an archive — a revision surface. Each problem folder holds the idea that",
-            "unlocks the problem, why this approach beats the obvious one, the pitfalls, and",
-            "a checklist for rebuilding it cold.",
+            "**A LeetCode revision surface that fills itself.** I solve a problem; by the",
+            "next afternoon this repo contains a page that gets me back into that problem",
+            "months later — the idea that unlocks it, why this approach beats the obvious",
+            "one, the traps, and a checklist for rebuilding it from nothing.",
             "",
-            "Solutions are in Python. `problems/<n>-<slug>/solution.py` is the exact code I",
-            "submitted plus explanatory comments — and that is *proved*, not asserted:",
-            "[`scripts/verify_ast.py`](scripts/verify_ast.py) compares the abstract syntax",
-            "trees of the annotated file and the raw submission, so anything beyond comments",
-            "and whitespace is rejected before it can be committed.",
+            *badges(problems),
             "",
-            "The repo fills itself. A GitHub Action fetches new submissions daily; a",
-            "scheduled Claude routine writes the notes. See",
-            "[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).",
-            "",
-            "**%d problem%s** — %s"
+            "**%d problem%s** — %s. Solutions in Python."
             % (len(problems), "" if len(problems) == 1 else "s", tally or "none yet"),
+            "",
+            "---",
+            "",
+            "## The loop",
+            "",
+            PIPELINE_DIAGRAM,
+            "",
+            "Two scheduled jobs, and the split between them is the interesting part.",
+            "",
+            "| | Job | Runs on | Holds | Daily at |",
+            "| --- | --- | --- | --- | --- |",
+            "| **1** | **fetch** — pull new submissions, commit raw code | GitHub Action, no model involved | the LeetCode cookie | `17:00 UTC` |",
+            "| **2** | **annotate** — write the notes, verify, commit | Claude scheduled routine | no credentials at all | `18:00 UTC` |",
+            "",
+            "Each job holds exactly one of the two sensitive things and never needs the",
+            "other's. Job 1 keeps the session cookie in GitHub's encrypted secret store and",
+            "never talks to a model. Job 2 has no credentials because the scheduled agent",
+            "*is* the model — which is why **this system contains no Anthropic API key, and",
+            "is designed so that it never needs one.**",
+            "",
+            "## The guarantee: my code is provably unmodified",
+            "",
+            "An LLM writes the commentary, so \"it didn't touch my code\" has to be *checked*,",
+            "not promised. [`scripts/verify_ast.py`](scripts/verify_ast.py) parses the raw",
+            "submission and the annotated copy and compares",
+            "`ast.dump(tree, annotate_fields=True, include_attributes=False)`.",
+            "",
+            "Python's parser discards comments and blank lines entirely, so they cannot",
+            "appear in an AST. **Equal dumps therefore prove every byte of difference is a",
+            "comment or whitespace.** A renamed variable, a reordered statement, a changed",
+            "literal, an added docstring or a helpfully-fixed bug each change the dump, and",
+            "the annotation is discarded instead of committed.",
+            "",
+            "It's checked in both directions — a gate that only ever passes is not a gate.",
+            "[`scripts/test_verify_ast.py`](scripts/test_verify_ast.py) asserts 3 cases that",
+            "must pass and 5 that must fail, plus the README's inline copy of each solution,",
+            "and CI runs it on every fetch.",
+            "",
+            "```",
+            "  [ok] gate said PASS, expected PASS   comments and blank lines only",
+            "  [ok] gate said PASS, expected PASS   comment on nearly every line",
+            "  [ok] gate said FAIL, expected FAIL   one renamed variable (seen -> cache)",
+            "  [ok] gate said FAIL, expected FAIL   docstring added",
+            "  [ok] gate said FAIL, expected FAIL   two statements reordered",
+            "  [ok] gate said FAIL, expected FAIL   return [] changed to return None",
+            "  [ok] gate said FAIL, expected FAIL   annotated file does not parse",
+            "```",
+            "",
+            "## Problems",
             "",
             "| # | Problem | Difficulty | Topics | Solved | Runtime |",
             "| --: | --- | --- | --- | --- | --- |",
             *rows,
             "",
-            "Other views: [by topic](indexes/by-topic.md) ·",
-            "[by difficulty](indexes/by-difficulty.md) ·",
-            "[review queue](indexes/review-queue.md)",
+            "Other views: **[by topic](indexes/by-topic.md)** ·",
+            "**[by difficulty](indexes/by-difficulty.md)** ·",
+            "**[review queue](indexes/review-queue.md)** — spaced repetition with no",
+            "bookkeeping, bucketed by how long ago each problem was solved.",
             "",
-            "Problem statements are my own short restatements, never LeetCode's text, with a",
-            "link to the original. Licensed MIT (the notes and code, not the problems).",
+            "## What a problem page contains",
+            "",
+            "Not a code dump. Each [`problems/<n>-<slug>/README.md`](problems) is",
+            "self-contained and has nine sections:",
+            "",
+            "1. **Header** — difficulty, topics, date solved, runtime and memory percentiles,",
+            "   link to the original.",
+            "2. **The problem** — given / return / guaranteed, plus the method signature.",
+            "3. **Examples** — invented, with a one-line *why* each, including a",
+            "   counterexample to the naive approach.",
+            "4. **Constraints, and what each one forces** — every row says what the",
+            "   constraint rules in or out, not just the number again.",
+            "5. **Key insight** — the one thing I'd want whispered to me if stuck.",
+            "6. **Approach** — the walk-through, flagging any step whose *order* is",
+            "   load-bearing.",
+            "7. **Solution** — the annotated code inline, AST-verified against the raw",
+            "   submission like `solution.py` itself.",
+            "8. **Why this approach** — the realistic alternatives, each with the specific",
+            "   reason this beats it.",
+            "9. **Complexity · Pitfalls · Redo from scratch · Related problems.**",
+            "",
+            "## Layout",
+            "",
+            "```",
+            "problems/<n>-<slug>/    GENERATED — the revision page + annotated solution",
+            "indexes/                GENERATED — by topic, by difficulty, review queue",
+            "data/raw/<slug>.py      my submission, verbatim — the gate's reference copy",
+            "data/questions/*.json   cached metadata, with LeetCode's prose stripped out",
+            "data/manifest.json      the only shared state between the two jobs",
+            "src/                    Job 1 — TypeScript ESM, zero runtime dependencies",
+            "scripts/verify_ast.py   the gate — plain Python, no dependencies",
+            "docs/routine-prompt.txt Job 2 — the entire prompt, version-controlled",
+            "```",
+            "",
+            "Anything marked GENERATED is rewritten on every run; hand edits vanish.",
+            "",
+            "## Docs",
+            "",
+            "- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — the secret boundary, the",
+            "  three fetch stages, exit codes, the manifest schema, and what a non-Python",
+            "  language would need instead of AST equality.",
+            "- **[docs/RUNBOOK.md](docs/RUNBOOK.md)** — the LeetCode session cookie expires",
+            "  every 1–2 weeks and cannot be refreshed programmatically, so the pipeline",
+            "  files a GitHub issue and emails me. Fixing it is two commands.",
+            "- **[docs/ROUTINE.md](docs/ROUTINE.md)** — how Job 2 is scheduled and how to",
+            "  change its prompt safely.",
+            "",
+            "## On copyright",
+            "",
+            "LeetCode's problem statements are theirs, and this repo is public. Job 1 never",
+            "persists the statement or the hints; Job 2 reads the statement at annotate time",
+            "and writes only its own restatement, with my own examples. A pre-commit hook",
+            "blocks that prose from reappearing, because history here is append-only and a",
+            "leak committed once could not be taken back.",
+            "",
+            "MIT licensed — the notes and the pipeline, not the problems.",
             "",
         ]
     )

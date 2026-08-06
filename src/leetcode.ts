@@ -113,8 +113,7 @@ async function graphql<T>(
           cookie: `LEETCODE_SESSION=${creds.session}; csrftoken=${creds.csrfToken}`,
           "x-csrftoken": creds.csrfToken,
           referer: "https://leetcode.com",
-          "user-agent":
-            "leetcode-portfolio/1.0 (+https://github.com/yadava5/leetcode-portfolio)",
+          "user-agent": "leetloop/1.0 (+https://github.com/yadava5/leetloop)",
         },
         body: JSON.stringify({ query, variables }),
       });

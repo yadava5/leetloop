@@ -1,4 +1,4 @@
-# leetcode-portfolio — project contract
+# leetloop — project contract
 
 Governed by `~/CLAUDE.md`. This file adds only what is specific to this repo.
 

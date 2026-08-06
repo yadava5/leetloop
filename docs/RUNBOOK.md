@@ -18,15 +18,15 @@ pretended away.
    history this way:
 
 ```
-/opt/homebrew/bin/gh secret set LEETCODE_SESSION --repo yadava5/leetcode-portfolio
-/opt/homebrew/bin/gh secret set LEETCODE_CSRF_TOKEN --repo yadava5/leetcode-portfolio
+/opt/homebrew/bin/gh secret set LEETCODE_SESSION --repo yadava5/leetloop
+/opt/homebrew/bin/gh secret set LEETCODE_CSRF_TOKEN --repo yadava5/leetloop
 ```
 
 5. Confirm it works, then close the issue:
 
 ```
-/opt/homebrew/bin/gh workflow run fetch.yml --repo yadava5/leetcode-portfolio
-/opt/homebrew/bin/gh run watch --repo yadava5/leetcode-portfolio
+/opt/homebrew/bin/gh workflow run fetch.yml --repo yadava5/leetloop
+/opt/homebrew/bin/gh run watch --repo yadava5/leetloop
 ```
 
 For local runs, update `~/.leetcode.env` too (same two keys). That file lives
@@ -44,13 +44,13 @@ one.
 ## Sync now instead of waiting for 17:00 UTC
 
 ```
-/opt/homebrew/bin/gh workflow run fetch.yml --repo yadava5/leetcode-portfolio
+/opt/homebrew/bin/gh workflow run fetch.yml --repo yadava5/leetloop
 ```
 
 Locally:
 
 ```
-cd ~/Documents/Projects/leetcode-portfolio
+cd ~/Documents/Projects/leetloop
 npm install --include=dev     # NODE_ENV=production is exported in your shell,
                               # so plain `npm install` skips typescript
 npm run build
@@ -65,7 +65,7 @@ Mark it stale, then let tonight's routine pick it up (or run the prompt in
 `docs/routine-prompt.txt` in a Claude session pointed at this repo):
 
 ```
-cd ~/Documents/Projects/leetcode-portfolio
+cd ~/Documents/Projects/leetloop
 /usr/bin/python3 - <<'EOF'
 import json, pathlib
 p = pathlib.Path("data/manifest.json")

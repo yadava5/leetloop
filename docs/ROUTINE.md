@@ -25,7 +25,7 @@ go back.
 ## Setting it up (one time, a couple of minutes)
 
 1. Go to <https://claude.ai/code/routines> and create a new routine.
-2. **Source:** `yadava5/leetcode-portfolio`, branch `main`.
+2. **Source:** `yadava5/leetloop`, branch `main`.
 3. **Schedule:** `0 18 * * *`, UTC. (If the UI wants a plain time instead of a
    cron expression, that's 18:00 UTC daily — 2 pm Eastern in summer, 1 pm in
    winter, because cron does not follow daylight saving.)
@@ -37,7 +37,7 @@ go back.
 Copy the prompt to your clipboard without opening an editor:
 
 ```
-/usr/bin/pbcopy < ~/Documents/Projects/leetcode-portfolio/docs/routine-prompt.txt
+/usr/bin/pbcopy < ~/Documents/Projects/leetloop/docs/routine-prompt.txt
 ```
 
 ### Checking that first run
@@ -46,7 +46,7 @@ Everything is currently annotated, so a run right now should correctly do
 **nothing**. Make it do real work first:
 
 ```
-cd ~/Documents/Projects/leetcode-portfolio
+cd ~/Documents/Projects/leetloop
 /usr/bin/python3 - <<'EOF'
 import json, pathlib
 p = pathlib.Path("data/manifest.json"); m = json.loads(p.read_text())
