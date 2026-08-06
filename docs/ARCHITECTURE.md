@@ -41,8 +41,14 @@ All three are driven by `data/manifest.json`.
    and similar questions. Question metadata is cached to
    `data/questions/<slug>.json`, so re-solving a problem costs one call, not two.
 3. **commit** — write `data/raw/<slug>.py` and `data/questions/<slug>.json`,
-   update the manifest (new or changed entries get `annotated: false`), commit
-   `chore: sync N new submission(s)`.
+   update the manifest (new or changed entries get `annotated: false`), re-run
+   `render_indexes.py`, and commit the lot as `chore: sync N new submission(s)`.
+
+   Job 1 re-renders as well as Job 2 for two reasons: the front page is then
+   truthful the moment data lands — a problem fetched at 17:00 appears
+   immediately as *awaiting annotation* rather than being invisible for an hour —
+   and the generated files are always in step with the manifest on `main`, which
+   is what lets `verify.yml` enforce that as an invariant.
 
 Throttle: **1 request/second**, with `3^n × 1000 ms` backoff and 5 retries on 429
 and 5xx. LeetCode publishes no numeric rate limit and returns bare 429s, so this
@@ -94,6 +100,24 @@ the gate inside the routine *and* again in a CI job it cannot touch.
 
 The consequence to remember: a green routine run is not the same as work landing
 on `main`. Check the `promote` workflow if a problem page doesn't appear.
+
+### Why `verify.yml` also exists
+
+The arrangement above rests on undocumented behaviour: routines *currently* cannot
+push to `main`, which is what forces everything through `promote` and buys the
+second, independent gate run. If that ever changes — the routine gains direct
+push, a future workflow writes to `main`, someone commits by hand — then `promote`
+silently leaves the path and the second gate run leaves with it. Nothing breaks
+loudly; the guarantee just quietly reverts to being checked once.
+
+So `.github/workflows/verify.yml` asserts the invariants against **`main` itself**
+on every push, whatever route the commit took: the AST gate over every annotation,
+the gate self-test, generated files matching their generator, no copyrighted prose
+in question metadata, and no README link pointing at a page that doesn't exist. It
+files an issue on failure and closes it when `main` verifies again.
+
+`promote` gates the *route*. `verify` gates the *destination*. The second one
+cannot be bypassed by a change in someone else's platform.
 
 ### If a push loses a race
 

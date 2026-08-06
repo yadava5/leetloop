@@ -32,6 +32,7 @@ import {
   DATA_DIR,
   QUESTIONS_DIR,
   RAW_DIR,
+  REPO_ROOT,
   readManifest,
   sha256,
   writeManifest,
@@ -39,6 +40,7 @@ import {
   type ProblemEntry,
 } from "./manifest.js";
 import { commit, hasStagedChanges, headSummary, push, stage } from "./git.js";
+import { spawnSync } from "node:child_process";
 
 const EXIT_OK = 0;
 const EXIT_ERROR = 1;
@@ -158,6 +160,33 @@ function writeQuestionCache(meta: QuestionMeta): string {
   return path;
 }
 
+/**
+ * Re-render the root README and indexes/ from the manifest.
+ *
+ * Job 1 does this as well as Job 2, so the front page is truthful the moment new
+ * data lands: a problem fetched at 17:00 shows up immediately as "awaiting
+ * annotation" instead of being invisible until the routine runs an hour later.
+ *
+ * It also means the generated files are always in sync with the manifest on
+ * `main`, which `.github/workflows/verify.yml` is then able to enforce as an
+ * invariant rather than a hope.
+ */
+function renderIndexes(): string[] {
+  const script = join(REPO_ROOT, "scripts", "render_indexes.py");
+  const result = spawnSync("/usr/bin/env", ["python3", script], {
+    encoding: "utf8",
+  });
+  if (result.status !== 0) {
+    throw new Error(
+      `render_indexes.py failed: ${result.stderr || result.stdout || "no output"}`,
+    );
+  }
+  for (const line of (result.stdout ?? "").trim().split("\n")) {
+    if (line.trim()) console.log(`    ${line.trim()}`);
+  }
+  return [join(REPO_ROOT, "README.md"), join(REPO_ROOT, "indexes")];
+}
+
 function writeRawCode(slug: string, code: string): string {
   mkdirSync(RAW_DIR, { recursive: true });
   const path = join(RAW_DIR, `${slug}.py`);
@@ -257,6 +286,11 @@ async function main(): Promise<number> {
   manifest.lastSyncedAt = new Date().toISOString();
   writeManifest(manifest);
   touched.push(join(DATA_DIR, "manifest.json"));
+
+  // Keep the generated files in step with the manifest in the same commit, so
+  // the front page never lags behind the data it describes.
+  console.log("\n  re-rendering README and indexes/");
+  touched.push(...renderIndexes());
 
   stage(touched);
   if (!hasStagedChanges()) {

@@ -1,0 +1,137 @@
+name: verify
+
+# The backstop. `promote` gates the route Job 2 currently takes; this gates the
+# destination itself, no matter how something got there.
+#
+# It exists because the current arrangement rests on undocumented behaviour: a
+# Claude routine cannot push to `main` today, so everything is forced through
+# `promote` and gets a second, independent gate run. If that ever changes — the
+# routine gains direct push, someone commits by hand, a future workflow writes to
+# `main` — then `promote` stops being in the path and the second gate run
+# disappears with it. Nothing would break loudly; the guarantee would just
+# quietly become a single-checked claim again.
+#
+# So the invariants are asserted against `main` itself, on every push:
+#
+#   * every annotated solution is still comments-only vs data/raw
+#   * the gate still rejects things, checked in both directions
+#   * README and indexes/ still match what render_indexes.py produces
+#   * no question metadata carries LeetCode's copyrighted prose
+#
+# A red X here means `main` is in a state the repo's own rules say it should not
+# be in, so it also files an issue rather than relying on someone noticing.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: verify-main
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Gate self-test — does it still reject bad input?
+        run: python3 scripts/test_verify_ast.py
+
+      - name: AST gate on every annotation currently on main
+        run: python3 scripts/verify_ast.py --all
+
+      - name: Generated files must match the generator
+        run: |
+          python3 scripts/render_indexes.py
+          if ! /usr/bin/git diff --quiet; then
+            echo "::error::README/indexes on main differ from render_indexes.py output"
+            /usr/bin/git diff --stat
+            exit 1
+          fi
+
+      - name: No copyrighted prose in question metadata
+        run: |
+          # The pre-commit hook enforces this locally, but hooks are local config
+          # and a clone does not inherit them. Checked here too.
+          if /usr/bin/grep -lE '"(content|hints|mysqlSchemas|exampleTestcases)"[[:space:]]*:' data/questions/*.json 2>/dev/null; then
+            echo "::error::question metadata carries LeetCode's own prose"
+            exit 1
+          fi
+          python3 - <<'PY'
+          import glob, json, sys
+          bad = []
+          for path in glob.glob("data/questions/*.json"):
+              with open(path) as handle:
+                  data = json.load(handle)
+              for item in data.get("constraints", []):
+                  if len(item) > 120:
+                      bad.append((path, item[:70]))
+          for path, snippet in bad:
+              print("::error::%s has a constraints entry long enough to be prose: %s..." % (path, snippet))
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Every problem in the manifest has a page, or is honestly marked pending
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          manifest = json.loads(pathlib.Path("data/manifest.json").read_text())
+          readme = pathlib.Path("README.md").read_text()
+          broken = []
+          for slug, entry in manifest["problems"].items():
+              fid = entry["frontendId"]
+              folder = "%s-%s" % (fid.zfill(4) if fid.isdigit() else fid, slug)
+              link = "problems/%s/README.md" % folder
+              exists = pathlib.Path(link).is_file()
+              if link in readme and not exists:
+                  broken.append(link)
+          for link in broken:
+              print("::error::README links to %s which does not exist" % link)
+          sys.exit(1 if broken else 0)
+          PY
+
+      - name: Report an unverifiable main
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="main failed verification"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "\`main\` is in a state this repo's own rules say it should not be in."
+            echo ""
+            echo "Whatever landed did not go through — or did not survive — the checks that"
+            echo "make the central claim true: that every annotated solution differs from the"
+            echo "submitted code by comments alone, that the gate still rejects real edits,"
+            echo "that the generated files match their generator, and that no copyrighted"
+            echo "prose is stored."
+            echo ""
+            echo "Read the failing step. Then fix it **forward** with a new commit — history"
+            echo "here is append-only and force-pushing is not an option."
+            echo ""
+            echo "Failing run: $RUN_URL"
+          } > /tmp/issue-body.md
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file /tmp/issue-body.md
+          else
+            gh issue create --title "$TITLE" --body-file /tmp/issue-body.md
+          fi
+
+      - name: Close the issue once main verifies again
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="main failed verification"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "main verifies again. Closed automatically."
+          fi
