@@ -65,8 +65,16 @@ fetching happens, and an authenticated field returning `null` or empty `code`
   Source of truth.
 - `problems/<n>-<slug>/solution.py` — a derived artifact: the same code plus
   comments.
-- `scripts/verify_ast.py` — parses both and compares
+- `problems/<n>-<slug>/README.md` — shows the same annotated solution inline, so
+  one page holds the problem and the code.
+- `scripts/verify_ast.py` — parses each and compares
   `ast.dump(tree, annotate_fields=True, include_attributes=False)`.
+
+The README's inline copy is gated too: any ```python fence containing
+`class Solution` is treated as a claim to be the real submission and verified as
+one. An ungated second copy would be free to drift, which would quietly turn the
+guarantee into a half-guarantee. Code fragments quoted in prose therefore use
+inline backticks or a non-`python` fence.
 
 Python's parser discards comments and blank lines entirely, so they cannot appear
 in an AST. Equal dumps therefore mean the two files describe the identical

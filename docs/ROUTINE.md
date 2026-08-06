@@ -75,18 +75,34 @@ provably unmodified.
    - Start the file with a one-line header comment: number, title, difficulty,
      approach, complexity.
 
-4. Write problems/<padded>-<slug>/README.md with exactly these sections:
+4. Write problems/<padded>-<slug>/README.md with exactly these sections. The
+   page must be SELF-CONTAINED: Ayush should be able to understand the problem
+   and read the solution without clicking through to LeetCode or opening another
+   file.
 
    # <frontendId>. <Title>
    A small table: Difficulty, Topics, Solved (YYYY-MM-DD from the manifest
    timestamp, UTC), Runtime with percentile, Memory with percentile, Language,
    and the LeetCode URL.
 
-   ## Problem, restated
-   2-3 sentences in plain language, your words. Then a short paragraph on the
-   constraints that actually matter — the ones that dictate the required
-   complexity — and say WHY they matter (e.g. "n up to 1e4 makes O(n^2) about
-   1e8 operations, too slow in Python").
+   ## The problem
+   State it fully, in YOUR OWN WORDS — never LeetCode's sentences. Cover:
+   - **Given** what inputs;
+   - **Return** what exactly (indices vs values, in-place vs new, etc.);
+   - **Guaranteed** — any promise the problem makes that the solution leans on;
+   - the method signature.
+
+   ### Examples (mine, not LeetCode's)
+   A small table of 3-5 examples you INVENT yourself, each with a one-line "why".
+   Do not reuse LeetCode's example inputs. Include at least one example that is a
+   counterexample to the naive approach, and one edge case.
+
+   ### Constraints, and what each one forces
+   A two-column table: the constraint, and the consequence for the solution.
+   Every row must say what the constraint RULES IN OR OUT — "n up to 1e4 makes
+   O(n^2) about 1e8 operations, too slow in Python", not just the number again.
+   Constraints are facts, so restating them as facts is fine; do not copy
+   LeetCode's prose around them.
 
    ## Key insight
    The single idea that unlocks the problem. What you'd want whispered to you if
@@ -95,6 +111,18 @@ provably unmodified.
    ## Approach
    A numbered walk-through of how the solution works. Call out any step whose
    ORDER is load-bearing.
+
+   ## Solution
+   The annotated solution inline, in a ```python fence, byte-identical to the
+   solution.py you just wrote. Link to solution.py and to
+   ../../data/raw/<slug>.py underneath.
+
+   IMPORTANT: scripts/verify_ast.py gates every ```python fence that contains
+   `class Solution` against the raw submission, exactly as it gates solution.py.
+   So this copy cannot drift. If you want to quote a FRAGMENT of code in prose,
+   use inline `backticks` or a ```text fence — a ```python fence containing
+   `class Solution` is read as a claim to be the real submission and is verified
+   as one.
 
    ## Why this approach
    A table of the realistic alternatives, each with its cost and the specific
@@ -128,8 +156,9 @@ provably unmodified.
 
      python3 scripts/verify_ast.py --all
 
-   It compares each annotated solution's AST against data/raw/<slug>.py, so it
-   passes only if you changed comments and whitespace. If a problem FAILS:
+   It compares each annotated solution's AST — both solution.py and the inline
+   ```python copy in the README — against data/raw/<slug>.py, so it passes only
+   if you changed comments and whitespace. If a problem FAILS:
    delete that problem's solution.py and README.md, leave its manifest entry
    marked unannotated, report it clearly in your final message, and continue with
    the others. NEVER commit a file that fails the gate. Never edit

@@ -13,7 +13,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from verify_ast import GateFailure, compare  # noqa: E402
+from verify_ast import GateFailure, compare, compare_markdown, solution_blocks  # noqa: E402
 
 # Ayush's real Two Sum submission, byte for byte - including `return[...]`
 # with no space, which the annotator is forbidden from tidying up.
@@ -142,6 +142,81 @@ CASES = [
 ]
 
 
+FENCE = "```"
+
+
+def readme_with(code: str, extra: str = "") -> str:
+    """A minimal problem page showing the solution inline, like the real ones."""
+    return "\n".join(
+        [
+            "# 1. Two Sum",
+            "",
+            "Prose mentioning `seen[num] = i` as inline code, which must be ignored.",
+            "",
+            "## Solution",
+            "",
+            FENCE + "python",
+            code.rstrip("\n"),
+            FENCE,
+            "",
+            extra,
+        ]
+    )
+
+
+FRAGMENT_ONLY = "\n".join(
+    [
+        "# 1. Two Sum",
+        "",
+        "A fragment, not the whole submission:",
+        "",
+        FENCE + "python",
+        "comp = target - num",
+        FENCE,
+        "",
+    ]
+)
+
+
+def markdown_checks(tmp: Path, raw: Path) -> int:
+    """The README's inline copy of the solution has to be gated too."""
+    problems = 0
+    cases = [
+        ("README shows the real annotated solution", readme_with(ANNOTATED_OK), 0),
+        ("README's inline copy has a renamed variable", readme_with(RENAMED), 1),
+        ("README's inline copy silently changed a return", readme_with(STYLE_FIX), 1),
+    ]
+
+    print("\ninline-solution checks (README ```python fences)\n")
+    for name, markdown, expected_failures in cases:
+        path = tmp / "README.md"
+        path.write_text(markdown, encoding="utf-8")
+        actual = compare_markdown(raw, path)
+        ok = actual == expected_failures
+        if not ok:
+            problems += 1
+        print(
+            "  [%s] %d failure(s), expected %d   %s"
+            % ("ok" if ok else "BUG", actual, expected_failures, name)
+        )
+
+    # A fenced fragment is not a claim to be the submission, so it must be
+    # ignored rather than failed - otherwise the annotator could never quote a
+    # single line in prose.
+    path = tmp / "README.md"
+    path.write_text(FRAGMENT_ONLY, encoding="utf-8")
+    blocks = solution_blocks(path)
+    ok = len(blocks) == 0
+    if not ok:
+        problems += 1
+    print(
+        "  [%s] %d block(s) collected, expected 0   fenced fragment is not treated as the solution"
+        % ("ok" if ok else "BUG", len(blocks))
+    )
+
+    return problems
+
+
 def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="gate-test-"))
     raw = tmp / "raw.py"
@@ -171,6 +246,8 @@ def main() -> int:
         )
         if not ok:
             print("        ^ the gate is wrong here%s" % (": " + detail if detail else ""))
+
+    problems += markdown_checks(tmp, raw)
 
     # A gate that never rejects anything is useless even if every case above
     # happened to line up, so assert the two directions explicitly.

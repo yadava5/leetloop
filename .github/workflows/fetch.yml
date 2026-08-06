@@ -34,11 +34,13 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
+      # v5 rather than v4: v4 runs on Node 20, which GitHub has deprecated and
+      # is already force-running on Node 24 with a warning.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'
