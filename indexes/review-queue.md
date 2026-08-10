@@ -9,20 +9,20 @@ useful habit is to revisit a problem about 1, 3, 7 and 30 days after solving it.
 Work top-down: redo the problem from the **Redo from scratch** checklist in its
 README without reading the code first.
 
-Generated for 2026-08-06 (UTC).
+Generated for 2026-08-10 (UTC).
 
 ## Solved today (0)
 
 _nothing here_
 
-## 1-3 days ago (2)
-
-- [1. Two Sum](../problems/0001-two-sum/README.md) — Easy, Array, Hash Table — solved 2026-08-05 (1 day ago)
-- [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy, String, Stack, Bracket Sequences — solved 2026-08-05 (1 day ago)
-
-## 3-7 days ago (0)
+## 1-3 days ago (0)
 
 _nothing here_
+
+## 3-7 days ago (2)
+
+- [1. Two Sum](../problems/0001-two-sum/README.md) — Easy, Array, Hash Table — solved 2026-08-05 (5 days ago)
+- [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy, String, Stack, Bracket Sequences — solved 2026-08-05 (5 days ago)
 
 ## 7-30 days ago (0)
 
