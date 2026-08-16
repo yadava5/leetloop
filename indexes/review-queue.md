@@ -9,24 +9,24 @@ useful habit is to revisit a problem about 1, 3, 7 and 30 days after solving it.
 Work top-down: redo the problem from the **Redo from scratch** checklist in its
 README without reading the code first.
 
-Generated for 2026-08-10 (UTC).
+Generated for 2026-08-16 (UTC).
 
-## Solved today (0)
+## Solved today (1)
 
-_nothing here_
+- 242. Valid Anagram — _awaiting annotation_ — Easy, Hash Table, String, Sorting — solved 2026-08-16 (0 days ago)
 
 ## 1-3 days ago (0)
 
 _nothing here_
 
-## 3-7 days ago (2)
-
-- [1. Two Sum](../problems/0001-two-sum/README.md) — Easy, Array, Hash Table — solved 2026-08-05 (5 days ago)
-- [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy, String, Stack, Bracket Sequences — solved 2026-08-05 (5 days ago)
-
-## 7-30 days ago (0)
+## 3-7 days ago (0)
 
 _nothing here_
+
+## 7-30 days ago (2)
+
+- [1. Two Sum](../problems/0001-two-sum/README.md) — Easy, Array, Hash Table — solved 2026-08-05 (11 days ago)
+- [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy, String, Stack, Bracket Sequences — solved 2026-08-05 (11 days ago)
 
 ## 30+ days ago - most likely to have faded (0)
 

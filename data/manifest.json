@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1785974009,
-  "lastSyncedAt": "2026-08-06T05:15:26.244Z",
+  "lastSyncedTimestamp": 1786881277,
+  "lastSyncedAt": "2026-08-16T17:14:11.336Z",
   "problems": {
     "two-sum": {
       "frontendId": "1",
@@ -46,6 +46,34 @@
       "codeHash": "ef54d677816a41e70a3900e179822698be5c3a887c8f46616f58be3a83d0c023",
       "annotationHash": "ef54d677816a41e70a3900e179822698be5c3a887c8f46616f58be3a83d0c023",
       "annotated": true
+    },
+    "valid-anagram": {
+      "frontendId": "242",
+      "title": "Valid Anagram",
+      "slug": "valid-anagram",
+      "difficulty": "Easy",
+      "topics": [
+        "Hash Table",
+        "String",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/valid-anagram/",
+      "submissionId": "2108931978",
+      "timestamp": 1786881277,
+      "lang": "Python3",
+      "runtime": "3 ms",
+      "runtimePercentile": 98.397,
+      "memory": "19.5 MB",
+      "memoryPercentile": 30.078699999999987,
+      "similar": [
+        "group-anagrams",
+        "palindrome-permutation",
+        "find-all-anagrams-in-a-string",
+        "find-resultant-array-after-removing-anagrams"
+      ],
+      "codeHash": "d464f0387c5d01acdeb5d02f5d755a2a5ff3fbdab481b0ab031fd5d2727d11c0",
+      "annotationHash": null,
+      "annotated": false
     },
     "valid-parentheses": {
       "frontendId": "20",

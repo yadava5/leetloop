@@ -18,10 +18,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml"><img alt="daily fetch status" src="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml/badge.svg"></a> <a href="scripts/verify_ast.py"><img alt="code unmodified: AST-verified" src="https://img.shields.io/badge/code%20unmodified-AST--verified-2ea44f"></a> <img alt="problems solved" src="https://img.shields.io/badge/problems-2-1f6feb"> <img alt="easy" src="https://img.shields.io/badge/easy-2-00b8a3"> <img alt="medium" src="https://img.shields.io/badge/medium-0-ffb800"> <img alt="hard" src="https://img.shields.io/badge/hard-0-ff375f"> <img alt="topics covered" src="https://img.shields.io/badge/topics-5-8957e5"> <img alt="solutions in Python 3" src="https://img.shields.io/badge/solutions-Python%203-3572A5"> <img alt="pipeline in TypeScript" src="https://img.shields.io/badge/pipeline-TypeScript-3178c6"> <img alt="Anthropic API keys required: 0" src="https://img.shields.io/badge/Anthropic%20API%20keys-0-lightgrey"> <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml"><img alt="daily fetch status" src="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml/badge.svg"></a> <a href="scripts/verify_ast.py"><img alt="code unmodified: AST-verified" src="https://img.shields.io/badge/code%20unmodified-AST--verified-2ea44f"></a> <img alt="problems solved" src="https://img.shields.io/badge/problems-3-1f6feb"> <img alt="easy" src="https://img.shields.io/badge/easy-3-00b8a3"> <img alt="medium" src="https://img.shields.io/badge/medium-0-ffb800"> <img alt="hard" src="https://img.shields.io/badge/hard-0-ff375f"> <img alt="topics covered" src="https://img.shields.io/badge/topics-6-8957e5"> <img alt="solutions in Python 3" src="https://img.shields.io/badge/solutions-Python%203-3572A5"> <img alt="pipeline in TypeScript" src="https://img.shields.io/badge/pipeline-TypeScript-3178c6"> <img alt="Anthropic API keys required: 0" src="https://img.shields.io/badge/Anthropic%20API%20keys-0-lightgrey"> <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
-**2 problems** — Easy 2. Solutions in Python.
+> **1 problem fetched but not annotated yet.** Job 1 commits the code at
+> 17:00 UTC and Job 2 writes the page an hour later, so a gap here is normal in between runs. If it persists, the watchdog opens an issue — see [docs/RUNBOOK.md](docs/RUNBOOK.md).
+
+**3 problems** — Easy 3. Solutions in Python.
 
 ---
 
@@ -162,6 +165,7 @@ two places, one of which it cannot reach.
 | --: | --- | --- | --- | --- | --- |
 | 1 | [1. Two Sum](problems/0001-two-sum/README.md) | Easy | Array, Hash Table | 2026-08-05 | 3 ms (top 46%) |
 | 20 | [20. Valid Parentheses](problems/0020-valid-parentheses/README.md) | Easy | String, Stack, Bracket Sequences | 2026-08-05 | 4 ms (top 88%) |
+| 242 | 242. Valid Anagram — _awaiting annotation_ | Easy | Hash Table, String, Sorting | 2026-08-16 | 3 ms (top 2%) |
 
 Other views: **[by topic](indexes/by-topic.md)** ·
 **[by difficulty](indexes/by-difficulty.md)** ·

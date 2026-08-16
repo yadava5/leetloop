@@ -1,0 +1,21 @@
+{
+  "questionId": "242",
+  "frontendId": "242",
+  "title": "Valid Anagram",
+  "slug": "valid-anagram",
+  "difficulty": "Easy",
+  "topics": [
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "similar": [
+    "group-anagrams",
+    "palindrome-permutation",
+    "find-all-anagrams-in-a-string",
+    "find-resultant-array-after-removing-anagrams"
+  ],
+  "constraints": [
+    "1 <= s.length, t.length <= 5 * 10^4"
+  ]
+}
