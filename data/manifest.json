@@ -72,8 +72,8 @@
         "find-resultant-array-after-removing-anagrams"
       ],
       "codeHash": "d464f0387c5d01acdeb5d02f5d755a2a5ff3fbdab481b0ab031fd5d2727d11c0",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "d464f0387c5d01acdeb5d02f5d755a2a5ff3fbdab481b0ab031fd5d2727d11c0",
+      "annotated": true
     },
     "valid-parentheses": {
       "frontendId": "20",

@@ -6,4 +6,4 @@
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Array, Hash Table
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — String, Stack, Bracket Sequences
-- 242. Valid Anagram — _awaiting annotation_ — Hash Table, String, Sorting
+- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Hash Table, String, Sorting

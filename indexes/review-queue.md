@@ -13,7 +13,7 @@ Generated for 2026-08-16 (UTC).
 
 ## Solved today (1)
 
-- 242. Valid Anagram — _awaiting annotation_ — Easy, Hash Table, String, Sorting — solved 2026-08-16 (0 days ago)
+- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy, Hash Table, String, Sorting — solved 2026-08-16 (0 days ago)
 
 ## 1-3 days ago (0)
 

@@ -5,12 +5,12 @@
 ## Hash Table (2)
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Easy
-- 242. Valid Anagram — _awaiting annotation_ — Easy
+- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 
 ## String (2)
 
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy
-- 242. Valid Anagram — _awaiting annotation_ — Easy
+- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 
 ## Array (1)
 
@@ -22,7 +22,7 @@
 
 ## Sorting (1)
 
-- 242. Valid Anagram — _awaiting annotation_ — Easy
+- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 
 ## Stack (1)
 
