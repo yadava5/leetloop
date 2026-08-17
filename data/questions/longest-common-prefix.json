@@ -1,0 +1,22 @@
+{
+  "questionId": "14",
+  "frontendId": "14",
+  "title": "Longest Common Prefix",
+  "slug": "longest-common-prefix",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "String",
+    "Trie"
+  ],
+  "similar": [
+    "smallest-missing-integer-greater-than-sequential-prefix-sum",
+    "find-the-length-of-the-longest-common-prefix",
+    "longest-common-suffix-queries",
+    "longest-common-prefix-after-at-most-one-removal"
+  ],
+  "constraints": [
+    "1 <= strs.length <= 200",
+    "0 <= strs[i].length <= 200"
+  ]
+}

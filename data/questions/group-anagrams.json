@@ -1,0 +1,23 @@
+{
+  "questionId": "49",
+  "frontendId": "49",
+  "title": "Group Anagrams",
+  "slug": "group-anagrams",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "similar": [
+    "valid-anagram",
+    "group-shifted-strings",
+    "find-resultant-array-after-removing-anagrams",
+    "count-anagrams"
+  ],
+  "constraints": [
+    "1 <= strs.length <= 10^4",
+    "0 <= strs[i].length <= 100"
+  ]
+}

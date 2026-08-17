@@ -1,8 +1,125 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1786881277,
-  "lastSyncedAt": "2026-08-16T17:14:11.336Z",
+  "lastSyncedTimestamp": 1786948268,
+  "lastSyncedAt": "2026-08-17T17:22:02.574Z",
   "problems": {
+    "group-anagrams": {
+      "frontendId": "49",
+      "title": "Group Anagrams",
+      "slug": "group-anagrams",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "String",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/group-anagrams/",
+      "submissionId": "2109571648",
+      "timestamp": 1786932277,
+      "lang": "Python3",
+      "runtime": "7 ms",
+      "runtimePercentile": 98.3185,
+      "memory": "22.6 MB",
+      "memoryPercentile": 38.826900000000016,
+      "similar": [
+        "valid-anagram",
+        "group-shifted-strings",
+        "find-resultant-array-after-removing-anagrams",
+        "count-anagrams"
+      ],
+      "codeHash": "20dfd4bcecc34e665480fe7e58ae458545729dcf08e73f59920feeaaae3f95ec",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "longest-common-prefix": {
+      "frontendId": "14",
+      "title": "Longest Common Prefix",
+      "slug": "longest-common-prefix",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "String",
+        "Trie"
+      ],
+      "url": "https://leetcode.com/problems/longest-common-prefix/",
+      "submissionId": "2109535061",
+      "timestamp": 1786925384,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "19.3 MB",
+      "memoryPercentile": 31.216799999999985,
+      "similar": [
+        "smallest-missing-integer-greater-than-sequential-prefix-sum",
+        "find-the-length-of-the-longest-common-prefix",
+        "longest-common-suffix-queries",
+        "longest-common-prefix-after-at-most-one-removal"
+      ],
+      "codeHash": "f84d2778e1718fb7fc143efd4570509f20d9692085892c52ec61dbeee2d54318",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "majority-element": {
+      "frontendId": "169",
+      "title": "Majority Element",
+      "slug": "majority-element",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Divide and Conquer",
+        "Sorting",
+        "Counting",
+        "Boyer–Moore Majority Vote Algorithm"
+      ],
+      "url": "https://leetcode.com/problems/majority-element/",
+      "submissionId": "2109782179",
+      "timestamp": 1786948268,
+      "lang": "Python3",
+      "runtime": "2 ms",
+      "runtimePercentile": 86.7052,
+      "memory": "21.3 MB",
+      "memoryPercentile": 18.528899999999986,
+      "similar": [
+        "majority-element-ii",
+        "check-if-a-number-is-majority-element-in-a-sorted-array",
+        "most-frequent-even-element",
+        "minimum-index-of-a-valid-split",
+        "minimum-operations-to-exceed-threshold-value-i",
+        "find-the-most-common-response",
+        "find-valid-pair-of-adjacent-digits-in-string"
+      ],
+      "codeHash": "c767a4d2149732e81c02921ddac1fc997d4650c09ad4d7b04452602e342da76b",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "remove-element": {
+      "frontendId": "27",
+      "title": "Remove Element",
+      "slug": "remove-element",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Two Pointers"
+      ],
+      "url": "https://leetcode.com/problems/remove-element/",
+      "submissionId": "2109733949",
+      "timestamp": 1786945683,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "19.3 MB",
+      "memoryPercentile": 57.1893,
+      "similar": [
+        "remove-duplicates-from-sorted-array",
+        "remove-linked-list-elements",
+        "move-zeroes"
+      ],
+      "codeHash": "8571fe5addba18a936c71b1db8b121a010103eec879cb1ad5cad5c37b3298eff",
+      "annotationHash": null,
+      "annotated": false
+    },
     "two-sum": {
       "frontendId": "1",
       "title": "Two Sum",

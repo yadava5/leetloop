@@ -1,0 +1,30 @@
+{
+  "questionId": "169",
+  "frontendId": "169",
+  "title": "Majority Element",
+  "slug": "majority-element",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Divide and Conquer",
+    "Sorting",
+    "Counting",
+    "Boyer–Moore Majority Vote Algorithm"
+  ],
+  "similar": [
+    "majority-element-ii",
+    "check-if-a-number-is-majority-element-in-a-sorted-array",
+    "most-frequent-even-element",
+    "minimum-index-of-a-valid-split",
+    "minimum-operations-to-exceed-threshold-value-i",
+    "find-the-most-common-response",
+    "find-valid-pair-of-adjacent-digits-in-string"
+  ],
+  "constraints": [
+    "n == nums.length",
+    "1 <= n <= 5 * 10^4",
+    "-10^9 <= nums[i] <= 10^9",
+    "The input is generated such that a majority element will exist in the array."
+  ]
+}

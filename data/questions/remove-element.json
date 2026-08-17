@@ -1,0 +1,21 @@
+{
+  "questionId": "27",
+  "frontendId": "27",
+  "title": "Remove Element",
+  "slug": "remove-element",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Two Pointers"
+  ],
+  "similar": [
+    "remove-duplicates-from-sorted-array",
+    "remove-linked-list-elements",
+    "move-zeroes"
+  ],
+  "constraints": [
+    "0 <= nums.length <= 100",
+    "0 <= nums[i] <= 50",
+    "0 <= val <= 100"
+  ]
+}
