@@ -5,12 +5,12 @@
 ## Easy (6)
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Array, Hash Table
-- 14. Longest Common Prefix — _awaiting annotation_ — Array, String, Trie
+- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Array, String, Trie
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — String, Stack, Bracket Sequences
-- 27. Remove Element — _awaiting annotation_ — Array, Two Pointers
-- 169. Majority Element — _awaiting annotation_ — Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm
+- [27. Remove Element](../problems/0027-remove-element/README.md) — Array, Two Pointers
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Hash Table, String, Sorting
 
 ## Medium (1)
 
-- 49. Group Anagrams — _awaiting annotation_ — Array, Hash Table, String, Sorting
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Array, Hash Table, String, Sorting

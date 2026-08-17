@@ -29,8 +29,8 @@
         "count-anagrams"
       ],
       "codeHash": "20dfd4bcecc34e665480fe7e58ae458545729dcf08e73f59920feeaaae3f95ec",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "20dfd4bcecc34e665480fe7e58ae458545729dcf08e73f59920feeaaae3f95ec",
+      "annotated": true
     },
     "longest-common-prefix": {
       "frontendId": "14",
@@ -57,8 +57,8 @@
         "longest-common-prefix-after-at-most-one-removal"
       ],
       "codeHash": "f84d2778e1718fb7fc143efd4570509f20d9692085892c52ec61dbeee2d54318",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "f84d2778e1718fb7fc143efd4570509f20d9692085892c52ec61dbeee2d54318",
+      "annotated": true
     },
     "majority-element": {
       "frontendId": "169",
@@ -71,7 +71,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer–Moore Majority Vote Algorithm"
+        "Boyer\u2013Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2109782179",
@@ -91,8 +91,8 @@
         "find-valid-pair-of-adjacent-digits-in-string"
       ],
       "codeHash": "c767a4d2149732e81c02921ddac1fc997d4650c09ad4d7b04452602e342da76b",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "c767a4d2149732e81c02921ddac1fc997d4650c09ad4d7b04452602e342da76b",
+      "annotated": true
     },
     "remove-element": {
       "frontendId": "27",
@@ -117,8 +117,8 @@
         "move-zeroes"
       ],
       "codeHash": "8571fe5addba18a936c71b1db8b121a010103eec879cb1ad5cad5c37b3298eff",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "8571fe5addba18a936c71b1db8b121a010103eec879cb1ad5cad5c37b3298eff",
+      "annotated": true
     },
     "two-sum": {
       "frontendId": "1",

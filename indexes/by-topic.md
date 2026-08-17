@@ -5,34 +5,34 @@
 ## Array (5)
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Easy
-- 14. Longest Common Prefix — _awaiting annotation_ — Easy
-- 27. Remove Element — _awaiting annotation_ — Easy
-- 49. Group Anagrams — _awaiting annotation_ — Medium
-- 169. Majority Element — _awaiting annotation_ — Easy
+- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
+- [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 
 ## Hash Table (4)
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Easy
-- 49. Group Anagrams — _awaiting annotation_ — Medium
-- 169. Majority Element — _awaiting annotation_ — Easy
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 
 ## String (4)
 
-- 14. Longest Common Prefix — _awaiting annotation_ — Easy
+- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy
-- 49. Group Anagrams — _awaiting annotation_ — Medium
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 
 ## Sorting (3)
 
-- 49. Group Anagrams — _awaiting annotation_ — Medium
-- 169. Majority Element — _awaiting annotation_ — Easy
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 
 ## Boyer–Moore Majority Vote Algorithm (1)
 
-- 169. Majority Element — _awaiting annotation_ — Easy
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 
 ## Bracket Sequences (1)
 
@@ -40,11 +40,11 @@
 
 ## Counting (1)
 
-- 169. Majority Element — _awaiting annotation_ — Easy
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 
 ## Divide and Conquer (1)
 
-- 169. Majority Element — _awaiting annotation_ — Easy
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 
 ## Stack (1)
 
@@ -52,8 +52,8 @@
 
 ## Trie (1)
 
-- 14. Longest Common Prefix — _awaiting annotation_ — Easy
+- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
 
 ## Two Pointers (1)
 
-- 27. Remove Element — _awaiting annotation_ — Easy
+- [27. Remove Element](../problems/0027-remove-element/README.md) — Easy

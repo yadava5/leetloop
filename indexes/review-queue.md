@@ -13,10 +13,10 @@ Generated for 2026-08-17 (UTC).
 
 ## Solved today (4)
 
-- 49. Group Anagrams — _awaiting annotation_ — Medium, Array, Hash Table, String, Sorting — solved 2026-08-17 (0 days ago)
-- 14. Longest Common Prefix — _awaiting annotation_ — Easy, Array, String, Trie — solved 2026-08-17 (0 days ago)
-- 169. Majority Element — _awaiting annotation_ — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-08-17 (0 days ago)
-- 27. Remove Element — _awaiting annotation_ — Easy, Array, Two Pointers — solved 2026-08-17 (0 days ago)
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium, Array, Hash Table, String, Sorting — solved 2026-08-17 (0 days ago)
+- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy, Array, String, Trie — solved 2026-08-17 (0 days ago)
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-08-17 (0 days ago)
+- [27. Remove Element](../problems/0027-remove-element/README.md) — Easy, Array, Two Pointers — solved 2026-08-17 (0 days ago)
 
 ## 1-3 days ago (1)
 
