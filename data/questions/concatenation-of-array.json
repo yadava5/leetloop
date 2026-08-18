@@ -1,0 +1,17 @@
+{
+  "questionId": "2058",
+  "frontendId": "1929",
+  "title": "Concatenation of Array",
+  "slug": "concatenation-of-array",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Simulation"
+  ],
+  "similar": [],
+  "constraints": [
+    "n == nums.length",
+    "1 <= n <= 1000",
+    "1 <= nums[i] <= 1000"
+  ]
+}

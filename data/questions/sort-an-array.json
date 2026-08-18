@@ -1,0 +1,22 @@
+{
+  "questionId": "948",
+  "frontendId": "912",
+  "title": "Sort an Array",
+  "slug": "sort-an-array",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Divide and Conquer",
+    "Sorting",
+    "Heap (Priority Queue)",
+    "Merge Sort",
+    "Bucket Sort",
+    "Radix Sort",
+    "Counting Sort"
+  ],
+  "similar": [],
+  "constraints": [
+    "1 <= nums.length <= 5 * 10^4",
+    "-5 * 10^4 <= nums[i] <= 5 * 10^4"
+  ]
+}

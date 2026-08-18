@@ -1,0 +1,23 @@
+{
+  "questionId": "75",
+  "frontendId": "75",
+  "title": "Sort Colors",
+  "slug": "sort-colors",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Two Pointers",
+    "Sorting",
+    "Quicksort",
+    "Bubble Sort"
+  ],
+  "similar": [
+    "sort-list",
+    "wiggle-sort",
+    "wiggle-sort-ii"
+  ],
+  "constraints": [
+    "n == nums.length",
+    "1 <= n <= 300"
+  ]
+}

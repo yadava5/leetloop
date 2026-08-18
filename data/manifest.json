@@ -1,8 +1,86 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1786948268,
-  "lastSyncedAt": "2026-08-17T17:22:02.574Z",
+  "lastSyncedTimestamp": 1787036289,
+  "lastSyncedAt": "2026-08-18T17:21:23.677Z",
   "problems": {
+    "concatenation-of-array": {
+      "frontendId": "1929",
+      "title": "Concatenation of Array",
+      "slug": "concatenation-of-array",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Simulation"
+      ],
+      "url": "https://leetcode.com/problems/concatenation-of-array/",
+      "submissionId": "2110735751",
+      "timestamp": 1787012185,
+      "lang": "Python3",
+      "runtime": "3 ms",
+      "runtimePercentile": 18.211299999999994,
+      "memory": "19.4 MB",
+      "memoryPercentile": 41.2776,
+      "similar": [],
+      "codeHash": "c32fe219b8ab36b22ad143ae9739e61c5ce03c04a8231115b0657f3b431b18ea",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "design-hashmap": {
+      "frontendId": "706",
+      "title": "Design HashMap",
+      "slug": "design-hashmap",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Linked List",
+        "Design",
+        "Hash Function"
+      ],
+      "url": "https://leetcode.com/problems/design-hashmap/",
+      "submissionId": "2110693277",
+      "timestamp": 1787003521,
+      "lang": "Python3",
+      "runtime": "21 ms",
+      "runtimePercentile": 92.55619999999999,
+      "memory": "23.2 MB",
+      "memoryPercentile": 39.71599999999999,
+      "similar": [
+        "design-hashset",
+        "design-skiplist"
+      ],
+      "codeHash": "a76f3502900bb8bb286d66aa52821639fda4e465765fb7767d7c8b48fc2e154c",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "design-hashset": {
+      "frontendId": "705",
+      "title": "Design HashSet",
+      "slug": "design-hashset",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Linked List",
+        "Design",
+        "Hash Function"
+      ],
+      "url": "https://leetcode.com/problems/design-hashset/",
+      "submissionId": "2110647854",
+      "timestamp": 1786997622,
+      "lang": "Python3",
+      "runtime": "47 ms",
+      "runtimePercentile": 47.312299999999965,
+      "memory": "46.1 MB",
+      "memoryPercentile": 11.940799999999955,
+      "similar": [
+        "design-hashmap",
+        "design-skiplist"
+      ],
+      "codeHash": "18abce2cd5d9bff376ba8aeb4807c5f0221fa1691e9e8475f5da1d8ef4c7ea85",
+      "annotationHash": null,
+      "annotated": false
+    },
     "group-anagrams": {
       "frontendId": "49",
       "title": "Group Anagrams",
@@ -71,7 +149,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer\u2013Moore Majority Vote Algorithm"
+        "Boyer–Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2109782179",
@@ -119,6 +197,63 @@
       "codeHash": "8571fe5addba18a936c71b1db8b121a010103eec879cb1ad5cad5c37b3298eff",
       "annotationHash": "8571fe5addba18a936c71b1db8b121a010103eec879cb1ad5cad5c37b3298eff",
       "annotated": true
+    },
+    "sort-an-array": {
+      "frontendId": "912",
+      "title": "Sort an Array",
+      "slug": "sort-an-array",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Divide and Conquer",
+        "Sorting",
+        "Heap (Priority Queue)",
+        "Merge Sort",
+        "Bucket Sort",
+        "Radix Sort",
+        "Counting Sort"
+      ],
+      "url": "https://leetcode.com/problems/sort-an-array/",
+      "submissionId": "2110729842",
+      "timestamp": 1787011018,
+      "lang": "Python3",
+      "runtime": "643 ms",
+      "runtimePercentile": 48.49750000000093,
+      "memory": "27.3 MB",
+      "memoryPercentile": 60.713200000000036,
+      "similar": [],
+      "codeHash": "bb7afc49662dd9c5972e618f978ae603a4223507cb67656b6fac084141e885aa",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "sort-colors": {
+      "frontendId": "75",
+      "title": "Sort Colors",
+      "slug": "sort-colors",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Two Pointers",
+        "Sorting",
+        "Quicksort",
+        "Bubble Sort"
+      ],
+      "url": "https://leetcode.com/problems/sort-colors/",
+      "submissionId": "2111062393",
+      "timestamp": 1787036289,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "19.2 MB",
+      "memoryPercentile": 62.11290000000001,
+      "similar": [
+        "sort-list",
+        "wiggle-sort",
+        "wiggle-sort-ii"
+      ],
+      "codeHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
+      "annotationHash": null,
+      "annotated": false
     },
     "two-sum": {
       "frontendId": "1",

@@ -1,0 +1,22 @@
+{
+  "questionId": "816",
+  "frontendId": "705",
+  "title": "Design HashSet",
+  "slug": "design-hashset",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Linked List",
+    "Design",
+    "Hash Function"
+  ],
+  "similar": [
+    "design-hashmap",
+    "design-skiplist"
+  ],
+  "constraints": [
+    "0 <= key <= 10^6",
+    "At most 10^4 calls will be made to add, remove, and contains."
+  ]
+}

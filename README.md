@@ -18,10 +18,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml"><img alt="daily fetch status" src="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml/badge.svg"></a> <a href="scripts/verify_ast.py"><img alt="code unmodified: AST-verified" src="https://img.shields.io/badge/code%20unmodified-AST--verified-2ea44f"></a> <img alt="problems solved" src="https://img.shields.io/badge/problems-7-1f6feb"> <img alt="easy" src="https://img.shields.io/badge/easy-6-00b8a3"> <img alt="medium" src="https://img.shields.io/badge/medium-1-ffb800"> <img alt="hard" src="https://img.shields.io/badge/hard-0-ff375f"> <img alt="topics covered" src="https://img.shields.io/badge/topics-11-8957e5"> <img alt="solutions in Python 3" src="https://img.shields.io/badge/solutions-Python%203-3572A5"> <img alt="pipeline in TypeScript" src="https://img.shields.io/badge/pipeline-TypeScript-3178c6"> <img alt="Anthropic API keys required: 0" src="https://img.shields.io/badge/Anthropic%20API%20keys-0-lightgrey"> <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml"><img alt="daily fetch status" src="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml/badge.svg"></a> <a href="scripts/verify_ast.py"><img alt="code unmodified: AST-verified" src="https://img.shields.io/badge/code%20unmodified-AST--verified-2ea44f"></a> <img alt="problems solved" src="https://img.shields.io/badge/problems-12-1f6feb"> <img alt="easy" src="https://img.shields.io/badge/easy-9-00b8a3"> <img alt="medium" src="https://img.shields.io/badge/medium-3-ffb800"> <img alt="hard" src="https://img.shields.io/badge/hard-0-ff375f"> <img alt="topics covered" src="https://img.shields.io/badge/topics-22-8957e5"> <img alt="solutions in Python 3" src="https://img.shields.io/badge/solutions-Python%203-3572A5"> <img alt="pipeline in TypeScript" src="https://img.shields.io/badge/pipeline-TypeScript-3178c6"> <img alt="Anthropic API keys required: 0" src="https://img.shields.io/badge/Anthropic%20API%20keys-0-lightgrey"> <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
-**7 problems** — Easy 6 · Medium 1. Solutions in Python.
+> **5 problems fetched but not annotated yet.** Job 1 commits the code at
+> 17:00 UTC and Job 2 writes the page an hour later, so a gap here is normal in between runs. If it persists, the watchdog opens an issue — see [docs/RUNBOOK.md](docs/RUNBOOK.md).
+
+**12 problems** — Easy 9 · Medium 3. Solutions in Python.
 
 ---
 
@@ -165,8 +168,13 @@ two places, one of which it cannot reach.
 | 20 | [20. Valid Parentheses](problems/0020-valid-parentheses/README.md) | Easy | String, Stack, Bracket Sequences | 2026-08-05 | 4 ms (top 88%) |
 | 27 | [27. Remove Element](problems/0027-remove-element/README.md) | Easy | Array, Two Pointers | 2026-08-17 | 0 ms (top 0%) |
 | 49 | [49. Group Anagrams](problems/0049-group-anagrams/README.md) | Medium | Array, Hash Table, String, Sorting | 2026-08-17 | 7 ms (top 2%) |
+| 75 | 75. Sort Colors — _awaiting annotation_ | Medium | Array, Two Pointers, Sorting, Quicksort, Bubble Sort | 2026-08-18 | 0 ms (top 0%) |
 | 169 | [169. Majority Element](problems/0169-majority-element/README.md) | Easy | Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm | 2026-08-17 | 2 ms (top 13%) |
 | 242 | [242. Valid Anagram](problems/0242-valid-anagram/README.md) | Easy | Hash Table, String, Sorting | 2026-08-16 | 3 ms (top 2%) |
+| 705 | 705. Design HashSet — _awaiting annotation_ | Easy | Array, Hash Table, Linked List, Design, Hash Function | 2026-08-17 | 47 ms (top 53%) |
+| 706 | 706. Design HashMap — _awaiting annotation_ | Easy | Array, Hash Table, Linked List, Design, Hash Function | 2026-08-17 | 21 ms (top 7%) |
+| 912 | 912. Sort an Array — _awaiting annotation_ | Medium | Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort | 2026-08-17 | 643 ms (top 52%) |
+| 1929 | 1929. Concatenation of Array — _awaiting annotation_ | Easy | Array, Simulation | 2026-08-18 | 3 ms (top 82%) |
 
 Other views: **[by topic](indexes/by-topic.md)** ·
 **[by difficulty](indexes/by-difficulty.md)** ·

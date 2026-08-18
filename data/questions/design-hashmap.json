@@ -1,0 +1,22 @@
+{
+  "questionId": "817",
+  "frontendId": "706",
+  "title": "Design HashMap",
+  "slug": "design-hashmap",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Linked List",
+    "Design",
+    "Hash Function"
+  ],
+  "similar": [
+    "design-hashset",
+    "design-skiplist"
+  ],
+  "constraints": [
+    "0 <= key, value <= 10^6",
+    "At most 10^4 calls will be made to put, get, and remove."
+  ]
+}
