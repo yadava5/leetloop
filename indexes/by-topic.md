@@ -8,12 +8,12 @@
 - [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
-- 75. Sort Colors — _awaiting annotation_ — Medium
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 705. Design HashSet — _awaiting annotation_ — Easy
-- 706. Design HashMap — _awaiting annotation_ — Easy
-- 912. Sort an Array — _awaiting annotation_ — Medium
-- 1929. Concatenation of Array — _awaiting annotation_ — Easy
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
+- [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy
 
 ## Hash Table (6)
 
@@ -21,16 +21,16 @@
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
-- 705. Design HashSet — _awaiting annotation_ — Easy
-- 706. Design HashMap — _awaiting annotation_ — Easy
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 
 ## Sorting (5)
 
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
-- 75. Sort Colors — _awaiting annotation_ — Medium
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## String (4)
 
@@ -41,28 +41,28 @@
 
 ## Design (2)
 
-- 705. Design HashSet — _awaiting annotation_ — Easy
-- 706. Design HashMap — _awaiting annotation_ — Easy
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 
 ## Divide and Conquer (2)
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Hash Function (2)
 
-- 705. Design HashSet — _awaiting annotation_ — Easy
-- 706. Design HashMap — _awaiting annotation_ — Easy
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 
 ## Linked List (2)
 
-- 705. Design HashSet — _awaiting annotation_ — Easy
-- 706. Design HashMap — _awaiting annotation_ — Easy
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 
 ## Two Pointers (2)
 
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
-- 75. Sort Colors — _awaiting annotation_ — Medium
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 
 ## Boyer–Moore Majority Vote Algorithm (1)
 
@@ -74,11 +74,11 @@
 
 ## Bubble Sort (1)
 
-- 75. Sort Colors — _awaiting annotation_ — Medium
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 
 ## Bucket Sort (1)
 
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Counting (1)
 
@@ -86,27 +86,27 @@
 
 ## Counting Sort (1)
 
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Heap (Priority Queue) (1)
 
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Merge Sort (1)
 
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Quicksort (1)
 
-- 75. Sort Colors — _awaiting annotation_ — Medium
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 
 ## Radix Sort (1)
 
-- 912. Sort an Array — _awaiting annotation_ — Medium
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Simulation (1)
 
-- 1929. Concatenation of Array — _awaiting annotation_ — Easy
+- [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy
 
 ## Stack (1)
 

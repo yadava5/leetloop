@@ -22,8 +22,8 @@
       "memoryPercentile": 41.2776,
       "similar": [],
       "codeHash": "c32fe219b8ab36b22ad143ae9739e61c5ce03c04a8231115b0657f3b431b18ea",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "c32fe219b8ab36b22ad143ae9739e61c5ce03c04a8231115b0657f3b431b18ea",
+      "annotated": true
     },
     "design-hashmap": {
       "frontendId": "706",
@@ -50,8 +50,8 @@
         "design-skiplist"
       ],
       "codeHash": "a76f3502900bb8bb286d66aa52821639fda4e465765fb7767d7c8b48fc2e154c",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "a76f3502900bb8bb286d66aa52821639fda4e465765fb7767d7c8b48fc2e154c",
+      "annotated": true
     },
     "design-hashset": {
       "frontendId": "705",
@@ -78,8 +78,8 @@
         "design-skiplist"
       ],
       "codeHash": "18abce2cd5d9bff376ba8aeb4807c5f0221fa1691e9e8475f5da1d8ef4c7ea85",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "18abce2cd5d9bff376ba8aeb4807c5f0221fa1691e9e8475f5da1d8ef4c7ea85",
+      "annotated": true
     },
     "group-anagrams": {
       "frontendId": "49",
@@ -223,8 +223,8 @@
       "memoryPercentile": 60.713200000000036,
       "similar": [],
       "codeHash": "bb7afc49662dd9c5972e618f978ae603a4223507cb67656b6fac084141e885aa",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "bb7afc49662dd9c5972e618f978ae603a4223507cb67656b6fac084141e885aa",
+      "annotated": true
     },
     "sort-colors": {
       "frontendId": "75",
@@ -252,8 +252,8 @@
         "wiggle-sort-ii"
       ],
       "codeHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
+      "annotated": true
     },
     "two-sum": {
       "frontendId": "1",

@@ -10,12 +10,12 @@
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Array, Two Pointers
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Hash Table, String, Sorting
-- 705. Design HashSet — _awaiting annotation_ — Array, Hash Table, Linked List, Design, Hash Function
-- 706. Design HashMap — _awaiting annotation_ — Array, Hash Table, Linked List, Design, Hash Function
-- 1929. Concatenation of Array — _awaiting annotation_ — Array, Simulation
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Array, Hash Table, Linked List, Design, Hash Function
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Array, Hash Table, Linked List, Design, Hash Function
+- [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Array, Simulation
 
 ## Medium (3)
 
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Array, Hash Table, String, Sorting
-- 75. Sort Colors — _awaiting annotation_ — Array, Two Pointers, Sorting, Quicksort, Bubble Sort
-- 912. Sort an Array — _awaiting annotation_ — Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Array, Two Pointers, Sorting, Quicksort, Bubble Sort
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort
