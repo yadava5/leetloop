@@ -11,9 +11,11 @@ README without reading the code first.
 
 Generated for 2026-09-15 (UTC).
 
-## Solved today (1)
+## Solved today (3)
 
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (0 days ago)
+- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-15 (0 days ago)
+- 647. Palindromic Substrings — _awaiting annotation_ — Medium, Two Pointers, String, Dynamic Programming — solved 2026-09-15 (0 days ago)
 
 ## 1-3 days ago (3)
 

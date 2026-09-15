@@ -40,19 +40,23 @@
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
-## String (4)
+## String (6)
 
+- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
 - [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
+- 647. Palindromic Substrings — _awaiting annotation_ — Medium
 
-## Two Pointers (4)
+## Two Pointers (6)
 
+- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
 - [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
+- 647. Palindromic Substrings — _awaiting annotation_ — Medium
 
 ## Design (3)
 
@@ -75,6 +79,11 @@
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
+
+## Dynamic Programming (2)
+
+- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
+- 647. Palindromic Substrings — _awaiting annotation_ — Medium
 
 ## Hash Function (2)
 
@@ -106,6 +115,10 @@
 ## Counting Sort (1)
 
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
+
+## Manacher (1)
+
+- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
 
 ## Merge Sort (1)
 

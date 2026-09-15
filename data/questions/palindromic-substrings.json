@@ -1,0 +1,20 @@
+{
+  "questionId": "647",
+  "frontendId": "647",
+  "title": "Palindromic Substrings",
+  "slug": "palindromic-substrings",
+  "difficulty": "Medium",
+  "topics": [
+    "Two Pointers",
+    "String",
+    "Dynamic Programming"
+  ],
+  "similar": [
+    "longest-palindromic-substring",
+    "longest-palindromic-subsequence"
+  ],
+  "constraints": [
+    "1 <= s.length <= 1000",
+    "s consists of lowercase English letters."
+  ]
+}

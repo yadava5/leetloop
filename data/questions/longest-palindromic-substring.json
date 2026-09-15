@@ -1,0 +1,24 @@
+{
+  "questionId": "5",
+  "frontendId": "5",
+  "title": "Longest Palindromic Substring",
+  "slug": "longest-palindromic-substring",
+  "difficulty": "Medium",
+  "topics": [
+    "Two Pointers",
+    "String",
+    "Dynamic Programming",
+    "Manacher"
+  ],
+  "similar": [
+    "shortest-palindrome",
+    "palindrome-permutation",
+    "palindrome-pairs",
+    "longest-palindromic-subsequence",
+    "palindromic-substrings",
+    "maximum-number-of-non-overlapping-palindrome-substrings"
+  ],
+  "constraints": [
+    "1 <= s.length <= 1000"
+  ]
+}

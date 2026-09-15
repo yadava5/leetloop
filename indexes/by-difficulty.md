@@ -17,10 +17,12 @@
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Array, Hash Table, Linked List, Design, Hash Function
 - [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Array, Simulation
 
-## Medium (5)
+## Medium (7)
 
+- 5. Longest Palindromic Substring — _awaiting annotation_ — Two Pointers, String, Dynamic Programming, Manacher
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Array, Hash Table, String, Sorting
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Array, Two Pointers, Sorting, Quicksort, Bubble Sort
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Array, Hash Table, Union-Find
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect
+- 647. Palindromic Substrings — _awaiting annotation_ — Two Pointers, String, Dynamic Programming
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort

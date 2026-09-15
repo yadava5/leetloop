@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1789430992,
-  "lastSyncedAt": "2026-09-15T17:02:35.807Z",
+  "lastSyncedTimestamp": 1789494888,
+  "lastSyncedAt": "2026-09-15T19:56:52.410Z",
   "problems": {
     "concatenation-of-array": {
       "frontendId": "1929",
@@ -167,6 +167,37 @@
       "annotationHash": "aeca0bd819822821f77b1c792b004874839958fb402611d12b4be8265e71e7f1",
       "annotated": true
     },
+    "longest-palindromic-substring": {
+      "frontendId": "5",
+      "title": "Longest Palindromic Substring",
+      "slug": "longest-palindromic-substring",
+      "difficulty": "Medium",
+      "topics": [
+        "Two Pointers",
+        "String",
+        "Dynamic Programming",
+        "Manacher"
+      ],
+      "url": "https://leetcode.com/problems/longest-palindromic-substring/",
+      "submissionId": "2142902460",
+      "timestamp": 1789493914,
+      "lang": "Python3",
+      "runtime": "215 ms",
+      "runtimePercentile": 91.63990000000024,
+      "memory": "19.2 MB",
+      "memoryPercentile": 70.01729999999999,
+      "similar": [
+        "shortest-palindrome",
+        "palindrome-permutation",
+        "palindrome-pairs",
+        "longest-palindromic-subsequence",
+        "palindromic-substrings",
+        "maximum-number-of-non-overlapping-palindrome-substrings"
+      ],
+      "codeHash": "cea60f74a9693beb4d8c2df078fcd58cd5d33f8e5ead94db568100106cb4b8ff",
+      "annotationHash": null,
+      "annotated": false
+    },
     "majority-element": {
       "frontendId": "169",
       "title": "Majority Element",
@@ -178,7 +209,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer\u2013Moore Majority Vote Algorithm"
+        "Boyer–Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2141940957",
@@ -225,6 +256,32 @@
       "codeHash": "75cff74c5b7e4122e4b532f8344a0d0c5f2f19b7f45bf7a92fcf0e4fdc892c00",
       "annotationHash": "75cff74c5b7e4122e4b532f8344a0d0c5f2f19b7f45bf7a92fcf0e4fdc892c00",
       "annotated": true
+    },
+    "palindromic-substrings": {
+      "frontendId": "647",
+      "title": "Palindromic Substrings",
+      "slug": "palindromic-substrings",
+      "difficulty": "Medium",
+      "topics": [
+        "Two Pointers",
+        "String",
+        "Dynamic Programming"
+      ],
+      "url": "https://leetcode.com/problems/palindromic-substrings/",
+      "submissionId": "2142923214",
+      "timestamp": 1789494888,
+      "lang": "Python3",
+      "runtime": "117 ms",
+      "runtimePercentile": 73.56919999999991,
+      "memory": "19.2 MB",
+      "memoryPercentile": 68.60999999999999,
+      "similar": [
+        "longest-palindromic-substring",
+        "longest-palindromic-subsequence"
+      ],
+      "codeHash": "09a9383b5f89d83c918f5bf88549c70960be59f0e4487852fa956abd68afae5c",
+      "annotationHash": null,
+      "annotated": false
     },
     "range-sum-query-immutable": {
       "frontendId": "303",
