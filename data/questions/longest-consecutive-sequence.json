@@ -1,0 +1,23 @@
+{
+  "questionId": "128",
+  "frontendId": "128",
+  "title": "Longest Consecutive Sequence",
+  "slug": "longest-consecutive-sequence",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Union-Find"
+  ],
+  "similar": [
+    "binary-tree-longest-consecutive-sequence",
+    "find-three-consecutive-integers-that-sum-to-a-given-number",
+    "maximum-consecutive-floors-without-special-floors",
+    "length-of-the-longest-alphabetical-continuous-substring",
+    "find-the-maximum-number-of-elements-in-subset"
+  ],
+  "constraints": [
+    "0 <= nums.length <= 10^5",
+    "-10^9 <= nums[i] <= 10^9"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1787036289,
-  "lastSyncedAt": "2026-08-18T17:21:23.677Z",
+  "lastSyncedTimestamp": 1789430992,
+  "lastSyncedAt": "2026-09-15T17:02:35.807Z",
   "problems": {
     "concatenation-of-array": {
       "frontendId": "1929",
@@ -138,6 +138,35 @@
       "annotationHash": "f84d2778e1718fb7fc143efd4570509f20d9692085892c52ec61dbeee2d54318",
       "annotated": true
     },
+    "longest-consecutive-sequence": {
+      "frontendId": "128",
+      "title": "Longest Consecutive Sequence",
+      "slug": "longest-consecutive-sequence",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Union-Find"
+      ],
+      "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
+      "submissionId": "2142060204",
+      "timestamp": 1789430992,
+      "lang": "Python3",
+      "runtime": "48 ms",
+      "runtimePercentile": 62.65680000000006,
+      "memory": "36.6 MB",
+      "memoryPercentile": 66.92960000000008,
+      "similar": [
+        "binary-tree-longest-consecutive-sequence",
+        "find-three-consecutive-integers-that-sum-to-a-given-number",
+        "maximum-consecutive-floors-without-special-floors",
+        "length-of-the-longest-alphabetical-continuous-substring",
+        "find-the-maximum-number-of-elements-in-subset"
+      ],
+      "codeHash": "aeca0bd819822821f77b1c792b004874839958fb402611d12b4be8265e71e7f1",
+      "annotationHash": null,
+      "annotated": false
+    },
     "majority-element": {
       "frontendId": "169",
       "title": "Majority Element",
@@ -152,13 +181,13 @@
         "Boyer–Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
-      "submissionId": "2109782179",
-      "timestamp": 1786948268,
+      "submissionId": "2141940957",
+      "timestamp": 1789413138,
       "lang": "Python3",
-      "runtime": "2 ms",
-      "runtimePercentile": 86.7052,
-      "memory": "21.3 MB",
-      "memoryPercentile": 18.528899999999986,
+      "runtime": "7 ms",
+      "runtimePercentile": 58.41640000000001,
+      "memory": "21.6 MB",
+      "memoryPercentile": 5.059299999999999,
       "similar": [
         "majority-element-ii",
         "check-if-a-number-is-majority-element-in-a-sorted-array",
@@ -168,9 +197,89 @@
         "find-the-most-common-response",
         "find-valid-pair-of-adjacent-digits-in-string"
       ],
-      "codeHash": "c767a4d2149732e81c02921ddac1fc997d4650c09ad4d7b04452602e342da76b",
-      "annotationHash": "c767a4d2149732e81c02921ddac1fc997d4650c09ad4d7b04452602e342da76b",
-      "annotated": true
+      "codeHash": "0c10b6f4095f22c83ec398824d31e8d234303877ff5dc352df7cffac3d1ad57d",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "move-zeroes": {
+      "frontendId": "283",
+      "title": "Move Zeroes",
+      "slug": "move-zeroes",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Two Pointers"
+      ],
+      "url": "https://leetcode.com/problems/move-zeroes/",
+      "submissionId": "2141958401",
+      "timestamp": 1789414684,
+      "lang": "Python3",
+      "runtime": "3 ms",
+      "runtimePercentile": 81.8465,
+      "memory": "20.5 MB",
+      "memoryPercentile": 25.349299999999978,
+      "similar": [
+        "remove-element",
+        "apply-operations-to-an-array"
+      ],
+      "codeHash": "75cff74c5b7e4122e4b532f8344a0d0c5f2f19b7f45bf7a92fcf0e4fdc892c00",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "range-sum-query-immutable": {
+      "frontendId": "303",
+      "title": "Range Sum Query - Immutable",
+      "slug": "range-sum-query-immutable",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Design",
+        "Prefix Sum"
+      ],
+      "url": "https://leetcode.com/problems/range-sum-query-immutable/",
+      "submissionId": "2112086543",
+      "timestamp": 1787103302,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "23 MB",
+      "memoryPercentile": 17.323199999999996,
+      "similar": [
+        "range-sum-query-2d-immutable",
+        "range-sum-query-mutable",
+        "maximum-size-subarray-sum-equals-k",
+        "sum-of-variable-length-subarrays"
+      ],
+      "codeHash": "5a6156167b16171a1d0564e77b8bbb86497952462fee3de3f034c7557a4ccb59",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "remove-duplicates-from-sorted-array": {
+      "frontendId": "26",
+      "title": "Remove Duplicates from Sorted Array",
+      "slug": "remove-duplicates-from-sorted-array",
+      "difficulty": "Easy",
+      "topics": [
+        "Array",
+        "Two Pointers"
+      ],
+      "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+      "submissionId": "2141968262",
+      "timestamp": 1789415662,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "20.5 MB",
+      "memoryPercentile": 79.35170000000002,
+      "similar": [
+        "remove-element",
+        "remove-duplicates-from-sorted-array-ii",
+        "apply-operations-to-an-array",
+        "sum-of-distances"
+      ],
+      "codeHash": "26cd690841cdd0ee40d0b9766d51958d73624d6eabb22354c5197dd007098356",
+      "annotationHash": null,
+      "annotated": false
     },
     "remove-element": {
       "frontendId": "27",
@@ -254,6 +363,45 @@
       "codeHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
       "annotationHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
       "annotated": true
+    },
+    "top-k-frequent-elements": {
+      "frontendId": "347",
+      "title": "Top K Frequent Elements",
+      "slug": "top-k-frequent-elements",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Divide and Conquer",
+        "Sorting",
+        "Heap (Priority Queue)",
+        "Bucket Sort",
+        "Counting",
+        "Quickselect"
+      ],
+      "url": "https://leetcode.com/problems/top-k-frequent-elements/",
+      "submissionId": "2112043378",
+      "timestamp": 1787095297,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "22.7 MB",
+      "memoryPercentile": 80.82929999999998,
+      "similar": [
+        "word-frequency",
+        "kth-largest-element-in-an-array",
+        "sort-characters-by-frequency",
+        "split-array-into-consecutive-subsequences",
+        "top-k-frequent-words",
+        "k-closest-points-to-origin",
+        "sort-features-by-popularity",
+        "sender-with-largest-word-count",
+        "most-frequent-even-element",
+        "linked-list-frequency"
+      ],
+      "codeHash": "ae84ec05c44782165ba6f084cf2c324b8287534e1318c47cc577d0f198ad903f",
+      "annotationHash": null,
+      "annotated": false
     },
     "two-sum": {
       "frontendId": "1",
