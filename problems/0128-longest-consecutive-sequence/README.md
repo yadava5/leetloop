@@ -4,7 +4,7 @@
 |---|---|
 | **Difficulty** | Medium |
 | **Topics** | Array, Hash Table, Union-Find |
-| **Solved** | 2026-09-15 |
+| **Solved** | 2026-09-14 |
 | **Runtime** | 48 ms (62.66th percentile) |
 | **Memory** | 36.6 MB (66.93th percentile) |
 | **Language** | Python3 |

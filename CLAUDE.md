@@ -13,7 +13,7 @@ needs an Anthropic API key**:
 | 1 | **fetch** — pull new submissions, commit raw data | the LeetCode cookie | GitHub Action, no model involved | `0 17 * * *` |
 | 2 | **annotate** — write the revision docs | no credentials at all | Claude cloud routine (Claude *is* the runtime) | 2:00 PM ET |
 | 3 | **promote** — re-verify Job 2's branch, fast-forward `main` | nothing | GitHub Action | on Job 2's push |
-| 4 | **watchdog** — file an issue if anything is stuck | nothing | GitHub Action | 4:00 PM ET |
+| 4 | **watchdog** — file an issue if anything is stuck, or if fetch has stalled | nothing | GitHub Action | 4:00 PM ET |
 
 Both are UTC: 17:00 and 18:00, which is 1 pm and 2 pm Eastern while EDT is
 in effect, an hour earlier in winter. Job 2 runs an hour after Job 1 so the
@@ -88,6 +88,10 @@ running in the cloud must be pasted over to match, at
 /opt/homebrew/bin/gh run list --workflow promote.yml            # did promote reject it?
 ```
 
+`check_pending.py` exits `1` if annotations are overdue and `3` if no fetch has
+succeeded in 72 hours. Exit 3 means nothing is arriving in the first place —
+usually a dead cookie whose issue went unread. See `docs/RUNBOOK.md`.
+
 Job 2 pushes to a branch; `promote` verifies and fast-forwards `main`. A green
 routine run alone does not mean the work landed.
 
@@ -119,6 +123,13 @@ directions and must keep doing so.
   will block `content` and `hints` in `data/questions/*.json`, but it can't tell
   that a paragraph in a README was copy-pasted — that one is on you.
 - **Don't introduce an Anthropic API call.** See the mental model above.
+- **Don't render a solve date in UTC.** Timestamps are UTC seconds, but every
+  date shown to a human goes through `SOLVED_TZ` in `scripts/render_indexes.py`
+  (`America/New_York`, overridable with `LEETLOOP_TZ`). Rendering UTC calendar
+  days credited every solve after 8 pm ET to the next day; 5 of the first 17
+  pages were stamped a day late before this was caught. Use
+  `render_indexes.solved_date(entry)` rather than formatting a timestamp
+  yourself, so the page and the indexes cannot disagree.
 - **Use absolute paths in scripts and verification commands.** Interactive
   aliases shadow POSIX tools (`ls`→eza, `cat`→bat, `diff`→difftastic,
   `du`→dust); on macOS `ls`/`cat`/`rm`/`cp`/`mkdir`/`chmod` are in `/bin`.

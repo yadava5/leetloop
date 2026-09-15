@@ -140,11 +140,18 @@ logic running unattended with nobody watching.
 - `scripts/verify_ast.py` — parses each and compares
   `ast.dump(tree, annotate_fields=True, include_attributes=False)`.
 
-The README's inline copy is gated too: any fenced `python` block containing
-`class Solution` is treated as a claim to be the real submission and verified as
+The README's inline copy is gated too: any fenced `python` block that defines a
+class at column 0 is treated as a claim to be the real submission and verified as
 one. An ungated second copy would be free to drift, which would quietly turn the
 guarantee into a half-guarantee. Code fragments quoted in prose therefore use
 inline backticks or a fence tagged something other than `python`.
+
+The test is *any* top-level class rather than the literal `class Solution`,
+because design problems define `class NumArray`, `class MyHashSet`,
+`class MyHashMap` and so on. While the marker was the literal string, those three
+pages' inline copies matched nothing and were skipped with a WARN — gated
+`solution.py`, ungated page. `scripts/test_verify_ast.py` now asserts that a
+design class with a drifted body is rejected, so the hole cannot reopen.
 
 Python's parser discards comments and blank lines entirely, so they cannot appear
 in an AST. Equal dumps therefore mean the two files describe the identical

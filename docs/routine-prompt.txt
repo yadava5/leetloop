@@ -20,6 +20,23 @@ provably unmodified.
    IF THERE ARE NONE: stop immediately. Commit nothing, change nothing, say so.
    Do not regenerate anything "just to be safe" — a no-op run must be a no-op.
 
+   But before you call a no-op run healthy, check that Job 1 is still alive:
+
+       python3 scripts/check_pending.py
+
+   It exits 3 when `lastSyncedAt` is stale, which means no fetch has succeeded
+   in days and "nothing to annotate" is a SYMPTOM rather than a quiet day. That
+   is what happened on 2026-08-19: the LeetCode cookie expired, fetch filed an
+   issue and then reported success every day, and this routine reported "no new
+   solves — expected outcome" for 28 consecutive days while four weeks of real
+   solves piled up unfetched. Nothing in the loop was lying; nothing was
+   looking either.
+
+   So if that check reports a stale sync, SAY SO LOUDLY in your final message —
+   name the issue to look at and the fix (docs/RUNBOOK.md, refresh the cookie).
+   Still commit nothing: you cannot fetch, and the annotation side is genuinely
+   idle. A no-op run stays a no-op; it just stops being silent about why.
+
 2. For each such problem, read:
    - data/raw/<slug>.py            — his exact submitted code
    - data/questions/<slug>.json    — title, frontendId, difficulty, topics,
@@ -67,9 +84,21 @@ provably unmodified.
    file.
 
    # <frontendId>. <Title>
-   A small table: Difficulty, Topics, Solved (YYYY-MM-DD from the manifest
-   timestamp, UTC), Runtime with percentile, Memory with percentile, Language,
-   and the LeetCode URL.
+   A small table: Difficulty, Topics, Solved, Runtime with percentile, Memory
+   with percentile, Language, and the LeetCode URL.
+
+   The Solved date is YYYY-MM-DD derived from the manifest timestamp in
+   **America/New_York**, NOT in UTC. Ayush solves in US-Eastern, so a
+   submission at 20:09 ET is 00:09 the next day in UTC and rendering it as a
+   UTC calendar day credits it to tomorrow. Get it from the same helper the
+   renderer uses, so the page and the indexes can never disagree:
+
+       python3 -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
+       import render_indexes as r; \
+       m=json.loads(pathlib.Path('data/manifest.json').read_text()); \
+       print(r.solved_date(m['problems']['<slug>']))"
+
+   Do not compute the date yourself and do not use UTC.
 
    ## The problem
    State it fully, in YOUR OWN WORDS — never LeetCode's sentences. Cover:

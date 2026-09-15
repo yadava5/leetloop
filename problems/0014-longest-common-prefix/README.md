@@ -4,7 +4,7 @@
 |---|---|
 | **Difficulty** | Easy |
 | **Topics** | Array, String, Trie |
-| **Solved** | 2026-08-17 |
+| **Solved** | 2026-08-16 |
 | **Runtime** | 0 ms (100.00th percentile) |
 | **Memory** | 19.3 MB (31.22th percentile) |
 | **Language** | Python3 |

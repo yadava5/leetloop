@@ -10,10 +10,25 @@ So: anything in the manifest still un-annotated more than MAX_PENDING_HOURS afte
 it was solved means a link in the chain is broken. The check is derived purely
 from data already in the manifest, so there is no new state to keep correct.
 
+There is a second quiet failure, and it is the one that actually bit. On
+2026-08-19 the LeetCode cookie expired. Job 1 handled it exactly as designed —
+filed an issue, exited 0 — and then reported SUCCESS every day for 28 days.
+Job 2 correctly found nothing to annotate and reported "no new solves, expected
+outcome" every day. This watchdog stayed silent too, because its only question
+was "is anything pending?" and the answer was honestly no: nothing was pending
+because nothing was arriving. Four weeks of real solves sat unfetched while
+every indicator in the system read green.
+
+So this also asks whether Job 1 is still alive at all, by checking how long ago
+`lastSyncedAt` was updated. A pipeline that has not ingested anything in days is
+broken whether or not the queue is empty — an empty queue is only good news if
+the thing that fills it still works.
+
 Exit status:
     0  nothing is overdue (including "nothing is pending at all")
     1  something is overdue — the workflow turns this into a GitHub issue
     2  the manifest is missing or unreadable, which is itself a problem
+    3  no successful fetch in MAX_SYNC_AGE_HOURS — Job 1 has stopped
 
 Run: /usr/bin/python3 scripts/check_pending.py
 """
@@ -32,6 +47,39 @@ MANIFEST = REPO / "data" / "manifest.json"
 # starts shouting.
 MAX_PENDING_HOURS = 30
 
+# Job 1 runs daily and updates lastSyncedAt on every SUCCESSFUL sync, whether or
+# not it found anything new. So this is not "days since Ayush last solved
+# something" — taking a week off is fine and does not trip it. It is "days since
+# the fetcher last completed a round trip to LeetCode", which only goes stale if
+# the cookie is dead, the workflow is disabled, or the schedule stopped firing.
+#
+# 72 hours: three missed daily runs. Long enough that a single GitHub outage or
+# a weekend of scheduler lag stays quiet, short enough that a dead cookie is
+# named within days instead of within a month.
+MAX_SYNC_AGE_HOURS = 72
+
+
+def sync_age_hours(manifest, now):
+    """Hours since Job 1 last completed a sync, or None if it cannot be told.
+
+    Returns None rather than 0 for a manifest with no `lastSyncedAt` at all — a
+    fresh fork has never synced, and shouting at it on day one would be noise.
+    An unparseable value is treated the same way: this check exists to catch a
+    stopped fetcher, not to police the manifest's schema.
+    """
+    raw = manifest.get("lastSyncedAt")
+    if not raw:
+        return None
+    try:
+        # Written by JavaScript's toISOString(), which always ends in "Z";
+        # fromisoformat() before Python 3.11 does not accept that suffix.
+        stamp = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if stamp.tzinfo is None:
+        stamp = stamp.replace(tzinfo=timezone.utc)
+    return (now - stamp).total_seconds() / 3600
+
 
 def main() -> int:
     if not MANIFEST.exists():
@@ -46,6 +94,27 @@ def main() -> int:
     problems = manifest.get("problems", {})
     now = datetime.now(tz=timezone.utc)
 
+    # Check Job 1 first. If the fetcher is dead, an empty annotation queue is a
+    # symptom rather than a clean bill of health, and reporting it as "all
+    # current" is precisely the mistake that hid a 28-day outage.
+    stale_hours = sync_age_hours(manifest, now)
+    if stale_hours is not None and stale_hours > MAX_SYNC_AGE_HOURS:
+        print(
+            "No successful fetch in %.1f hours (last: %s).\n"
+            % (stale_hours, manifest.get("lastSyncedAt", "never"))
+        )
+        print("Job 1 updates lastSyncedAt on every successful run, even a run that")
+        print("finds nothing new — so this is not a quiet stretch of not solving.")
+        print("It means the fetcher itself has stopped completing. Check, in order:")
+        print("  1. open issues — an expired LeetCode cookie files one automatically")
+        print("  2. the `fetch` workflow — note it exits 0 on an expired cookie,")
+        print("     so a green run does NOT mean anything was ingested")
+        print("  3. whether scheduled workflows are still enabled for this repo")
+        print("\nFix: docs/RUNBOOK.md — refresh the cookie, two `gh secret set` commands.")
+        print("Nothing is lost meanwhile; LeetCode keeps full submission history and")
+        print("the next successful run resumes from lastSyncedTimestamp.")
+        return 3
+
     pending = []
     for slug, entry in problems.items():
         if entry.get("annotated") and entry.get("annotationHash") == entry.get("codeHash"):
@@ -56,6 +125,11 @@ def main() -> int:
 
     if not pending:
         print("nothing pending annotation — %d problem(s) all current" % len(problems))
+        # Print the sync age even on the happy path, so "all current" is always
+        # accompanied by the evidence that it means something.
+        if stale_hours is not None:
+            print("last successful fetch %.1f h ago (%s)"
+                  % (stale_hours, manifest.get("lastSyncedAt")))
         return 0
 
     pending.sort(reverse=True)

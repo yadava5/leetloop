@@ -41,8 +41,49 @@ jobs:
           echo "code=$CODE" >> "$GITHUB_OUTPUT"
           exit 0
 
+      - name: File an issue if the fetcher has stopped
+        if: steps.check.outputs.code == '3'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Fetch has stopped bringing in submissions"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "No successful fetch in over 72 hours. Job 1 updates"
+            echo "\`lastSyncedAt\` on every successful run — including runs that find"
+            echo "nothing new — so this is **not** a quiet stretch of not solving."
+            echo "The fetcher itself has stopped completing."
+            echo ""
+            echo '```'
+            echo "${{ steps.check.outputs.report }}"
+            echo '```'
+            echo ""
+            echo "Why this issue exists separately from the cookie-expiry one: on"
+            echo "2026-08-19 the cookie expired, \`fetch\` filed its issue and then"
+            echo "reported success every day for 28 days, the annotate routine"
+            echo "correctly found nothing to do, and this watchdog stayed quiet"
+            echo "because nothing was *pending*. Every indicator read green while"
+            echo "four weeks of solves went unfetched. An empty queue is only good"
+            echo "news if the thing that fills it still works."
+            echo ""
+            echo "If an expired-cookie issue is also open, this one is the escalation:"
+            echo "that one has now gone unactioned long enough to cost real data"
+            echo "freshness. Fix: docs/RUNBOOK.md, two \`gh secret set\` commands."
+            echo ""
+            echo "Nothing is lost. LeetCode keeps full submission history and the next"
+            echo "successful run resumes from \`lastSyncedTimestamp\`."
+            echo ""
+            echo "Watchdog run: $RUN_URL"
+          } > /tmp/stale-body.md
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file /tmp/stale-body.md
+          else
+            gh issue create --title "$TITLE" --body-file /tmp/stale-body.md
+          fi
+
       - name: File an issue if something is stuck
-        if: steps.check.outputs.code != '0'
+        if: steps.check.outputs.code == '1' || steps.check.outputs.code == '2'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -71,16 +112,19 @@ jobs:
             gh issue create --title "$TITLE" --body-file /tmp/issue-body.md
           fi
 
-      - name: Close the issue once everything is current
+      - name: Close the issues once everything is current
         if: steps.check.outputs.code == '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TITLE="Annotation is not completing"
-          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
-          if [ -n "$EXISTING" ]; then
-            gh issue close "$EXISTING" --comment "Everything is annotated and current again. Closed by the watchdog."
-          fi
+          # Exit 0 means both conditions are clear: the fetcher synced recently
+          # AND nothing is overdue for annotation. So both issues can close.
+          for TITLE in "Annotation is not completing" "Fetch has stopped bringing in submissions"; do
+            EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+            if [ -n "$EXISTING" ]; then
+              gh issue close "$EXISTING" --comment "Everything is synced, annotated and current again. Closed by the watchdog."
+            fi
+          done
 
       - name: Summary
         if: always()

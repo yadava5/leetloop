@@ -112,6 +112,38 @@ The watchdog closes it by itself once everything is current again.
 /usr/bin/python3 scripts/check_pending.py     # the same check, locally
 ```
 
+## An issue appeared saying "Fetch has stopped bringing in submissions"
+
+No successful fetch in over 72 hours. Job 1 updates `lastSyncedAt` on every
+successful run — including a run that finds nothing new — so this is **not**
+triggered by a quiet stretch of not solving. Take a week off and it stays silent.
+It fires only when the fetcher itself stops completing.
+
+Almost always this means the cookie expired and the expired-cookie issue went
+unread. Treat this one as the escalation and follow the first section of this
+runbook.
+
+**Why it exists.** On 2026-08-19 the cookie expired. Job 1 filed its issue and
+then reported success every day for 28 days, because an expired cookie is exit
+code 2 and the workflow deliberately exits 0 on it. Job 2 correctly found nothing
+to annotate and reported "no new solves — expected outcome" every day. The
+watchdog stayed quiet too, because the only question it asked was "is anything
+pending?" and nothing was pending — nothing was pending because nothing was
+arriving. Every indicator in the system read green for four weeks while real
+solves went unfetched.
+
+An empty queue is only good news if the thing that fills it still works. That is
+now checked:
+
+```
+/usr/bin/python3 scripts/check_pending.py     # exit 3 == fetch has stalled
+```
+
+Exit codes: `0` all current, `1` annotations overdue, `2` manifest unreadable,
+`3` no successful fetch in 72 h. The annotate routine runs this before calling a
+no-op run healthy, so a stalled fetcher is now named by both Job 2 and Job 4
+rather than by neither.
+
 ## Where the jobs live
 
 | Job | Where | Schedule (UTC) | Holds |

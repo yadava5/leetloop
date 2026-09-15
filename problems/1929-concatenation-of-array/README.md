@@ -4,7 +4,7 @@
 |---|---|
 | **Difficulty** | Easy |
 | **Topics** | Array, Simulation |
-| **Solved** | 2026-08-18 |
+| **Solved** | 2026-08-17 |
 | **Runtime** | 3 ms (18.21th percentile) |
 | **Memory** | 19.4 MB (41.28th percentile) |
 | **Language** | Python3 |

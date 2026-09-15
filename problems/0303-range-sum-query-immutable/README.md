@@ -4,7 +4,7 @@
 |---|---|
 | **Difficulty** | Easy |
 | **Topics** | Array, Design, Prefix Sum |
-| **Solved** | 2026-08-19 |
+| **Solved** | 2026-08-18 |
 | **Runtime** | 0 ms (100th percentile) |
 | **Memory** | 23 MB (17.32th percentile) |
 | **Language** | Python3 |

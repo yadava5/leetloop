@@ -177,9 +177,105 @@ FRAGMENT_ONLY = "\n".join(
     ]
 )
 
+# --- design problems: the class is NOT called Solution ---------------------
+#
+# Regression test for a real hole. The gate used to look for the literal string
+# "class Solution", so a design problem's inline copy - class NumArray,
+# MyHashSet, MyHashMap - matched nothing and was skipped with a WARN. Three of
+# the repo's first seventeen pages were in that state: their solution.py was
+# gated, the copy people actually read on the page was not.
+DESIGN_RAW = '''class NumArray:
 
-def markdown_checks(tmp: Path, raw: Path) -> int:
-    """The README's inline copy of the solution has to be gated too."""
+    def __init__(self, nums: List[int]):
+        self.prefix = [0]
+
+        for num in nums:
+            self.prefix.append(self.prefix[-1] + num)
+
+    def sumRange(self, left: int, right: int) -> int:
+        return (self.prefix[right + 1] - self.prefix[left])
+'''
+
+DESIGN_ANNOTATED_OK = '''# 303. Range Sum Query - Immutable
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+        # leading 0 = the sum of the first zero elements
+        self.prefix = [0]
+
+        for num in nums:
+            self.prefix.append(self.prefix[-1] + num)
+
+    def sumRange(self, left: int, right: int) -> int:
+        # right is inclusive, prefix is indexed by count, hence the +1
+        return (self.prefix[right + 1] - self.prefix[left])
+'''
+
+# The exact drift the old gate could not see: the +1 quietly dropped, which
+# silently returns the sum of one element too few.
+DESIGN_OFF_BY_ONE = '''class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.prefix = [0]
+
+        for num in nums:
+            self.prefix.append(self.prefix[-1] + num)
+
+    def sumRange(self, left: int, right: int) -> int:
+        return (self.prefix[right] - self.prefix[left])
+'''
+
+
+def design_class_checks(tmp: Path):
+    """A design problem's inline copy must be gated exactly like class Solution.
+
+    Returns (disagreements, checks_run).
+    """
+    problems = 0
+    raw = tmp / "design_raw.py"
+    raw.write_text(DESIGN_RAW, encoding="utf-8")
+
+    cases = [
+        ("design class: page shows the real annotated solution", DESIGN_ANNOTATED_OK, 0),
+        ("design class: page dropped the +1 (was invisible to the old gate)",
+         DESIGN_OFF_BY_ONE, 1),
+    ]
+
+    print("\ndesign-problem checks (class NumArray, not class Solution)\n")
+    for name, code, expected_failures in cases:
+        path = tmp / "DESIGN_README.md"
+        path.write_text(readme_with(code), encoding="utf-8")
+        actual = compare_markdown(raw, path)
+        ok = actual == expected_failures
+        if not ok:
+            problems += 1
+        print(
+            "  [%s] %d failure(s), expected %d   %s"
+            % ("ok" if ok else "BUG", actual, expected_failures, name)
+        )
+
+    # The collection step is where the old bug actually lived: the fence was
+    # never even picked up, so compare_markdown had nothing to compare and
+    # returned 0 failures while printing WARN. Assert it is collected now.
+    path = tmp / "DESIGN_README.md"
+    path.write_text(readme_with(DESIGN_OFF_BY_ONE), encoding="utf-8")
+    blocks = solution_blocks(path)
+    ok = len(blocks) == 1
+    if not ok:
+        problems += 1
+    print(
+        "  [%s] %d block(s) collected, expected 1   a non-Solution class IS a full-solution claim"
+        % ("ok" if ok else "BUG", len(blocks))
+    )
+
+    return problems, len(cases) + 1
+
+
+def markdown_checks(tmp: Path, raw: Path):
+    """The README's inline copy of the solution has to be gated too.
+
+    Returns (disagreements, checks_run).
+    """
     problems = 0
     cases = [
         ("README shows the real annotated solution", readme_with(ANNOTATED_OK), 0),
@@ -214,7 +310,7 @@ def markdown_checks(tmp: Path, raw: Path) -> int:
         % ("ok" if ok else "BUG", len(blocks))
     )
 
-    return problems
+    return problems, len(cases) + 1
 
 
 def main() -> int:
@@ -247,15 +343,19 @@ def main() -> int:
         if not ok:
             print("        ^ the gate is wrong here%s" % (": " + detail if detail else ""))
 
-    problems += markdown_checks(tmp, raw)
+    md_problems, md_checks = markdown_checks(tmp, raw)
+    design_problems, design_checks = design_class_checks(tmp)
+    problems += md_problems + design_problems
 
     # A gate that never rejects anything is useless even if every case above
     # happened to line up, so assert the two directions explicitly.
     rejected = sum(1 for _, _, should_pass in CASES if not should_pass)
     accepted = len(CASES) - rejected
+    total = len(CASES) + md_checks + design_checks
     print(
-        "\n%d case(s): %d must pass, %d must fail. %d disagreement(s)."
-        % (len(CASES), accepted, rejected, problems)
+        "\n%d check(s): %d file-level (%d must pass, %d must fail), "
+        "%d inline-copy, %d design-class. %d disagreement(s)."
+        % (total, len(CASES), accepted, rejected, md_checks, design_checks, problems)
     )
     if problems:
         print("GATE IS BROKEN - do not commit annotations until this is green")

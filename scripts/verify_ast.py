@@ -23,13 +23,17 @@ but semantically different trees cannot collide.
 WHAT GETS CHECKED
     problems/<n>-<slug>/solution.py         the annotated file
     problems/<n>-<slug>/README.md           every ```python fence in it that
-                                            contains "class Solution"
+                                            defines a class at column 0
 
 The README is checked too because each problem page shows the full solution
 inline for reading in one place, and a copy that isn't gated is a copy that can
 drift. Illustrative fragments must therefore use inline code or a non-`python`
-fence; a ```python fence containing `class Solution` is treated as a claim that
+fence; a ```python fence defining a top-level class is treated as a claim that
 this is the real submission, and is verified as one.
+
+The test is any top-level class, not the literal "class Solution", so that
+DESIGN problems — `class NumArray`, `class MyHashSet` — are gated on the same
+terms as everything else. They were not, for the repo's first seventeen pages.
 
 Usage:
     verify_ast.py <raw.py> <annotated.py|README.md>   compare one pair
@@ -51,7 +55,20 @@ RAW_DIR = REPO / "data" / "raw"
 PROBLEMS_DIR = REPO / "problems"
 
 FENCE_RE = re.compile(r"^```python[ \t]*\r?\n(.*?)^```[ \t]*$", re.MULTILINE | re.DOTALL)
-FULL_SOLUTION_MARKER = "class Solution"
+
+# A fence claims to be the real submission if it defines a class at column 0.
+#
+# This used to be the literal string "class Solution", which silently exempted
+# every DESIGN problem — the ones whose submission defines `class NumArray`,
+# `class MyHashSet`, `class MyHashMap` rather than `class Solution`. Their
+# solution.py files were gated, but the inline copy on the page was not, so it
+# was free to drift from the submission with nothing to catch it. Three of the
+# repo's seventeen pages sat in that hole.
+#
+# Matching any top-level class keeps the original intent — an illustrative
+# FRAGMENT belongs in inline backticks or a ```text fence, and fragments do not
+# define classes at column 0 — while closing the exemption.
+TOP_LEVEL_CLASS_RE = re.compile(r"(?m)^class\s+\w+")
 
 
 class GateFailure(Exception):
@@ -113,7 +130,7 @@ def solution_blocks(markdown_path: Path):
     found = []
     for ordinal, match in enumerate(FENCE_RE.finditer(text), start=1):
         code = match.group(1)
-        if FULL_SOLUTION_MARKER in code:
+        if TOP_LEVEL_CLASS_RE.search(code):
             found.append((ordinal, code))
     return found
 
@@ -123,7 +140,7 @@ def compare_markdown(raw: Path, markdown_path: Path) -> int:
     blocks = solution_blocks(markdown_path)
     if not blocks:
         print(
-            "WARN  %s\n  no ```python fence containing `class Solution` — the page does"
+            "WARN  %s\n  no ```python fence defining a top-level class — the page does"
             "\n  not show the solution inline, so nothing to verify there" % markdown_path
         )
         return 0

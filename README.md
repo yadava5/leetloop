@@ -69,7 +69,7 @@ flowchart LR
 
     PAGES["main<br/>problems/&lt;n&gt;-&lt;slug&gt;/"]
     MANIFEST[("data/manifest.json<br/>the only shared state")]
-    WATCH{{"Job 4 · watchdog — 4 pm ET<br/>anything pending 30 h+? file an issue"}}
+    WATCH{{"Job 4 · watchdog — 4 pm ET<br/>pending 30 h+, or no fetch in 72 h? file an issue"}}
 
     SOLVE --> FETCH --> HYDRATE --> STRIP --> RAW & META
     RAW & META --> MANIFEST
@@ -103,7 +103,7 @@ between the first two is the interesting part.
 | **1** | **fetch** — pull new submissions, commit raw code | GitHub Action, no model involved | the LeetCode cookie | 1 pm ET daily |
 | **2** | **annotate** — write the notes, verify, push a branch | Claude scheduled routine | no credentials at all | 2 pm ET daily |
 | **3** | **promote** — re-verify, then fast-forward `main` | GitHub Action | nothing | when Job 2 pushes |
-| **4** | **watchdog** — open an issue if anything is stuck | GitHub Action | nothing | 4 pm ET daily |
+| **4** | **watchdog** — open an issue if anything is stuck, or if fetch has stalled | GitHub Action | nothing | 4 pm ET daily |
 
 Jobs 3 and 4 exist because of two things the first version got wrong. A Claude
 routine **cannot push to `main`** — its environment pins it to a feature branch —
@@ -111,6 +111,12 @@ so `promote` does the last mile, and re-runs the AST gate while it's there. And 
 green routine run turned out not to mean the work had landed, which is a failure
 you cannot see; the watchdog looks every day and files an issue if anything sat
 un-annotated for more than 30 hours.
+
+The watchdog also asks whether Job 1 is still alive at all, because an empty
+queue is only good news if the thing that fills it still works. An expired cookie
+makes `fetch` exit 0 by design, so for 28 days every indicator read green while
+nothing was being ingested — nothing was pending because nothing was arriving. It
+now files a separate issue when no fetch has succeeded in 72 hours.
 
 Each job holds exactly one of the two sensitive things and never needs the
 other's. Job 1 keeps the session cookie in GitHub's encrypted secret store and
@@ -161,22 +167,22 @@ two places, one of which it cannot reach.
 | # | Problem | Difficulty | Topics | Solved | Runtime |
 | --: | --- | --- | --- | --- | --- |
 | 1 | [1. Two Sum](problems/0001-two-sum/README.md) | Easy | Array, Hash Table | 2026-08-05 | 3 ms (top 46%) |
-| 14 | [14. Longest Common Prefix](problems/0014-longest-common-prefix/README.md) | Easy | Array, String, Trie | 2026-08-17 | 0 ms (top 0%) |
+| 14 | [14. Longest Common Prefix](problems/0014-longest-common-prefix/README.md) | Easy | Array, String, Trie | 2026-08-16 | 0 ms (top 0%) |
 | 20 | [20. Valid Parentheses](problems/0020-valid-parentheses/README.md) | Easy | String, Stack, Bracket Sequences | 2026-08-05 | 4 ms (top 88%) |
 | 26 | [26. Remove Duplicates from Sorted Array](problems/0026-remove-duplicates-from-sorted-array/README.md) | Easy | Array, Two Pointers | 2026-09-14 | 0 ms (top 0%) |
 | 27 | [27. Remove Element](problems/0027-remove-element/README.md) | Easy | Array, Two Pointers | 2026-08-17 | 0 ms (top 0%) |
-| 49 | [49. Group Anagrams](problems/0049-group-anagrams/README.md) | Medium | Array, Hash Table, String, Sorting | 2026-08-17 | 7 ms (top 2%) |
+| 49 | [49. Group Anagrams](problems/0049-group-anagrams/README.md) | Medium | Array, Hash Table, String, Sorting | 2026-08-16 | 7 ms (top 2%) |
 | 75 | [75. Sort Colors](problems/0075-sort-colors/README.md) | Medium | Array, Two Pointers, Sorting, Quicksort, Bubble Sort | 2026-08-18 | 0 ms (top 0%) |
-| 128 | [128. Longest Consecutive Sequence](problems/0128-longest-consecutive-sequence/README.md) | Medium | Array, Hash Table, Union-Find | 2026-09-15 | 48 ms (top 37%) |
+| 128 | [128. Longest Consecutive Sequence](problems/0128-longest-consecutive-sequence/README.md) | Medium | Array, Hash Table, Union-Find | 2026-09-14 | 48 ms (top 37%) |
 | 169 | [169. Majority Element](problems/0169-majority-element/README.md) | Easy | Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm | 2026-09-14 | 7 ms (top 42%) |
 | 242 | [242. Valid Anagram](problems/0242-valid-anagram/README.md) | Easy | Hash Table, String, Sorting | 2026-08-16 | 3 ms (top 2%) |
 | 283 | [283. Move Zeroes](problems/0283-move-zeroes/README.md) | Easy | Array, Two Pointers | 2026-09-14 | 3 ms (top 18%) |
-| 303 | [303. Range Sum Query - Immutable](problems/0303-range-sum-query-immutable/README.md) | Easy | Array, Design, Prefix Sum | 2026-08-19 | 0 ms (top 0%) |
+| 303 | [303. Range Sum Query - Immutable](problems/0303-range-sum-query-immutable/README.md) | Easy | Array, Design, Prefix Sum | 2026-08-18 | 0 ms (top 0%) |
 | 347 | [347. Top K Frequent Elements](problems/0347-top-k-frequent-elements/README.md) | Medium | Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect | 2026-08-18 | 0 ms (top 0%) |
 | 705 | [705. Design HashSet](problems/0705-design-hashset/README.md) | Easy | Array, Hash Table, Linked List, Design, Hash Function | 2026-08-17 | 47 ms (top 53%) |
 | 706 | [706. Design HashMap](problems/0706-design-hashmap/README.md) | Easy | Array, Hash Table, Linked List, Design, Hash Function | 2026-08-17 | 21 ms (top 7%) |
 | 912 | [912. Sort an Array](problems/0912-sort-an-array/README.md) | Medium | Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort | 2026-08-17 | 643 ms (top 52%) |
-| 1929 | [1929. Concatenation of Array](problems/1929-concatenation-of-array/README.md) | Easy | Array, Simulation | 2026-08-18 | 3 ms (top 82%) |
+| 1929 | [1929. Concatenation of Array](problems/1929-concatenation-of-array/README.md) | Easy | Array, Simulation | 2026-08-17 | 3 ms (top 82%) |
 
 Other views: **[by topic](indexes/by-topic.md)** ·
 **[by difficulty](indexes/by-difficulty.md)** ·

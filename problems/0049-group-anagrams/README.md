@@ -4,7 +4,7 @@
 |---|---|
 | **Difficulty** | Medium |
 | **Topics** | Array, Hash Table, String, Sorting |
-| **Solved** | 2026-08-17 |
+| **Solved** | 2026-08-16 |
 | **Runtime** | 7 ms (98.32th percentile) |
 | **Memory** | 22.6 MB (38.83th percentile) |
 | **Language** | Python3 |
