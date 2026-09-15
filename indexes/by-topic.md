@@ -6,15 +6,15 @@
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Easy
 - [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
-- 26. Remove Duplicates from Sorted Array — _awaiting annotation_ — Easy
+- [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
-- 128. Longest Consecutive Sequence — _awaiting annotation_ — Medium
+- [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 283. Move Zeroes — _awaiting annotation_ — Easy
-- 303. Range Sum Query - Immutable — _awaiting annotation_ — Easy
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
+- [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
@@ -24,10 +24,10 @@
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
-- 128. Longest Consecutive Sequence — _awaiting annotation_ — Medium
+- [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 
@@ -37,7 +37,7 @@
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## String (4)
@@ -49,32 +49,32 @@
 
 ## Two Pointers (4)
 
-- 26. Remove Duplicates from Sorted Array — _awaiting annotation_ — Easy
+- [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
-- 283. Move Zeroes — _awaiting annotation_ — Easy
+- [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
 
 ## Design (3)
 
-- 303. Range Sum Query - Immutable — _awaiting annotation_ — Easy
+- [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 
 ## Divide and Conquer (3)
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Bucket Sort (2)
 
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Counting (2)
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 
 ## Hash Function (2)
 
@@ -83,7 +83,7 @@
 
 ## Heap (Priority Queue) (2)
 
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 
 ## Linked List (2)
@@ -113,11 +113,11 @@
 
 ## Prefix Sum (1)
 
-- 303. Range Sum Query - Immutable — _awaiting annotation_ — Easy
+- [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy
 
 ## Quickselect (1)
 
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 
 ## Quicksort (1)
 
@@ -141,4 +141,4 @@
 
 ## Union-Find (1)
 
-- 128. Longest Consecutive Sequence — _awaiting annotation_ — Medium
+- [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium

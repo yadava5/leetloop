@@ -13,13 +13,13 @@ Generated for 2026-09-15 (UTC).
 
 ## Solved today (1)
 
-- 128. Longest Consecutive Sequence — _awaiting annotation_ — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (0 days ago)
+- [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (0 days ago)
 
 ## 1-3 days ago (3)
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-09-14 (1 day ago)
-- 283. Move Zeroes — _awaiting annotation_ — Easy, Array, Two Pointers — solved 2026-09-14 (1 day ago)
-- 26. Remove Duplicates from Sorted Array — _awaiting annotation_ — Easy, Array, Two Pointers — solved 2026-09-14 (1 day ago)
+- [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (1 day ago)
+- [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (1 day ago)
 
 ## 3-7 days ago (0)
 
@@ -35,8 +35,8 @@ _nothing here_
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium, Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort — solved 2026-08-17 (29 days ago)
 - [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy, Array, Simulation — solved 2026-08-18 (28 days ago)
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium, Array, Two Pointers, Sorting, Quicksort, Bubble Sort — solved 2026-08-18 (28 days ago)
-- 347. Top K Frequent Elements — _awaiting annotation_ — Medium, Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect — solved 2026-08-18 (28 days ago)
-- 303. Range Sum Query - Immutable — _awaiting annotation_ — Easy, Array, Design, Prefix Sum — solved 2026-08-19 (27 days ago)
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium, Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect — solved 2026-08-18 (28 days ago)
+- [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy, Array, Design, Prefix Sum — solved 2026-08-19 (27 days ago)
 
 ## 30+ days ago - most likely to have faded (3)
 
