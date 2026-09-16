@@ -1,0 +1,22 @@
+{
+  "questionId": "125",
+  "frontendId": "125",
+  "title": "Valid Palindrome",
+  "slug": "valid-palindrome",
+  "difficulty": "Easy",
+  "topics": [
+    "Two Pointers",
+    "String"
+  ],
+  "similar": [
+    "palindrome-linked-list",
+    "valid-palindrome-ii",
+    "maximum-product-of-the-length-of-two-palindromic-subsequences",
+    "find-first-palindromic-string-in-the-array",
+    "valid-palindrome-iv",
+    "maximum-palindromes-after-operations"
+  ],
+  "constraints": [
+    "1 <= s.length <= 2 * 10^5"
+  ]
+}

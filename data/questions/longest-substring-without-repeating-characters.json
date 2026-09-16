@@ -1,0 +1,29 @@
+{
+  "questionId": "3",
+  "frontendId": "3",
+  "title": "Longest Substring Without Repeating Characters",
+  "slug": "longest-substring-without-repeating-characters",
+  "difficulty": "Medium",
+  "topics": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "similar": [
+    "longest-substring-with-at-most-two-distinct-characters",
+    "longest-substring-with-at-most-k-distinct-characters",
+    "subarrays-with-k-different-integers",
+    "maximum-erasure-value",
+    "number-of-equal-count-substrings",
+    "minimum-consecutive-cards-to-pick-up",
+    "longest-nice-subarray",
+    "optimal-partition-of-string",
+    "count-complete-subarrays-in-an-array",
+    "find-longest-special-substring-that-occurs-thrice-ii",
+    "find-longest-special-substring-that-occurs-thrice-i"
+  ],
+  "constraints": [
+    "0 <= s.length <= 10^5",
+    "s consists of English letters, digits, symbols and spaces."
+  ]
+}

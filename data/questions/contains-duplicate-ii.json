@@ -1,0 +1,21 @@
+{
+  "questionId": "219",
+  "frontendId": "219",
+  "title": "Contains Duplicate II",
+  "slug": "contains-duplicate-ii",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+  ],
+  "similar": [
+    "contains-duplicate",
+    "contains-duplicate-iii"
+  ],
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "-10^9 <= nums[i] <= 10^9",
+    "0 <= k <= 10^5"
+  ]
+}

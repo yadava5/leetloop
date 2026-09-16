@@ -11,18 +11,23 @@ README without reading the code first.
 
 Generated for 2026-09-16 (UTC).
 
-## Solved today (0)
+## Solved today (4)
 
-_nothing here_
+- 121. Best Time to Buy and Sell Stock — _awaiting annotation_ — Easy, Array, Dynamic Programming — solved 2026-09-16 (0 days ago)
+- 219. Contains Duplicate II — _awaiting annotation_ — Easy, Array, Hash Table, Sliding Window — solved 2026-09-16 (0 days ago)
+- 9. Palindrome Number — _awaiting annotation_ — Easy, Math — solved 2026-09-16 (0 days ago)
+- 167. Two Sum II - Input Array Is Sorted — _awaiting annotation_ — Medium, Array, Two Pointers, Binary Search — solved 2026-09-16 (0 days ago)
 
-## 1-3 days ago (6)
+## 1-3 days ago (8)
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-09-14 (2 days ago)
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (2 days ago)
 - [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (2 days ago)
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (1 day ago)
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-15 (1 day ago)
+- 3. Longest Substring Without Repeating Characters — _awaiting annotation_ — Medium, Hash Table, String, Sliding Window — solved 2026-09-15 (1 day ago)
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium, Two Pointers, String, Dynamic Programming — solved 2026-09-15 (1 day ago)
+- 125. Valid Palindrome — _awaiting annotation_ — Easy, Two Pointers, String — solved 2026-09-15 (1 day ago)
 
 ## 3-7 days ago (0)
 

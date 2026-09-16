@@ -1,0 +1,21 @@
+{
+  "questionId": "9",
+  "frontendId": "9",
+  "title": "Palindrome Number",
+  "slug": "palindrome-number",
+  "difficulty": "Easy",
+  "topics": [
+    "Math"
+  ],
+  "similar": [
+    "palindrome-linked-list",
+    "find-palindrome-with-fixed-length",
+    "strictly-palindromic-number",
+    "count-symmetric-integers",
+    "find-the-count-of-good-integers",
+    "find-the-largest-palindrome-divisible-by-k"
+  ],
+  "constraints": [
+    "-2^31 <= x <= 2^31 - 1"
+  ]
+}
