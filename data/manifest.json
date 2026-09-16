@@ -195,8 +195,8 @@
         "maximum-number-of-non-overlapping-palindrome-substrings"
       ],
       "codeHash": "cea60f74a9693beb4d8c2df078fcd58cd5d33f8e5ead94db568100106cb4b8ff",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "cea60f74a9693beb4d8c2df078fcd58cd5d33f8e5ead94db568100106cb4b8ff",
+      "annotated": true
     },
     "majority-element": {
       "frontendId": "169",
@@ -280,8 +280,8 @@
         "longest-palindromic-subsequence"
       ],
       "codeHash": "09a9383b5f89d83c918f5bf88549c70960be59f0e4487852fa956abd68afae5c",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "09a9383b5f89d83c918f5bf88549c70960be59f0e4487852fa956abd68afae5c",
+      "annotated": true
     },
     "range-sum-query-immutable": {
       "frontendId": "303",

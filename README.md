@@ -21,9 +21,6 @@
   <a href="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml"><img alt="daily fetch status" src="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml/badge.svg"></a> <a href="scripts/verify_ast.py"><img alt="code unmodified: AST-verified" src="https://img.shields.io/badge/code%20unmodified-AST--verified-2ea44f"></a> <img alt="problems solved" src="https://img.shields.io/badge/problems-19-1f6feb"> <img alt="easy" src="https://img.shields.io/badge/easy-12-00b8a3"> <img alt="medium" src="https://img.shields.io/badge/medium-7-ffb800"> <img alt="hard" src="https://img.shields.io/badge/hard-0-ff375f"> <img alt="topics covered" src="https://img.shields.io/badge/topics-27-8957e5"> <img alt="solutions in Python 3" src="https://img.shields.io/badge/solutions-Python%203-3572A5"> <img alt="pipeline in TypeScript" src="https://img.shields.io/badge/pipeline-TypeScript-3178c6"> <img alt="Anthropic API keys required: 0" src="https://img.shields.io/badge/Anthropic%20API%20keys-0-lightgrey"> <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
-> **2 problems fetched but not annotated yet.** Job 1 commits the code at
-> 17:00 UTC and Job 2 writes the page an hour later, so a gap here is normal in between runs. If it persists, the watchdog opens an issue — see [docs/RUNBOOK.md](docs/RUNBOOK.md).
-
 **19 problems** — Easy 12 · Medium 7. Solutions in Python.
 
 ---
@@ -164,7 +161,7 @@ two places, one of which it cannot reach.
 | # | Problem | Difficulty | Topics | Solved | Runtime |
 | --: | --- | --- | --- | --- | --- |
 | 1 | [1. Two Sum](problems/0001-two-sum/README.md) | Easy | Array, Hash Table | 2026-08-05 | 3 ms (top 46%) |
-| 5 | 5. Longest Palindromic Substring — _awaiting annotation_ | Medium | Two Pointers, String, Dynamic Programming, Manacher | 2026-09-15 | 215 ms (top 8%) |
+| 5 | [5. Longest Palindromic Substring](problems/0005-longest-palindromic-substring/README.md) | Medium | Two Pointers, String, Dynamic Programming, Manacher | 2026-09-15 | 215 ms (top 8%) |
 | 14 | [14. Longest Common Prefix](problems/0014-longest-common-prefix/README.md) | Easy | Array, String, Trie | 2026-08-17 | 0 ms (top 0%) |
 | 20 | [20. Valid Parentheses](problems/0020-valid-parentheses/README.md) | Easy | String, Stack, Bracket Sequences | 2026-08-05 | 4 ms (top 88%) |
 | 26 | [26. Remove Duplicates from Sorted Array](problems/0026-remove-duplicates-from-sorted-array/README.md) | Easy | Array, Two Pointers | 2026-09-14 | 0 ms (top 0%) |
@@ -177,7 +174,7 @@ two places, one of which it cannot reach.
 | 283 | [283. Move Zeroes](problems/0283-move-zeroes/README.md) | Easy | Array, Two Pointers | 2026-09-14 | 3 ms (top 18%) |
 | 303 | [303. Range Sum Query - Immutable](problems/0303-range-sum-query-immutable/README.md) | Easy | Array, Design, Prefix Sum | 2026-08-19 | 0 ms (top 0%) |
 | 347 | [347. Top K Frequent Elements](problems/0347-top-k-frequent-elements/README.md) | Medium | Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect | 2026-08-18 | 0 ms (top 0%) |
-| 647 | 647. Palindromic Substrings — _awaiting annotation_ | Medium | Two Pointers, String, Dynamic Programming | 2026-09-15 | 117 ms (top 26%) |
+| 647 | [647. Palindromic Substrings](problems/0647-palindromic-substrings/README.md) | Medium | Two Pointers, String, Dynamic Programming | 2026-09-15 | 117 ms (top 26%) |
 | 705 | [705. Design HashSet](problems/0705-design-hashset/README.md) | Easy | Array, Hash Table, Linked List, Design, Hash Function | 2026-08-17 | 47 ms (top 53%) |
 | 706 | [706. Design HashMap](problems/0706-design-hashmap/README.md) | Easy | Array, Hash Table, Linked List, Design, Hash Function | 2026-08-17 | 21 ms (top 7%) |
 | 912 | [912. Sort an Array](problems/0912-sort-an-array/README.md) | Medium | Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort | 2026-08-17 | 643 ms (top 52%) |

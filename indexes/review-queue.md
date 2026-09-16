@@ -9,39 +9,40 @@ useful habit is to revisit a problem about 1, 3, 7 and 30 days after solving it.
 Work top-down: redo the problem from the **Redo from scratch** checklist in its
 README without reading the code first.
 
-Generated for 2026-09-15 (UTC).
+Generated for 2026-09-16 (UTC).
 
-## Solved today (3)
+## Solved today (0)
 
-- [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (0 days ago)
-- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-15 (0 days ago)
-- 647. Palindromic Substrings — _awaiting annotation_ — Medium, Two Pointers, String, Dynamic Programming — solved 2026-09-15 (0 days ago)
+_nothing here_
 
-## 1-3 days ago (3)
+## 1-3 days ago (6)
 
-- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-09-14 (1 day ago)
-- [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (1 day ago)
-- [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (1 day ago)
+- [169. Majority Element](../problems/0169-majority-element/README.md) — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-09-14 (2 days ago)
+- [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (2 days ago)
+- [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (2 days ago)
+- [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (1 day ago)
+- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-15 (1 day ago)
+- [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium, Two Pointers, String, Dynamic Programming — solved 2026-09-15 (1 day ago)
 
 ## 3-7 days ago (0)
 
 _nothing here_
 
-## 7-30 days ago (10)
+## 7-30 days ago (4)
 
-- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy, Array, Hash Table, Linked List, Design, Hash Function — solved 2026-08-17 (29 days ago)
-- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy, Array, Hash Table, Linked List, Design, Hash Function — solved 2026-08-17 (29 days ago)
-- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium, Array, Hash Table, String, Sorting — solved 2026-08-17 (29 days ago)
-- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy, Array, String, Trie — solved 2026-08-17 (29 days ago)
-- [27. Remove Element](../problems/0027-remove-element/README.md) — Easy, Array, Two Pointers — solved 2026-08-17 (29 days ago)
-- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium, Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort — solved 2026-08-17 (29 days ago)
-- [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy, Array, Simulation — solved 2026-08-18 (28 days ago)
-- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium, Array, Two Pointers, Sorting, Quicksort, Bubble Sort — solved 2026-08-18 (28 days ago)
-- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium, Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect — solved 2026-08-18 (28 days ago)
-- [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy, Array, Design, Prefix Sum — solved 2026-08-19 (27 days ago)
+- [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy, Array, Simulation — solved 2026-08-18 (29 days ago)
+- [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium, Array, Two Pointers, Sorting, Quicksort, Bubble Sort — solved 2026-08-18 (29 days ago)
+- [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium, Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect — solved 2026-08-18 (29 days ago)
+- [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy, Array, Design, Prefix Sum — solved 2026-08-19 (28 days ago)
 
-## 30+ days ago - most likely to have faded (3)
+## 30+ days ago - most likely to have faded (9)
 
-- [1. Two Sum](../problems/0001-two-sum/README.md) — Easy, Array, Hash Table — solved 2026-08-05 (41 days ago)
-- [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy, String, Stack, Bracket Sequences — solved 2026-08-05 (41 days ago)
-- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy, Hash Table, String, Sorting — solved 2026-08-16 (30 days ago)
+- [1. Two Sum](../problems/0001-two-sum/README.md) — Easy, Array, Hash Table — solved 2026-08-05 (42 days ago)
+- [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy, String, Stack, Bracket Sequences — solved 2026-08-05 (42 days ago)
+- [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy, Hash Table, String, Sorting — solved 2026-08-16 (31 days ago)
+- [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy, Array, Hash Table, Linked List, Design, Hash Function — solved 2026-08-17 (30 days ago)
+- [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy, Array, Hash Table, Linked List, Design, Hash Function — solved 2026-08-17 (30 days ago)
+- [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium, Array, Hash Table, String, Sorting — solved 2026-08-17 (30 days ago)
+- [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy, Array, String, Trie — solved 2026-08-17 (30 days ago)
+- [27. Remove Element](../problems/0027-remove-element/README.md) — Easy, Array, Two Pointers — solved 2026-08-17 (30 days ago)
+- [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium, Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort — solved 2026-08-17 (30 days ago)

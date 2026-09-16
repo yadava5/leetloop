@@ -42,21 +42,21 @@
 
 ## String (6)
 
-- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
+- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
 - [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
-- 647. Palindromic Substrings — _awaiting annotation_ — Medium
+- [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
 ## Two Pointers (6)
 
-- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
+- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
 - [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
-- 647. Palindromic Substrings — _awaiting annotation_ — Medium
+- [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
 ## Design (3)
 
@@ -82,8 +82,8 @@
 
 ## Dynamic Programming (2)
 
-- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
-- 647. Palindromic Substrings — _awaiting annotation_ — Medium
+- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
+- [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
 ## Hash Function (2)
 
@@ -118,7 +118,7 @@
 
 ## Manacher (1)
 
-- 5. Longest Palindromic Substring — _awaiting annotation_ — Medium
+- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
 
 ## Merge Sort (1)
 
