@@ -11,18 +11,19 @@ README without reading the code first.
 
 Generated for 2026-09-17 (UTC).
 
-## Solved today (0)
+## Solved today (3)
 
-_nothing here_
+- [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy, Array, Dynamic Programming — solved 2026-09-17 (0 days ago)
+- 122. Best Time to Buy and Sell Stock II — _awaiting annotation_ — Medium, Array, Dynamic Programming, Greedy — solved 2026-09-17 (0 days ago)
+- 739. Daily Temperatures — _awaiting annotation_ — Medium, Array, Stack, Monotonic Stack — solved 2026-09-17 (0 days ago)
 
-## 1-3 days ago (9)
+## 1-3 days ago (8)
 
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (2 days ago)
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-15 (2 days ago)
 - [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Medium, Hash Table, String, Sliding Window — solved 2026-09-15 (2 days ago)
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium, Two Pointers, String, Dynamic Programming — solved 2026-09-15 (2 days ago)
 - [125. Valid Palindrome](../problems/0125-valid-palindrome/README.md) — Easy, Two Pointers, String — solved 2026-09-15 (2 days ago)
-- [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy, Array, Dynamic Programming — solved 2026-09-16 (1 day ago)
 - [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy, Array, Hash Table, Sliding Window — solved 2026-09-16 (1 day ago)
 - [9. Palindrome Number](../problems/0009-palindrome-number/README.md) — Easy, Math — solved 2026-09-16 (1 day ago)
 - [167. Two Sum II - Input Array Is Sorted](../problems/0167-two-sum-ii-input-array-is-sorted/README.md) — Medium, Array, Two Pointers, Binary Search — solved 2026-09-16 (1 day ago)

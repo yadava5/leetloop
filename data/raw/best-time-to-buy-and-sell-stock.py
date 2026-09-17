@@ -2,7 +2,8 @@ class Solution:
     def maxProfit(self, prices: list[int]) -> int:
         
         max_price = 0
-        min_price = float('inf')
+
+        min_price = float("inf")
 
         for current in prices:
 

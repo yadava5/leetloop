@@ -21,14 +21,16 @@
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Array, Hash Table, Linked List, Design, Hash Function
 - [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Array, Simulation
 
-## Medium (9)
+## Medium (11)
 
 - [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Hash Table, String, Sliding Window
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Two Pointers, String, Dynamic Programming, Manacher
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Array, Hash Table, String, Sorting
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Array, Two Pointers, Sorting, Quicksort, Bubble Sort
+- 122. Best Time to Buy and Sell Stock II — _awaiting annotation_ — Array, Dynamic Programming, Greedy
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Array, Hash Table, Union-Find
 - [167. Two Sum II - Input Array Is Sorted](../problems/0167-two-sum-ii-input-array-is-sorted/README.md) — Array, Two Pointers, Binary Search
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Two Pointers, String, Dynamic Programming
+- 739. Daily Temperatures — _awaiting annotation_ — Array, Stack, Monotonic Stack
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort

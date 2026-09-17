@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1789580529,
-  "lastSyncedAt": "2026-09-16T19:49:46.072Z",
+  "lastSyncedTimestamp": 1789664750,
+  "lastSyncedAt": "2026-09-17T19:58:04.039Z",
   "problems": {
     "best-time-to-buy-and-sell-stock": {
       "frontendId": "121",
@@ -13,13 +13,13 @@
         "Dynamic Programming"
       ],
       "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
-      "submissionId": "2143888895",
-      "timestamp": 1789577196,
+      "submissionId": "2144970311",
+      "timestamp": 1789664750,
       "lang": "Python3",
-      "runtime": "27 ms",
-      "runtimePercentile": 88.55110000000002,
+      "runtime": "18 ms",
+      "runtimePercentile": 96.35140000000001,
       "memory": "28.6 MB",
-      "memoryPercentile": 76.50560000000003,
+      "memoryPercentile": 76.56600000000003,
       "similar": [
         "maximum-subarray",
         "best-time-to-buy-and-sell-stock-ii",
@@ -31,9 +31,39 @@
         "maximum-profit-from-trading-stocks",
         "best-time-to-buy-and-sell-stock-v"
       ],
-      "codeHash": "776d28ef043902dacd40a17bbc98f817923a6dad99f22dc7731a0a92d6d7da42",
-      "annotationHash": "776d28ef043902dacd40a17bbc98f817923a6dad99f22dc7731a0a92d6d7da42",
-      "annotated": true
+      "codeHash": "779742df1d9200abb2d84f628400e59dbf5d66ff6e15f2c19dac41109ecf663b",
+      "annotationHash": null,
+      "annotated": false
+    },
+    "best-time-to-buy-and-sell-stock-ii": {
+      "frontendId": "122",
+      "title": "Best Time to Buy and Sell Stock II",
+      "slug": "best-time-to-buy-and-sell-stock-ii",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Dynamic Programming",
+        "Greedy"
+      ],
+      "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/",
+      "submissionId": "2144966699",
+      "timestamp": 1789664575,
+      "lang": "Python3",
+      "runtime": "0 ms",
+      "runtimePercentile": 100,
+      "memory": "20.1 MB",
+      "memoryPercentile": 99.7068,
+      "similar": [
+        "best-time-to-buy-and-sell-stock",
+        "best-time-to-buy-and-sell-stock-iii",
+        "best-time-to-buy-and-sell-stock-iv",
+        "best-time-to-buy-and-sell-stock-with-cooldown",
+        "best-time-to-buy-and-sell-stock-with-transaction-fee",
+        "maximum-profit-from-trading-stocks"
+      ],
+      "codeHash": "854f1e1615c8251b24601958ff63b8f0169de081cc48137f39b6e11fc5d4f91f",
+      "annotationHash": null,
+      "annotated": false
     },
     "concatenation-of-array": {
       "frontendId": "1929",
@@ -82,6 +112,32 @@
       "codeHash": "d884706f159f1413445a49e77d92f689e008969d23cd6e7117b56a23e56167b6",
       "annotationHash": "d884706f159f1413445a49e77d92f689e008969d23cd6e7117b56a23e56167b6",
       "annotated": true
+    },
+    "daily-temperatures": {
+      "frontendId": "739",
+      "title": "Daily Temperatures",
+      "slug": "daily-temperatures",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Stack",
+        "Monotonic Stack"
+      ],
+      "url": "https://leetcode.com/problems/daily-temperatures/",
+      "submissionId": "2144956804",
+      "timestamp": 1789664083,
+      "lang": "Python3",
+      "runtime": "94 ms",
+      "runtimePercentile": 57.37730000000001,
+      "memory": "28.6 MB",
+      "memoryPercentile": 57.3129,
+      "similar": [
+        "next-greater-element-i",
+        "online-stock-span"
+      ],
+      "codeHash": "78f71c4f8a96d4a4ad54e308663809c70e8d2e658490e27d02f8a0caf34af5bd",
+      "annotationHash": null,
+      "annotated": false
     },
     "design-hashmap": {
       "frontendId": "706",
@@ -302,7 +358,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer\u2013Moore Majority Vote Algorithm"
+        "Boyer–Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2141940957",
