@@ -10,11 +10,11 @@
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
-- 121. Best Time to Buy and Sell Stock — _awaiting annotation_ — Easy
+- [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium
-- 167. Two Sum II - Input Array Is Sorted — _awaiting annotation_ — Medium
+- [167. Two Sum II - Input Array Is Sorted](../problems/0167-two-sum-ii-input-array-is-sorted/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 219. Contains Duplicate II — _awaiting annotation_ — Easy
+- [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
 - [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
@@ -26,11 +26,11 @@
 ## Hash Table (10)
 
 - [1. Two Sum](../problems/0001-two-sum/README.md) — Easy
-- 3. Longest Substring Without Repeating Characters — _awaiting annotation_ — Medium
+- [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Medium
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
-- 219. Contains Duplicate II — _awaiting annotation_ — Easy
+- [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
@@ -38,12 +38,12 @@
 
 ## String (8)
 
-- 3. Longest Substring Without Repeating Characters — _awaiting annotation_ — Medium
+- [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Medium
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
 - [14. Longest Common Prefix](../problems/0014-longest-common-prefix/README.md) — Easy
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
-- 125. Valid Palindrome — _awaiting annotation_ — Easy
+- [125. Valid Palindrome](../problems/0125-valid-palindrome/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
@@ -53,8 +53,8 @@
 - [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
-- 125. Valid Palindrome — _awaiting annotation_ — Easy
-- 167. Two Sum II - Input Array Is Sorted — _awaiting annotation_ — Medium
+- [125. Valid Palindrome](../problems/0125-valid-palindrome/README.md) — Easy
+- [167. Two Sum II - Input Array Is Sorted](../problems/0167-two-sum-ii-input-array-is-sorted/README.md) — Medium
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
@@ -82,7 +82,7 @@
 ## Dynamic Programming (3)
 
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
-- 121. Best Time to Buy and Sell Stock — _awaiting annotation_ — Easy
+- [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
 ## Bucket Sort (2)
@@ -112,12 +112,12 @@
 
 ## Sliding Window (2)
 
-- 3. Longest Substring Without Repeating Characters — _awaiting annotation_ — Medium
-- 219. Contains Duplicate II — _awaiting annotation_ — Easy
+- [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Medium
+- [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy
 
 ## Binary Search (1)
 
-- 167. Two Sum II - Input Array Is Sorted — _awaiting annotation_ — Medium
+- [167. Two Sum II - Input Array Is Sorted](../problems/0167-two-sum-ii-input-array-is-sorted/README.md) — Medium
 
 ## Boyer–Moore Majority Vote Algorithm (1)
 
@@ -141,7 +141,7 @@
 
 ## Math (1)
 
-- 9. Palindrome Number — _awaiting annotation_ — Easy
+- [9. Palindrome Number](../problems/0009-palindrome-number/README.md) — Easy
 
 ## Merge Sort (1)
 

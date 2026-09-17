@@ -21,9 +21,6 @@
   <a href="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml"><img alt="daily fetch status" src="https://github.com/yadava5/leetloop/actions/workflows/fetch.yml/badge.svg"></a> <a href="scripts/verify_ast.py"><img alt="code unmodified: AST-verified" src="https://img.shields.io/badge/code%20unmodified-AST--verified-2ea44f"></a> <img alt="problems solved" src="https://img.shields.io/badge/problems-25-1f6feb"> <img alt="easy" src="https://img.shields.io/badge/easy-16-00b8a3"> <img alt="medium" src="https://img.shields.io/badge/medium-9-ffb800"> <img alt="hard" src="https://img.shields.io/badge/hard-0-ff375f"> <img alt="topics covered" src="https://img.shields.io/badge/topics-30-8957e5"> <img alt="solutions in Python 3" src="https://img.shields.io/badge/solutions-Python%203-3572A5"> <img alt="pipeline in TypeScript" src="https://img.shields.io/badge/pipeline-TypeScript-3178c6"> <img alt="Anthropic API keys required: 0" src="https://img.shields.io/badge/Anthropic%20API%20keys-0-lightgrey"> <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
-> **6 problems fetched but not annotated yet.** Job 1 commits the code at
-> 17:00 UTC and Job 2 writes the page an hour later, so a gap here is normal in between runs. If it persists, the watchdog opens an issue — see [docs/RUNBOOK.md](docs/RUNBOOK.md).
-
 **25 problems** — Easy 16 · Medium 9. Solutions in Python.
 
 ---
@@ -164,21 +161,21 @@ two places, one of which it cannot reach.
 | # | Problem | Difficulty | Topics | Solved | Runtime |
 | --: | --- | --- | --- | --- | --- |
 | 1 | [1. Two Sum](problems/0001-two-sum/README.md) | Easy | Array, Hash Table | 2026-08-05 | 3 ms (top 46%) |
-| 3 | 3. Longest Substring Without Repeating Characters — _awaiting annotation_ | Medium | Hash Table, String, Sliding Window | 2026-09-15 | 172 ms (top 23%) |
+| 3 | [3. Longest Substring Without Repeating Characters](problems/0003-longest-substring-without-repeating-characters/README.md) | Medium | Hash Table, String, Sliding Window | 2026-09-15 | 172 ms (top 23%) |
 | 5 | [5. Longest Palindromic Substring](problems/0005-longest-palindromic-substring/README.md) | Medium | Two Pointers, String, Dynamic Programming, Manacher | 2026-09-15 | 215 ms (top 8%) |
-| 9 | 9. Palindrome Number — _awaiting annotation_ | Easy | Math | 2026-09-16 | 13 ms (top 76%) |
+| 9 | [9. Palindrome Number](problems/0009-palindrome-number/README.md) | Easy | Math | 2026-09-16 | 13 ms (top 76%) |
 | 14 | [14. Longest Common Prefix](problems/0014-longest-common-prefix/README.md) | Easy | Array, String, Trie | 2026-08-17 | 0 ms (top 0%) |
 | 20 | [20. Valid Parentheses](problems/0020-valid-parentheses/README.md) | Easy | String, Stack, Bracket Sequences | 2026-08-05 | 4 ms (top 88%) |
 | 26 | [26. Remove Duplicates from Sorted Array](problems/0026-remove-duplicates-from-sorted-array/README.md) | Easy | Array, Two Pointers | 2026-09-14 | 0 ms (top 0%) |
 | 27 | [27. Remove Element](problems/0027-remove-element/README.md) | Easy | Array, Two Pointers | 2026-08-17 | 0 ms (top 0%) |
 | 49 | [49. Group Anagrams](problems/0049-group-anagrams/README.md) | Medium | Array, Hash Table, String, Sorting | 2026-08-17 | 7 ms (top 2%) |
 | 75 | [75. Sort Colors](problems/0075-sort-colors/README.md) | Medium | Array, Two Pointers, Sorting, Quicksort, Bubble Sort | 2026-08-18 | 0 ms (top 0%) |
-| 121 | 121. Best Time to Buy and Sell Stock — _awaiting annotation_ | Easy | Array, Dynamic Programming | 2026-09-16 | 27 ms (top 11%) |
-| 125 | 125. Valid Palindrome — _awaiting annotation_ | Easy | Two Pointers, String | 2026-09-15 | 7 ms (top 19%) |
+| 121 | [121. Best Time to Buy and Sell Stock](problems/0121-best-time-to-buy-and-sell-stock/README.md) | Easy | Array, Dynamic Programming | 2026-09-16 | 27 ms (top 11%) |
+| 125 | [125. Valid Palindrome](problems/0125-valid-palindrome/README.md) | Easy | Two Pointers, String | 2026-09-15 | 7 ms (top 19%) |
 | 128 | [128. Longest Consecutive Sequence](problems/0128-longest-consecutive-sequence/README.md) | Medium | Array, Hash Table, Union-Find | 2026-09-15 | 48 ms (top 37%) |
-| 167 | 167. Two Sum II - Input Array Is Sorted — _awaiting annotation_ | Medium | Array, Two Pointers, Binary Search | 2026-09-16 | 11 ms (top 95%) |
+| 167 | [167. Two Sum II - Input Array Is Sorted](problems/0167-two-sum-ii-input-array-is-sorted/README.md) | Medium | Array, Two Pointers, Binary Search | 2026-09-16 | 11 ms (top 95%) |
 | 169 | [169. Majority Element](problems/0169-majority-element/README.md) | Easy | Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm | 2026-09-14 | 7 ms (top 42%) |
-| 219 | 219. Contains Duplicate II — _awaiting annotation_ | Easy | Array, Hash Table, Sliding Window | 2026-09-16 | 41 ms (top 20%) |
+| 219 | [219. Contains Duplicate II](problems/0219-contains-duplicate-ii/README.md) | Easy | Array, Hash Table, Sliding Window | 2026-09-16 | 41 ms (top 20%) |
 | 242 | [242. Valid Anagram](problems/0242-valid-anagram/README.md) | Easy | Hash Table, String, Sorting | 2026-08-16 | 3 ms (top 2%) |
 | 283 | [283. Move Zeroes](problems/0283-move-zeroes/README.md) | Easy | Array, Two Pointers | 2026-09-14 | 3 ms (top 18%) |
 | 303 | [303. Range Sum Query - Immutable](problems/0303-range-sum-query-immutable/README.md) | Easy | Array, Design, Prefix Sum | 2026-08-19 | 0 ms (top 0%) |

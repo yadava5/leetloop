@@ -32,8 +32,8 @@
         "best-time-to-buy-and-sell-stock-v"
       ],
       "codeHash": "776d28ef043902dacd40a17bbc98f817923a6dad99f22dc7731a0a92d6d7da42",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "776d28ef043902dacd40a17bbc98f817923a6dad99f22dc7731a0a92d6d7da42",
+      "annotated": true
     },
     "concatenation-of-array": {
       "frontendId": "1929",
@@ -80,8 +80,8 @@
         "contains-duplicate-iii"
       ],
       "codeHash": "d884706f159f1413445a49e77d92f689e008969d23cd6e7117b56a23e56167b6",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "d884706f159f1413445a49e77d92f689e008969d23cd6e7117b56a23e56167b6",
+      "annotated": true
     },
     "design-hashmap": {
       "frontendId": "706",
@@ -288,8 +288,8 @@
         "find-longest-special-substring-that-occurs-thrice-i"
       ],
       "codeHash": "76025ea59804ead6cc39abcaa49c05261075c1dd14c2e427a9a87cf1c00c67ef",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "76025ea59804ead6cc39abcaa49c05261075c1dd14c2e427a9a87cf1c00c67ef",
+      "annotated": true
     },
     "majority-element": {
       "frontendId": "169",
@@ -302,7 +302,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer–Moore Majority Vote Algorithm"
+        "Boyer\u2013Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2141940957",
@@ -375,8 +375,8 @@
         "find-the-largest-palindrome-divisible-by-k"
       ],
       "codeHash": "7099315ef0901e069d2d95e430b743a9ea68076b9f6f8d62f1db5e4268be762b",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "7099315ef0901e069d2d95e430b743a9ea68076b9f6f8d62f1db5e4268be762b",
+      "annotated": true
     },
     "palindromic-substrings": {
       "frontendId": "647",
@@ -649,8 +649,8 @@
         "two-sum-less-than-k"
       ],
       "codeHash": "ae7301ebb7f0798163e2a54b4cf9706df584e0866fee04ff1f249b063258de85",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "ae7301ebb7f0798163e2a54b4cf9706df584e0866fee04ff1f249b063258de85",
+      "annotated": true
     },
     "valid-anagram": {
       "frontendId": "242",
@@ -706,8 +706,8 @@
         "maximum-palindromes-after-operations"
       ],
       "codeHash": "3ae85c3262c619d5bbdccc3564e2b2280a9a7d827d99567458cbee4392feb50b",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "3ae85c3262c619d5bbdccc3564e2b2280a9a7d827d99567458cbee4392feb50b",
+      "annotated": true
     },
     "valid-parentheses": {
       "frontendId": "20",
