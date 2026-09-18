@@ -32,8 +32,8 @@
         "best-time-to-buy-and-sell-stock-v"
       ],
       "codeHash": "779742df1d9200abb2d84f628400e59dbf5d66ff6e15f2c19dac41109ecf663b",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "779742df1d9200abb2d84f628400e59dbf5d66ff6e15f2c19dac41109ecf663b",
+      "annotated": true
     },
     "best-time-to-buy-and-sell-stock-ii": {
       "frontendId": "122",
@@ -62,8 +62,8 @@
         "maximum-profit-from-trading-stocks"
       ],
       "codeHash": "854f1e1615c8251b24601958ff63b8f0169de081cc48137f39b6e11fc5d4f91f",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "854f1e1615c8251b24601958ff63b8f0169de081cc48137f39b6e11fc5d4f91f",
+      "annotated": true
     },
     "concatenation-of-array": {
       "frontendId": "1929",
@@ -136,8 +136,8 @@
         "online-stock-span"
       ],
       "codeHash": "78f71c4f8a96d4a4ad54e308663809c70e8d2e658490e27d02f8a0caf34af5bd",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "78f71c4f8a96d4a4ad54e308663809c70e8d2e658490e27d02f8a0caf34af5bd",
+      "annotated": true
     },
     "design-hashmap": {
       "frontendId": "706",
@@ -358,7 +358,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer–Moore Majority Vote Algorithm"
+        "Boyer\u2013Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2141940957",

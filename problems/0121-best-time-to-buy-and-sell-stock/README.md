@@ -4,9 +4,9 @@
 |---|---|
 | **Difficulty** | Easy |
 | **Topics** | Array, Dynamic Programming |
-| **Solved** | 2026-09-16 |
-| **Runtime** | 27 ms (88.55th percentile) |
-| **Memory** | 28.6 MB (76.51th percentile) |
+| **Solved** | 2026-09-17 |
+| **Runtime** | 18 ms (96.35th percentile) |
+| **Memory** | 28.6 MB (76.57th percentile) |
 | **Language** | Python3 |
 | **LeetCode** | https://leetcode.com/problems/best-time-to-buy-and-sell-stock/ |
 
@@ -43,14 +43,14 @@ def maxProfit(self, prices: list[int]) -> int
 | `[3, 2, 1]` | `0` | Prices only fall, so no profitable pair exists and the "don't trade" answer is returned. This is what the `max_price = 0` seed is for. |
 | `[1]` | `0` | **Edge case:** a single day. There is no later day to sell on, the loop runs once and only updates `min_price`, and `0` comes back. |
 | `[4, 4, 4]` | `0` | A flat series. The `elif` computes `4 - 4 = 0`, which is not `> 0`, so nothing is recorded. Selling at the price you bought at is not a profit. |
-| `[0, 0, 10]` | `10` | Price `0` is legal and is a valid buy. Shows why `min_price` must be seeded at `float('inf')` and not at `0`. |
+| `[0, 0, 10]` | `10` | Price `0` is legal and is a valid buy. Shows why `min_price` must be seeded at `float("inf")` and not at `0`. |
 
 ### Constraints, and what each one forces
 
 | Constraint | What it forces |
 |---|---|
 | `1 <= prices.length <= 10^5` | The upper bound rules out the obvious nested loop: **10⁵ days means an O(n²) pairwise scan is ~5 × 10⁹ comparisons, hopeless in Python**, so the solution must be a single pass (or at worst `n log n`). It also makes O(n) *extra* memory — a suffix-maximum array, say — technically affordable but wasteful, since a single scalar carries the same information. The lower bound of `1` rules in the empty-array question entirely: `prices` is never empty, so no guard is needed, and the `for` loop over one element is a well-defined base case that leaves `max_price` at its seed. |
-| `0 <= prices[i] <= 10^4` | Prices are **non-negative**, which is exactly why `min_price = float('inf')` is the right sentinel and `min_price = 0` would be a bug — a seed of `0` is below every legal price, so it would never be replaced and every "profit" would be computed against a day that does not exist. The bound also caps the answer at 10⁴, comfortably inside a machine integer in any language, so nothing here needs overflow care. |
+| `0 <= prices[i] <= 10^4` | Prices are **non-negative**, which is exactly why `min_price = float("inf")` is the right sentinel and `min_price = 0` would be a bug — a seed of `0` is below every legal price, so it would never be replaced and every "profit" would be computed against a day that does not exist. The bound also caps the answer at 10⁴, comfortably inside a machine integer in any language, so nothing here needs overflow care. |
 
 ## Key insight
 
@@ -66,7 +66,7 @@ sweep direction enforces for you.
 
 1. Seed `max_price = 0` — the profit of not trading, and the floor on the
    answer.
-2. Seed `min_price = float('inf')` so that day 0 is unconditionally cheaper.
+2. Seed `min_price = float("inf")` so that day 0 is unconditionally cheaper.
 3. Sweep the array left to right. For each `current`:
    - if `current < min_price`, it is the new cheapest buy candidate for every
      later day;
@@ -124,10 +124,11 @@ class Solution:
         # trade at all" - on a strictly falling series nothing ever beats 0,
         # so 0 is returned rather than a negative loss.
         max_price = 0
-        # float('inf') so that the very first day is unconditionally cheaper
+
+        # float("inf") so that the very first day is unconditionally cheaper
         # and becomes the buy candidate. A sentinel of 0 would be wrong here
         # (prices can be 0, and nothing would ever go below it).
-        min_price = float('inf')
+        min_price = float("inf")
 
         # Single left-to-right pass. The direction is the whole point: buying
         # must happen before selling, so by only ever comparing `current`
@@ -186,7 +187,7 @@ class Solution:
 - **`max(prices) - min(prices)`.** Returns `5` on `[5, 1, 4, 0, 3]` instead of
   `3`. It is right on plenty of inputs — any input where the cheapest day
   precedes the dearest — which is what makes it survive a casual test.
-- **Seeding `min_price = 0` instead of `float('inf')`.** Prices may be `0`, so
+- **Seeding `min_price = 0` instead of `float("inf")`.** Prices may be `0`, so
   `0` is not a safe "smaller than anything" sentinel. With that seed,
   `[0, 0, 10]` still works by luck but `[5, 3, 6]` reports `6` (selling against a
   phantom day priced at `0`) rather than `3`. Using `prices[0]` as the seed is
@@ -215,7 +216,7 @@ class Solution:
 1. Say the reframing first: **fix the sell day, ask for the cheapest day before
    it.** The pair search collapses to a scan.
 2. Seed `best_profit = 0` (declining to trade is legal) and
-   `cheapest = float('inf')` (prices can be `0`).
+   `cheapest = float("inf")` (prices can be `0`).
 3. One left-to-right pass. Update the cheapest price, or update the best profit
    against it.
 4. Return `best_profit`.
@@ -235,11 +236,13 @@ and what else in the function that answer depends on.
   solved yet, and the one to do next. This problem *is* Maximum Subarray applied
   to the array of consecutive daily differences; solving both makes the running
   minimum and Kadane's running sum visibly the same trick seen from two ends.
-- [Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
-  — not solved yet. Unlimited transactions, which collapses to summing every
-  positive daily delta. The instructive part is *why* the greedy is suddenly
-  legal there and is not here: with one transaction you must commit to a single
-  interval, and greed over intervals is not the same as greed over days.
+- [Best Time to Buy and Sell Stock II](../0122-best-time-to-buy-and-sell-stock-ii/README.md)
+  — solved. Unlimited transactions, which collapses to summing every positive
+  daily delta. The instructive part is *why* the greedy is suddenly legal there
+  and is not here: with one transaction you must commit to a single interval,
+  and greed over intervals is not the same as greed over days. Read the two
+  pages back to back — one keeps a running minimum, the other throws the
+  minimum away entirely, and the difference is exactly the transaction cap.
 - [Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
   and [IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/) —
   not solved yet. At most two, then at most `k`, transactions. This is where the

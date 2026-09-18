@@ -11,7 +11,7 @@
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy
-- 122. Best Time to Buy and Sell Stock II — _awaiting annotation_ — Medium
+- [122. Best Time to Buy and Sell Stock II](../problems/0122-best-time-to-buy-and-sell-stock-ii/README.md) — Medium
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium
 - [167. Two Sum II - Input Array Is Sorted](../problems/0167-two-sum-ii-input-array-is-sorted/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
@@ -21,7 +21,7 @@
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
-- 739. Daily Temperatures — _awaiting annotation_ — Medium
+- [739. Daily Temperatures](../problems/0739-daily-temperatures/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 - [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy
 
@@ -73,7 +73,7 @@
 
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
 - [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy
-- 122. Best Time to Buy and Sell Stock II — _awaiting annotation_ — Medium
+- [122. Best Time to Buy and Sell Stock II](../problems/0122-best-time-to-buy-and-sell-stock-ii/README.md) — Medium
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
 ## Design (3)
@@ -121,7 +121,7 @@
 ## Stack (2)
 
 - [20. Valid Parentheses](../problems/0020-valid-parentheses/README.md) — Easy
-- 739. Daily Temperatures — _awaiting annotation_ — Medium
+- [739. Daily Temperatures](../problems/0739-daily-temperatures/README.md) — Medium
 
 ## Binary Search (1)
 
@@ -145,7 +145,7 @@
 
 ## Greedy (1)
 
-- 122. Best Time to Buy and Sell Stock II — _awaiting annotation_ — Medium
+- [122. Best Time to Buy and Sell Stock II](../problems/0122-best-time-to-buy-and-sell-stock-ii/README.md) — Medium
 
 ## Manacher (1)
 
@@ -161,7 +161,7 @@
 
 ## Monotonic Stack (1)
 
-- 739. Daily Temperatures — _awaiting annotation_ — Medium
+- [739. Daily Temperatures](../problems/0739-daily-temperatures/README.md) — Medium
 
 ## Prefix Sum (1)
 

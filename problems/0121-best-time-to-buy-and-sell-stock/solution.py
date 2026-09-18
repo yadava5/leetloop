@@ -8,10 +8,11 @@ class Solution:
         # trade at all" - on a strictly falling series nothing ever beats 0,
         # so 0 is returned rather than a negative loss.
         max_price = 0
-        # float('inf') so that the very first day is unconditionally cheaper
+
+        # float("inf") so that the very first day is unconditionally cheaper
         # and becomes the buy candidate. A sentinel of 0 would be wrong here
         # (prices can be 0, and nothing would ever go below it).
-        min_price = float('inf')
+        min_price = float("inf")
 
         # Single left-to-right pass. The direction is the whole point: buying
         # must happen before selling, so by only ever comparing `current`
