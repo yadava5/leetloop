@@ -1,0 +1,32 @@
+{
+  "questionId": "53",
+  "frontendId": "53",
+  "title": "Maximum Subarray",
+  "slug": "maximum-subarray",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Divide and Conquer",
+    "Dynamic Programming"
+  ],
+  "similar": [
+    "best-time-to-buy-and-sell-stock",
+    "maximum-product-subarray",
+    "degree-of-an-array",
+    "longest-turbulent-subarray",
+    "maximum-score-of-spliced-array",
+    "maximum-absolute-sum-of-any-subarray",
+    "maximum-subarray-sum-after-one-operation",
+    "substring-with-largest-variance",
+    "count-subarrays-with-score-less-than-k",
+    "maximum-value-of-a-string-in-an-array",
+    "find-the-substring-with-maximum-cost",
+    "k-items-with-the-maximum-sum",
+    "maximum-good-subarray-sum",
+    "maximize-subarray-sum-after-removing-all-occurrences-of-one-element"
+  ],
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "-10^4 <= nums[i] <= 10^4"
+  ]
+}

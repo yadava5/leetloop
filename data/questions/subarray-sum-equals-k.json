@@ -1,0 +1,27 @@
+{
+  "questionId": "560",
+  "frontendId": "560",
+  "title": "Subarray Sum Equals K",
+  "slug": "subarray-sum-equals-k",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Prefix Sum"
+  ],
+  "similar": [
+    "two-sum",
+    "continuous-subarray-sum",
+    "subarray-product-less-than-k",
+    "find-pivot-index",
+    "subarray-sums-divisible-by-k",
+    "minimum-operations-to-reduce-x-to-zero",
+    "k-radius-subarray-averages",
+    "maximum-sum-score-of-array"
+  ],
+  "constraints": [
+    "1 <= nums.length <= 2 * 10^4",
+    "-1000 <= nums[i] <= 1000",
+    "-10^7 <= k <= 10^7"
+  ]
+}

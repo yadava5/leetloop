@@ -1,0 +1,20 @@
+{
+  "questionId": "940",
+  "frontendId": "904",
+  "title": "Fruit Into Baskets",
+  "slug": "fruit-into-baskets",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+  ],
+  "similar": [
+    "longest-nice-subarray",
+    "fruits-into-baskets-ii"
+  ],
+  "constraints": [
+    "1 <= fruits.length <= 10^5",
+    "0 <= fruits[i] < fruits.length"
+  ]
+}

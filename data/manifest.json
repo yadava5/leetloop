@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastSyncedTimestamp": 1789664750,
-  "lastSyncedAt": "2026-09-17T19:58:04.039Z",
+  "lastSyncedTimestamp": 1789704171,
+  "lastSyncedAt": "2026-09-18T19:23:01.480Z",
   "problems": {
     "best-time-to-buy-and-sell-stock": {
       "frontendId": "121",
@@ -195,6 +195,32 @@
       "annotationHash": "18abce2cd5d9bff376ba8aeb4807c5f0221fa1691e9e8475f5da1d8ef4c7ea85",
       "annotated": true
     },
+    "fruit-into-baskets": {
+      "frontendId": "904",
+      "title": "Fruit Into Baskets",
+      "slug": "fruit-into-baskets",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Sliding Window"
+      ],
+      "url": "https://leetcode.com/problems/fruit-into-baskets/",
+      "submissionId": "2145322213",
+      "timestamp": 1789704171,
+      "lang": "Python3",
+      "runtime": "192 ms",
+      "runtimePercentile": 39.23950000000001,
+      "memory": "26.1 MB",
+      "memoryPercentile": 14.256999999999994,
+      "similar": [
+        "longest-nice-subarray",
+        "fruits-into-baskets-ii"
+      ],
+      "codeHash": "c5dc544b116c9a34c11cc59ba0621a3b87b1bb5321cc04b1e9a8f36d7190e8e1",
+      "annotationHash": null,
+      "annotated": false
+    },
     "group-anagrams": {
       "frontendId": "49",
       "title": "Group Anagrams",
@@ -293,13 +319,13 @@
         "Manacher"
       ],
       "url": "https://leetcode.com/problems/longest-palindromic-substring/",
-      "submissionId": "2142902460",
-      "timestamp": 1789493914,
+      "submissionId": "2145291138",
+      "timestamp": 1789701162,
       "lang": "Python3",
-      "runtime": "215 ms",
-      "runtimePercentile": 91.63990000000024,
+      "runtime": "297 ms",
+      "runtimePercentile": 46.324800000000245,
       "memory": "19.2 MB",
-      "memoryPercentile": 70.01729999999999,
+      "memoryPercentile": 70.19309999999999,
       "similar": [
         "shortest-palindrome",
         "palindrome-permutation",
@@ -308,9 +334,9 @@
         "palindromic-substrings",
         "maximum-number-of-non-overlapping-palindrome-substrings"
       ],
-      "codeHash": "cea60f74a9693beb4d8c2df078fcd58cd5d33f8e5ead94db568100106cb4b8ff",
-      "annotationHash": "cea60f74a9693beb4d8c2df078fcd58cd5d33f8e5ead94db568100106cb4b8ff",
-      "annotated": true
+      "codeHash": "f8db3cf70546e9ea84dd993033d0c0db6eaf4a4d60ad9ae89e51a89902330a65",
+      "annotationHash": null,
+      "annotated": false
     },
     "longest-substring-without-repeating-characters": {
       "frontendId": "3",
@@ -358,7 +384,7 @@
         "Divide and Conquer",
         "Sorting",
         "Counting",
-        "Boyer\u2013Moore Majority Vote Algorithm"
+        "Boyer–Moore Majority Vote Algorithm"
       ],
       "url": "https://leetcode.com/problems/majority-element/",
       "submissionId": "2141940957",
@@ -380,6 +406,44 @@
       "codeHash": "0c10b6f4095f22c83ec398824d31e8d234303877ff5dc352df7cffac3d1ad57d",
       "annotationHash": "0c10b6f4095f22c83ec398824d31e8d234303877ff5dc352df7cffac3d1ad57d",
       "annotated": true
+    },
+    "maximum-subarray": {
+      "frontendId": "53",
+      "title": "Maximum Subarray",
+      "slug": "maximum-subarray",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Divide and Conquer",
+        "Dynamic Programming"
+      ],
+      "url": "https://leetcode.com/problems/maximum-subarray/",
+      "submissionId": "2145166383",
+      "timestamp": 1789678515,
+      "lang": "Python3",
+      "runtime": "19 ms",
+      "runtimePercentile": 96.8232,
+      "memory": "31.5 MB",
+      "memoryPercentile": 45.38149999999997,
+      "similar": [
+        "best-time-to-buy-and-sell-stock",
+        "maximum-product-subarray",
+        "degree-of-an-array",
+        "longest-turbulent-subarray",
+        "maximum-score-of-spliced-array",
+        "maximum-absolute-sum-of-any-subarray",
+        "maximum-subarray-sum-after-one-operation",
+        "substring-with-largest-variance",
+        "count-subarrays-with-score-less-than-k",
+        "maximum-value-of-a-string-in-an-array",
+        "find-the-substring-with-maximum-cost",
+        "k-items-with-the-maximum-sum",
+        "maximum-good-subarray-sum",
+        "maximize-subarray-sum-after-removing-all-occurrences-of-one-element"
+      ],
+      "codeHash": "52f26b2eb841e7a9fdd2ce7643dc49e17d5e6e2386ce50af7f3b3753bdfb056c",
+      "annotationHash": null,
+      "annotated": false
     },
     "move-zeroes": {
       "frontendId": "283",
@@ -597,6 +661,38 @@
       "codeHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
       "annotationHash": "fe5c62bd646bcae027ba335d6950c647e515881296f780d4fbbface18a861b30",
       "annotated": true
+    },
+    "subarray-sum-equals-k": {
+      "frontendId": "560",
+      "title": "Subarray Sum Equals K",
+      "slug": "subarray-sum-equals-k",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "Hash Table",
+        "Prefix Sum"
+      ],
+      "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+      "submissionId": "2145272412",
+      "timestamp": 1789699141,
+      "lang": "Python3",
+      "runtime": "35 ms",
+      "runtimePercentile": 46.231700000000004,
+      "memory": "21.5 MB",
+      "memoryPercentile": 99.3249,
+      "similar": [
+        "two-sum",
+        "continuous-subarray-sum",
+        "subarray-product-less-than-k",
+        "find-pivot-index",
+        "subarray-sums-divisible-by-k",
+        "minimum-operations-to-reduce-x-to-zero",
+        "k-radius-subarray-averages",
+        "maximum-sum-score-of-array"
+      ],
+      "codeHash": "43822c3a08b4e8f49a681b9009a7c8a71f707fc51acb528e0cfa21363ea32b4c",
+      "annotationHash": null,
+      "annotated": false
     },
     "top-k-frequent-elements": {
       "frontendId": "347",

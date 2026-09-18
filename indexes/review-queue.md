@@ -11,11 +11,13 @@ README without reading the code first.
 
 Generated for 2026-09-18 (UTC).
 
-## Solved today (0)
+## Solved today (3)
 
-_nothing here_
+- 904. Fruit Into Baskets — _awaiting annotation_ — Medium, Array, Hash Table, Sliding Window — solved 2026-09-18 (0 days ago)
+- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-18 (0 days ago)
+- 560. Subarray Sum Equals K — _awaiting annotation_ — Medium, Array, Hash Table, Prefix Sum — solved 2026-09-18 (0 days ago)
 
-## 1-3 days ago (6)
+## 1-3 days ago (7)
 
 - [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy, Array, Hash Table, Sliding Window — solved 2026-09-16 (2 days ago)
 - [9. Palindrome Number](../problems/0009-palindrome-number/README.md) — Easy, Math — solved 2026-09-16 (2 days ago)
@@ -23,14 +25,14 @@ _nothing here_
 - [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy, Array, Dynamic Programming — solved 2026-09-17 (1 day ago)
 - [122. Best Time to Buy and Sell Stock II](../problems/0122-best-time-to-buy-and-sell-stock-ii/README.md) — Medium, Array, Dynamic Programming, Greedy — solved 2026-09-17 (1 day ago)
 - [739. Daily Temperatures](../problems/0739-daily-temperatures/README.md) — Medium, Array, Stack, Monotonic Stack — solved 2026-09-17 (1 day ago)
+- 53. Maximum Subarray — _awaiting annotation_ — Medium, Array, Divide and Conquer, Dynamic Programming — solved 2026-09-17 (1 day ago)
 
-## 3-7 days ago (8)
+## 3-7 days ago (7)
 
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy, Array, Hash Table, Divide and Conquer, Sorting, Counting, Boyer–Moore Majority Vote Algorithm — solved 2026-09-14 (4 days ago)
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (4 days ago)
 - [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy, Array, Two Pointers — solved 2026-09-14 (4 days ago)
 - [128. Longest Consecutive Sequence](../problems/0128-longest-consecutive-sequence/README.md) — Medium, Array, Hash Table, Union-Find — solved 2026-09-15 (3 days ago)
-- [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium, Two Pointers, String, Dynamic Programming, Manacher — solved 2026-09-15 (3 days ago)
 - [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Medium, Hash Table, String, Sliding Window — solved 2026-09-15 (3 days ago)
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium, Two Pointers, String, Dynamic Programming — solved 2026-09-15 (3 days ago)
 - [125. Valid Palindrome](../problems/0125-valid-palindrome/README.md) — Easy, Two Pointers, String — solved 2026-09-15 (3 days ago)
