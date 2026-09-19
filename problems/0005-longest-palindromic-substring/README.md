@@ -4,9 +4,9 @@
 |---|---|
 | **Difficulty** | Medium |
 | **Topics** | Two Pointers, String, Dynamic Programming, Manacher |
-| **Solved** | 2026-09-15 |
-| **Runtime** | 215 ms (91.64th percentile) |
-| **Memory** | 19.2 MB (70.02th percentile) |
+| **Solved** | 2026-09-18 |
+| **Runtime** | 297 ms (46.32th percentile) |
+| **Memory** | 19.2 MB (70.19th percentile) |
 | **Language** | Python3 |
 | **LeetCode** | https://leetcode.com/problems/longest-palindromic-substring/ |
 
@@ -15,19 +15,23 @@
 **Given** a string `s`.
 
 **Return** the longest **contiguous substring** of `s` that reads the same
-forwards and backwards. You return the substring itself, not its length and not
-its indices. If several substrings tie for longest, any one of them is accepted.
+forwards and backwards. The substring itself, not its length and not its indices.
 
-Two things this is *not*. It is a **substring**, so the characters must be
-contiguous in `s` — this is not the longest palindromic *subsequence*, which is
-a genuinely different (and harder) problem solved by an O(n²) DP. And a
-palindrome here is defined by plain character equality: no case folding, no
-skipping punctuation.
+Three things to be precise about:
 
-**Guaranteed**: `s` is non-empty. That single promise is worth noticing,
-because it means an answer always exists — every one-character substring is a
-palindrome, so the result is never the empty string, and the `if not s` guard
-at the top of the solution can never fire.
+- **Substring, not subsequence.** Characters must be adjacent in the original.
+  The longest palindromic *subsequence* of `"abcba"` and of `"abccba"` are
+  different questions with different (and harder) answers.
+- **Any longest one will do.** If several share the maximum length, LeetCode
+  accepts any of them. This solution returns the leftmost, by using a strict `>`
+  when comparing lengths — a deliberate choice for determinism, not a
+  requirement.
+- **Length 1 counts.** Every single character is a palindrome, so the answer is
+  never empty for a non-empty input. On `"abc"` the answer is `"a"`.
+
+**Guaranteed**: `1 <= s.length`, so the string is never empty and an answer
+always exists. Characters may be letters or digits; nothing here depends on the
+alphabet.
 
 ```text
 def longestPalindrome(self, s: str) -> str
@@ -37,301 +41,315 @@ def longestPalindrome(self, s: str) -> str
 
 | `s` | Returns | Why |
 |---|---|---|
-| `"q"` | `"q"` | **Edge case:** one character. Handled entirely by the initialisation `best_start = 0, best_length = 1` — the loop runs once and improves on nothing. |
-| `"abcde"` | `"a"` | No palindrome longer than one character exists. The strict `>` in `if length > best_length` never fires, so the pre-loop default is returned, and that default is the leftmost single character. |
-| `"xyzzyx"` | `"xyzzyx"` | **Counterexample to expanding from characters only.** The whole string is an even-length palindrome centred on the gap between the two `z`s. An odd-centres-only version returns `"x"` — verified, not assumed. This is why each pass of the loop runs the expansion twice. |
-| `"bananas"` | `"anana"` | The answer touches neither end of the string and starts at an odd index. Kills any instinct to anchor the search at index `0` or to only grow a window from the left. |
-| `"aaaa"` | `"aaaa"` | The worst case for running time as well as a correctness check: every centre expands as far as it can go, so this is the shape that makes the O(n²) bound tight. Also the case where several centres produce the same maximal length and the strict `>` quietly picks the first. |
+| `"aba"` | `"aba"` | The odd case: a palindrome centred on a character, radius 1. |
+| `"abba"` | `"abba"` | **The even case, and the reason the loop runs twice per position.** This palindrome is centred on the *gap* between the two `b`s. A solution that only expands around characters answers `"bb"` — plausible-looking and wrong. |
+| `"abc"` | `"a"` | **Edge case:** no palindrome longer than one character. The answer comes from the seed `(best_start=0, best_string=1)` rather than from any comparison inside the loop, because `1 > 1` is false. |
+| `"bananas"` | `"anana"` | A longer odd palindrome that is neither a prefix nor a suffix, sitting at index 1. Good for catching an off-by-one in the start index: `best_start = left` instead of `left + 1` returns `"banan"` here — same length, wrong window, and it *looks* like a palindrome at a glance. |
+| `"xabay"` | `"aba"` | The answer is strictly interior, with junk on both sides. The expansion from centre `2` must stop at the mismatched `x`/`y`, not run past them. |
+| `"abacdfgdcaba"` | `"aba"` | **Counterexample to "reverse the string and take the longest common substring."** That method returns `"abacd"` (length 5) here, because `"abacd"` also appears in the reversed string — but it is not a palindrome. The true answer is a mere `"aba"`. |
+| `"z"` | `"z"` | **Edge case:** one character. Both `while` loops at the single centre stop immediately or run once trivially; the seed supplies the answer. |
 
 ### Constraints, and what each one forces
 
 | Constraint | What it forces |
 |---|---|
-| `1 <= s.length <= 1000` | The lower bound of **`1` makes `if not s: return ""` dead code** — pleasant to have, but it is never exercised by the judge, so it proves nothing about the solution and should not be mistaken for the base case. The upper bound is the real design input: **n = 1000 makes O(n²) ≈ 10⁶ character comparisons, which Python does comfortably**, while a brute force over all ~5 × 10⁵ substrings that re-checks each one in O(n) is ~10⁹ operations and times out. Equally, 1000 is small enough that **Manacher's O(n) algorithm buys nothing** — the whole reason this problem is usually solved by centre expansion rather than by the asymptotically better method. The bound also makes the O(n²) *memory* of a DP table (10⁶ booleans) affordable but pointless next to this solution's O(1). |
-
-One honesty note: the fetched constraints list contains only that one bound. The
-real statement also restricts the alphabet, but that line was not captured, and
-nothing here depends on it — the expansion compares characters with `==` and
-works for any alphabet at all.
+| `1 <= s.length <= 1000` | The upper bound is the whole story: at `n = 1000`, an O(n²) method is ~10⁶ character comparisons, which is comfortable in Python, while the O(n³) "check every substring for palindromicity" is ~10⁹ and will TLE. So the bound rules **in** expand-around-centre and the O(n²) DP table, and rules **out** brute force — while making Manacher's O(n) algorithm entirely unnecessary. That is worth saying plainly: the constraint is small on purpose, and reaching for Manacher here is over-engineering, not optimisation. The bound also rules in O(n²) *space* if you want the DP table (10⁶ booleans), though this solution needs none. The lower bound of `1` means the string is never empty, so the `if not s` guard is dead code and the seed of `best_string = 1` is always a valid standing answer. |
 
 ## Key insight
 
-Stop thinking about *substrings* and start thinking about *centres*. A
-palindrome is completely determined by where its middle is and how far it
-reaches, and there are only `2n - 1` possible middles: each of the `n`
-characters (odd lengths) and each of the `n - 1` gaps between adjacent
-characters (even lengths). Walk outwards from each one while the two ends
-match, and you have enumerated every palindrome in the string in O(n²) total,
-never once re-checking a substring from the inside out.
+Every palindrome is determined by its **centre** plus how far it extends, so
+instead of hunting for palindromes, enumerate the centres and grow each one
+outward until the characters stop matching. There are `2n - 1` centres — `n`
+characters for the odd-length palindromes and `n - 1` gaps between adjacent
+characters for the even-length ones — and each expansion is cheap, which turns an
+apparently O(n³) search into O(n²).
 
-The thing that makes this cheap is that a palindrome's interior is itself a
-palindrome, so growing outwards reuses everything already verified. That is
-also the licence to stop at the first mismatch.
+The thing to whisper if stuck: *don't search for palindromes, grow them.* And
+immediately after: *there are two kinds of centre, and forgetting the gaps is the
+bug.*
 
 ## Approach
 
-1. Return `""` if `s` is empty. (Dead under the constraints.)
-2. Seed the answer as `best_start = 0, best_length = 1` — the leftmost single
-   character, which is always a valid palindrome. This is what makes a string
-   with no longer palindrome return something sensible.
-3. For each index `centre`, run the expansion **twice**:
-   - **odd**: `left = right = centre`, so the window starts as one character;
-   - **even**: `left = centre, right = centre + 1`, so the window starts as two.
-4. In each expansion, while `left >= 0 and right < len(s) and s[left] == s[right]`,
-   step `left` down and `right` up.
-5. After the loop, compute `length = right - left - 1`.
-6. If `length > best_length`, record `best_length = length` and
-   `best_start = left + 1`.
-7. Return `s[best_start : best_length + best_start]`.
+1. Carry the answer as `(best_start, best_string)` — a start index and a
+   **length** — and slice exactly once at the end. Slicing inside the loop would
+   copy up to `n` characters on every improvement.
+2. Seed with `best_start = 0`, `best_string = 1`: the first character, which is
+   always a valid answer.
+3. For each index `centre`:
+   - **Odd:** set `left = right = centre` and expand while the ends match.
+   - **Even:** set `left = centre`, `right = centre + 1` and expand the same way.
+4. Inside each expansion step, after moving both pointers, compute the width as
+   `right - left - 1` and record it if it beats the best.
+5. Return `s[best_start : best_start + best_string]`.
 
-Two ordering details are load-bearing. **The three clauses of the `while` must
-be in that order**: `left >= 0` and `right < len(s)` have to be checked *before*
-`s[left] == s[right]`, because Python's negative indexing means `s[-1]` does not
-raise — it silently reads the last character. Python's `and` short-circuits, so
-writing them in this order is what prevents the bug rather than merely detecting
-it. And **step 5 must happen after the loop exits, not inside it**: the loop
-always leaves `left` and `right` one step *outside* the palindrome, and
-`right - left - 1` is the formula that corrects for exactly that overshoot.
+Two details are load-bearing:
+
+- **`left >= 0` in the `while` guard.** This is not defensive coding. Python
+  wraps a negative index to the *end* of the string, so without the test the
+  expansion keeps comparing `s[-1]` against characters near the front and can
+  "succeed" on nonsense. Concretely, dropping it makes `"aa"` return `"a"` and
+  `"aab"` return `"b"`.
+- **`best_start = left + 1`, not `left`.** When the loop exits — or, here, after
+  each step — `left` and `right` sit one past the palindrome on both sides. The
+  window is `s[left+1 .. right-1]`, whose length is
+  `(right - 1) - (left + 1) + 1 = right - left - 1`. The two off-by-ones have to
+  agree with each other.
+
+**A note on where the measurement lives.** This submission recomputes the width
+and compares *inside* the `while` body, after every successful expansion, rather
+than once after the loop ends. Both are correct: expansions at a given centre
+grow monotonically, so the last one recorded is the widest, and any earlier
+recording is simply superseded. The in-loop version does a little more work — a
+subtraction and a comparison per expansion step rather than per centre — which is
+the most likely source of the 297 ms. It is also the version that *must* measure
+inside the body for the even case to behave: when an even centre fails
+immediately the body never runs, and nothing is recorded at all, which is right
+because the width there would be `0`.
 
 ### Why it's correct
 
-**Invariant of a single expansion**: *whenever the loop body executes, the
-window `s[left .. right]` is a palindrome.* The condition has just established
-that its two ends are equal, and its interior `s[left+1 .. right-1]` is either
-the window accepted by the previous iteration — a palindrome by this same
-invariant — or, on the first iteration, a single character (odd case) or the
-empty string (even case), both trivially palindromes. Equal ends plus a
-palindromic interior is exactly the definition, so the invariant carries
-forward. Every window the loop accepts is therefore a genuine palindrome, and
-the last one it accepts is the widest at that centre.
+**Invariant**: after the `centre = c` iteration completes, `(best_start,
+best_string)` describes a genuine palindromic substring of `s`, and its length is
+the maximum over all palindromes whose centre is at index `≤ c` — counting both
+the character-centres and the gap-centres up to that point.
 
-**Why stopping at the first mismatch loses nothing**: suppose the expansion
-halts at `left, right`. Any *wider* palindrome at this same centre would contain
-`s[left .. right]` as its middle — and every centred sub-window of a palindrome
-is itself a palindrome. Since `s[left .. right]` is not one (the ends differ, or
-one of them has fallen off the string), no wider window at this centre can be a
-palindrome either. Nothing is skipped by breaking early.
+That the recorded window is always a genuine palindrome follows from the
+expansion itself: the `while` only steps when `s[left] == s[right]`, and it
+starts from a trivially palindromic core (a single character, or an empty gap
+that is only stepped past if the two neighbours match). By induction, each
+successful step wraps a matching pair around a known palindrome, which is a
+palindrome.
 
-**Why all palindromes are covered**: a palindrome occupying `s[i .. j]` has
-`i + j` either even (centre character at `(i+j)/2`, reached by the odd pass) or
-odd (centre gap between `(i+j-1)/2` and `(i+j+1)/2`, reached by the even pass at
-`centre = (i+j-1)/2`). Both indices are in `range(len(s))`, so the outer `for`
-visits that centre, and by the previous paragraph the expansion from it reaches
-at least as far as `s[i .. j]`. So the maximum over all expansions is the true
-maximum.
+**Why stopping at the first mismatch loses nothing.** When the expansion at a
+centre halts, no *wider* window at that same centre can be a palindrome either,
+because any wider window contains the current, failed one as its middle — and a
+palindrome's middle is always a palindrome. So there is no reason to keep
+expanding past a mismatch, and no palindrome is skipped by stopping.
 
-**Termination and the edge of the range.** Each iteration strictly decreases
-`left` and strictly increases `right`, and both are bounded (`left >= 0`,
-`right < len(s)`), so every expansion ends after at most `n` steps. The odd
-expansion always runs at least once, because `s[centre] == s[centre]`, so
-`length >= 1` there. The even expansion may run **zero** times — and that case
-is the one worth checking by hand: `left = centre`, `right = centre + 1`, so
-`length = (centre + 1) - centre - 1 = 0`, which loses to `best_length >= 1` and
-correctly contributes nothing. The bound `right < len(s)` rather than `<=` is
-what stops `right = len(s)` from being indexed; it also means that at
-`centre = len(s) - 1` the even pass fails immediately, which is right, since
-there is no gap to the right of the last character.
+**Why enumerating centres is exhaustive.** A palindrome of odd length `2r+1` has
+a unique middle character; one of even length `2r` has a unique middle gap. Every
+palindromic substring therefore has exactly one of the `2n - 1` centres, and the
+loop visits all of them: the `centre` variable supplies the `n` character-centres
+directly, and the `(centre, centre + 1)` pairing supplies the `n - 1` gaps (the
+final iteration's gap has `right = n`, which fails the `right < len(s)` test
+immediately, so it contributes nothing — correct, as there is no gap after the
+last character).
 
-The off-by-one to stare at is `best_start = left + 1`. After the loop, `left`
-sits one position *left of* the palindrome, so the palindrome starts at
-`left + 1`. The same overshoot on both sides is what makes the length
-`right - left - 1` and not `right - left + 1`; a quick sanity check on a
-one-character expansion (`left = -1, right = 1`) gives `1 - (-1) - 1 = 1`,
-which is correct.
+**Termination and the edge of the range.** Each `while` iteration strictly
+decreases `left` and increases `right`, and both are bounded by the guard
+(`left >= 0` below, `right < len(s)` above), so each loop runs at most `n/2`
+times and halts. The `for` is a finite range. The guards short-circuit left to
+right, so `left >= 0 and right < len(s)` is fully checked before `s[left]` is
+evaluated — swapping the comparison to the front would index out of range. At the
+low end of the range, `centre = 0`'s odd expansion immediately steps to
+`left = -1`, and it is precisely the `left >= 0` test that stops the next
+iteration from wrapping around.
 
-Of everything above, the step I would flag as least likely to be reconstructed
-correctly under pressure is the mapping from `(i, j)` back to a centre index in
-the even case — `centre = (i + j - 1) / 2`, not `(i + j) / 2`. It is easy to
-believe the coverage argument without being able to produce that formula, and
-producing it is what actually establishes there are `2n - 1` centres and not
-some other number.
+The subtlety I am least sure of when reconstructing this cold is the seed
+interacting with the strict `>`. The seed says "length 1 starting at 0", and the
+odd loop *does* compute a width of `1` at every centre — but `1 > 1` is false, so
+those never overwrite the seed. The consequence is that on a string with no
+palindrome longer than one character, the answer is always `s[0]` specifically,
+supplied by the seed rather than by the loop. That is correct, and it is also the
+kind of interaction that makes "just initialise it to 0 instead" feel like a free
+change — it happens to also be correct here, since the first odd expansion
+records a `1`, but the two facts are worth separating rather than conflating.
 
 ## Solution
 
 ```python
-# 5. Longest Palindromic Substring (Medium) - expand around each of the 2n-1 centres, remember the widest. O(n^2) time, O(1) extra space.
+# 5. Longest Palindromic Substring (Medium) - expand around all 2n-1 centres, recording the widest window as it grows. O(n^2) time, O(1) extra space.
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        # Unreachable on LeetCode: the constraints promise 1 <= s.length, so s
-        # is never empty. Kept because it costs nothing and makes the function
-        # total if it is ever called from elsewhere.
+
+        # Unreachable on LeetCode: the constraints promise 1 <= s.length, so
+        # s is never empty. Costs nothing and makes the function total if it
+        # is ever called from elsewhere.
         if not s:
             return ""
 
-        # The answer is carried as (start, length), not as a string. Slicing
-        # inside the loop would copy up to n characters every time a better
-        # palindrome turned up; slicing once at the end copies exactly once.
+        # The answer is carried as (start, length), never as a string.
+        # Slicing inside the loop would copy up to n characters every time a
+        # wider palindrome turned up; slicing once at the end copies once.
+        #
+        # `best_string` holds a LENGTH, not a string - the name is a wart.
+        # Seeding it at 1 with best_start 0 means "the first character" is the
+        # standing answer: every single character is a palindrome, so on a
+        # string with no palindrome longer than 1 ("abc") the loop below never
+        # improves on this and s[0] is returned. Note the loop does compute a
+        # length of 1 at every odd centre, but `1 > 1` is false, so it is the
+        # seed and not the loop that supplies that case.
+        best_string = 1
         best_start = 0
-        best_length = 1 # every single character is a palindrome itself!
 
-
-        # Every palindrome is pinned by its CENTRE plus a radius, and there are
-        # 2n-1 centres: n characters (which generate the odd lengths) and n-1
-        # gaps between adjacent characters (the even lengths). Each pass of
-        # this loop tries both kinds of centre anchored at index `centre`, so
-        # over the whole loop all 2n-1 are covered.
+        # Every palindrome is pinned by a CENTRE plus a radius, and there are
+        # 2n-1 centres: n characters (odd lengths) and n-1 gaps between
+        # adjacent characters (even lengths). Each pass handles both kinds
+        # anchored at `centre`, so all 2n-1 are covered.
         for centre in range(len(s)):
 
             # --- odd lengths. The window starts as the single character
-            # s[centre], which is trivially a palindrome, so the while below
-            # always runs at least once and `length` ends up at least 1.
+            # s[centre], which is trivially a palindrome, so this while always
+            # runs at least once.
             left = centre
             right = centre
 
-            # `left >= 0` is load-bearing, not defensive: once left reaches -1
+            # `left >= 0` is load-bearing, not defensive. Once left reaches -1
             # Python wraps it to the END of the string and starts comparing
-            # characters that are nowhere near each other.
+            # characters nowhere near each other: without this test, "aa"
+            # returns "a" and "aab" returns "b".
+            #
             # Stopping at the first mismatch is safe because any wider window
-            # at this centre CONTAINS this one as its middle, so if this one is
-            # not a palindrome no wider one can be either.
+            # at this centre CONTAINS this one as its middle, so if this one
+            # is not a palindrome no wider one can be either.
             while left >= 0 and right < len(s) and s[left] == s[right]:
                 left -= 1
                 right += 1
-            # The loop always exits one step PAST the palindrome on both sides
-            # (either a mismatch or a fallen-off end), so the real window is
-            # s[left+1 .. right-1] and its length is
-            # (right - 1) - (left + 1) + 1 = right - left - 1.
-            length = right - left - 1
 
-            # Strict `>` keeps the FIRST palindrome of a given length, i.e. the
-            # leftmost. LeetCode accepts any longest one; this just makes the
-            # output deterministic.
-            if length > best_length:
-                best_length = length
-                # left overshot by one, so the window begins at left + 1.
-                # Writing `best_start = left` is the classic off-by-one here.
-                best_start = left + 1
+                # Measured INSIDE the loop, after each successful step. left
+                # and right have already moved one past the palindrome on both
+                # sides, so the real window is s[left+1 .. right-1] and its
+                # length is (right - 1) - (left + 1) + 1 = right - left - 1.
+                current_string = right - left - 1
 
-            # --- even lengths. The centre is now the GAP between s[centre] and
-            # s[centre+1]. If those two differ, or centre is the last index,
-            # the while body never runs and length comes out as
-            # (centre + 1) - centre - 1 = 0, which loses every comparison
-            # below - exactly right, since there is no even palindrome here.
+                # Strict `>` keeps the FIRST palindrome of a given length,
+                # i.e. the leftmost. LeetCode accepts any longest one; this
+                # just makes the output deterministic.
+                if current_string > best_string:
+                    best_string = current_string
+
+                    # left overshot by one, so the window begins at left + 1.
+                    # Writing `best_start = left` is the classic off-by-one:
+                    # it turns "abba" into "" and "bananas" into "banan".
+                    best_start = left + 1
+
+
+            # --- even lengths. The centre is now the GAP between s[centre]
+            # and s[centre+1]. If those differ, or centre is the last index,
+            # the body never runs and nothing is recorded for this centre -
+            # correct, since there is no even palindrome here. (Unlike the odd
+            # case, this loop can record nothing at all, which is why the
+            # measurement lives inside the body rather than after it.)
             left = centre
             right = centre + 1
 
             while left >= 0 and right < len(s) and s[left] == s[right]:
                 left -= 1
                 right += 1
-            length = right - left - 1
 
-            if length > best_length:
-                best_length = length
-                best_start = left + 1
+                current_string = right - left - 1
 
-        # Same thing as s[best_start : best_start + best_length]; the two
-        # operands of the sum are simply written the other way round.
-        return s[best_start : best_length + best_start]
+                if current_string > best_string:
+                    best_string = current_string
+
+                    best_start = left + 1
+
+        return s[best_start : best_start + best_string]
 ```
 
 [solution.py](solution.py) · [raw submission](../../data/raw/longest-palindromic-substring.py)
 
 ## Why this approach
 
-| Alternative | Cost | Why centre expansion beats it |
+| Alternative | Cost | Why expand-around-centre beats it |
 |---|---|---|
-| Brute force: try every substring, check each for palindromicity | O(n³) time, O(1) space | There are `n(n+1)/2 ≈ 5 × 10⁵` substrings at `n = 1000` and checking one costs up to 1000 comparisons: ~10⁹ operations, a guaranteed TLE in Python. The waste is structural — each check restarts from the ends of a substring whose interior was already examined as part of another substring. |
-| DP over a table: `dp[i][j] = (s[i] == s[j] and dp[i+1][j-1])`, filled by increasing length | O(n²) time, **O(n²) space** | Same time bound as this solution, so it is not *slower* — it just costs 10⁶ table entries to store facts the expansion derives on the fly, needs care over the fill order (by length, or bottom-up over `i`), and has two awkward base cases (length 1 and length 2). It is the tagged "Dynamic Programming" answer and it is strictly dominated here. Its one real advantage — answering arbitrary "is `s[i..j]` a palindrome?" queries later — is not something this problem asks for. |
-| Manacher's algorithm | **O(n)** time, O(n) space | Genuinely better asymptotically, and it is in the topic tags. But at `n = 1000` the O(n²) solution does ~10⁶ comparisons and finishes in the 200 ms range, so the theoretical win is invisible while the implementation risk is real — the transformed string, the mirror index, the right-boundary bookkeeping. Correct trade only when `n` reaches 10⁵ or more. |
-| Longest common substring between `s` and `reversed(s)` | O(n²) and **wrong** | The tempting reduction, and it does not work. On `s = "abacdfgdcaba"` the longest common substring with the reverse is `"abacd"` (length 5), which is not a palindrome at all; the true answer is `"aba"`. Verified, not recalled. It fails because a substring can coincide with the reverse of a *different* part of the string; repairing it means also checking that the two occurrences correspond to the same index range, which is more bookkeeping than the expansion it was meant to replace. |
-| Binary search on the answer length + rolling hashes | O(n log n) time, O(n) space | Workable — palindromic lengths are monotone within a parity class, so you can binary search odd and even lengths separately and test each candidate length with hashed comparisons. Far more machinery, a hash-collision caveat, and no benefit at `n = 1000`. |
+| Brute force: every substring, check each for palindromicity | O(n³) time, O(1) space | ~10⁹ character operations at `n = 1000` — a certain TLE in Python. The waste is that checking `s[i..j]` learns nothing that helps with `s[i..j+1]`, whereas expanding from a centre reuses the entire previous check. |
+| DP table: `dp[i][j]` is true iff `s[i..j]` is a palindrome, built from `dp[i+1][j-1]` | O(n²) time, O(n²) space | **Correct and the same asymptotic time**, and it is why "Dynamic Programming" is a topic tag. But it pays 10⁶ booleans of memory for the identical bound, needs careful iteration order (by increasing substring length, or the recurrence reads unfilled cells), and has two base cases to get right. The centre expansion is the same algorithm with the table thrown away. Worth being able to write if asked for "the DP solution" by name. |
+| Reverse the string, take the longest common substring | O(n²) time, O(n²) space | **Wrong**, and a genuinely popular suggestion. A substring shared with the reverse need not be a palindrome — it may match a *different* part of the reversed string. On `"abacdfgdcaba"` it returns `"abacd"` (length 5) where the answer is `"aba"`. It can be repaired by checking that the match's positions correspond, at which point it is strictly more machinery than the centre expansion for the same bound. |
+| Manacher's algorithm | O(n) time, O(n) space | Correct, and the reason "Manacher" is tagged. At `n = 1000` it saves nothing measurable — O(n²) here is ~10⁶ operations, already fast — while costing a transformed string, a radius array, and a mirror-and-rightmost-boundary argument that is hard to reproduce correctly under pressure. Reach for it only if the constraint grows by orders of magnitude. |
+| Expanding around character centres only | — | **Wrong**: misses every even-length palindrome. `"abba"` returns `"bb"` instead of `"abba"`. It passes any test whose answer happens to be odd-length, which is easy to arrange accidentally. |
 
 ## Complexity
 
-- **Time — O(n²)**. The outer loop runs `n` times and each pass does two
-  expansions, each of which takes at most `O(n)` steps before it runs off an
-  end. The bound is tight: on `"aaaa...a"` every expansion runs to the edge, for
-  roughly `n²/2` character comparisons — about 5 × 10⁵ at the maximum `n`, which
-  is where the 215 ms comes from.
-- **Space — O(1)** auxiliary. Four integers (`best_start`, `best_length`,
-  `left`, `right`) and nothing that grows with the input. The returned slice is
-  O(n), but that is the answer itself, not working memory — and crucially the
-  slice is taken **once at the end**, not on every improvement, which would turn
-  the copying into an O(n²)-time cost of its own.
+- **Time — O(n²)**. There are `2n - 1` centres, and each expands at most `n/2`
+  steps before hitting a mismatch or a boundary, giving ~n²/2 character
+  comparisons — about 5 × 10⁵ at `n = 1000`. The worst case is a string of
+  identical characters like `"aaaa…"`, where every centre expands all the way to
+  the boundaries and nothing ever short-circuits. The 297 ms reflects both that
+  and the per-step subtract-and-compare this version does inside the loop rather
+  than after it.
+- **Space — O(1)** auxiliary. Four integers and two loop pointers; no table, no
+  transformed string, no recursion. The returned slice is O(n), but that is the
+  required output rather than working space — which is what the solid 70th
+  percentile memory reading reflects.
 
 ## Pitfalls
 
-- **Forgetting the even-length centres.** Returns `"x"` on `"xyzzyx"` instead of
-  the whole string, and `"a"` on `"abba"`. This is the single most common way to
-  get this problem wrong, and it passes any test whose answer happens to be
-  odd-length.
-- **Dropping `left >= 0` from the loop condition.** No exception is raised —
-  Python wraps `s[-1]` to the last character. On `"aa"` the odd expansion at
-  `centre = 0` then matches `s[-1]` against `s[1]`, reports `best_length = 3`
-  (longer than the string), and the final slice returns `"a"`. Verified. A crash
-  would be kinder than this.
-- **Reordering the `while` clauses** so that `s[left] == s[right]` is tested
-  before the bounds. `right < len(s)` genuinely protects an `IndexError`, and
-  `and` short-circuits left to right, so the order is the guard.
-- **`best_start = left` instead of `left + 1`.** Returns a string shifted one
-  character left, which on many inputs is still *nearly* right and so survives
-  casual eyeballing: on `"bananas"` it gives `"nanan"` rather than `"anana"`.
-- **Computing `length` inside the `while` loop** rather than after it. Inside,
-  `left` and `right` have not yet overshot, so `right - left - 1` measures the
-  wrong window and the final answer comes out too short.
-- **`length = right - left + 1`.** The `-1` is there because *both* pointers
-  overshot by one. Check it against the smallest case: a single character ends
-  with `left = -1, right = 1`, and `1 - (-1) - 1 = 1`.
-- **Slicing inside the loop** — `best = s[left+1:right]` on every improvement is
-  correct but copies up to `n` characters each time; the `(start, length)`
-  representation exists to avoid that.
-- **Misreading the final slice.** `s[best_start : best_length + best_start]` is
-  the usual `s[start : start + length]` with the addition written backwards. It
-  is *not* `s[best_start : best_length]`, which would be the classic bug and is
-  right only when `best_start == 0`.
-- **The `if not s` guard looks like the base case but is not reachable** — the
-  constraints promise a non-empty string. The thing actually doing the work for
-  a length-1 input is `best_length = 1`. Delete that initialisation "because the
-  loop will set it" and `"abcde"` returns `""`.
+- **Handling only odd-length palindromes.** `"abba"` returns `"bb"`. This is the
+  single most common failure, because the odd case is the one that comes to mind
+  first and it produces a *plausible* answer rather than a crash.
+- **`best_start = left` instead of `left + 1`.** Both pointers overshoot by one,
+  so the recorded window is shifted left by one and no longer a palindrome:
+  `"abba"` returns `""` (an empty string, because the shifted slice runs off the
+  front), `"xabay"` returns `"xab"`, `"bananas"` returns `"banan"`. The length is
+  right, which is what makes it survive any test that only checks lengths.
+- **Dropping the `left >= 0` guard.** Python's negative indexing turns the
+  overshoot into a silent wrap to the end of the string, so the expansion can
+  match characters from opposite ends. `"aa"` returns `"a"`; `"aab"` returns
+  `"b"`. There is no exception — it is simply wrong.
+- **Getting the width formula wrong.** After the pointers move, the width is
+  `right - left - 1`, not `right - left` or `right - left + 1`. The `-1` is
+  because *both* ends overshot. Check it against a known case:
+  expanding `"aba"` from centre 1 ends with `left = -1`, `right = 3`, and
+  `3 - (-1) - 1 = 3`. ✓
+- **Returning the length instead of the substring.** The problem asks for the
+  string. `best_string` holds a length despite its name, and the final slice is
+  what converts it — the naming makes this easy to trip over months later.
+- **Reaching for Manacher.** At `n ≤ 1000` it buys nothing and costs a great deal
+  of correctness risk. Knowing *when* an O(n²) solution is already sufficient is
+  part of the answer here.
+- **Slicing inside the loop to track the best.** Correct but wasteful: each
+  improvement copies up to `n` characters, and on `"aaaa…"` improvements happen
+  ~n²/2 times, which turns an O(n²) algorithm into O(n³) work. Carrying
+  `(start, length)` is why this version stays within budget.
 
 ## Redo from scratch
 
-1. Say the reframing out loud first: **enumerate centres, not substrings.**
-   `2n - 1` of them — `n` characters and `n - 1` gaps.
-2. Seed `best_start = 0, best_length = 1`, and be clear why: every single
-   character is a palindrome, so this is a valid answer for any non-empty input.
-3. Write one expansion, twice: `(centre, centre)` for odd, `(centre, centre+1)`
-   for even. Bounds checks *first* in the `while`.
-4. After the loop: `length = right - left - 1`, `best_start = left + 1`. Derive
-   both from the overshoot rather than recalling them.
-5. Return `s[best_start : best_start + best_length]`.
-6. Test `"xyzzyx"` (even centre), `"bananas"` (answer in the middle), `"abcde"`
-   (nothing longer than 1) and `"q"` (single character).
+1. Every palindrome has a centre; there are `2n - 1` of them, `n` characters and
+   `n - 1` gaps. Enumerate centres, don't search substrings.
+2. Carry `(best_start, best_length)`, **not** a string — slice once at the end.
+3. For each centre, run the expansion twice: `(c, c)` for odd and `(c, c + 1)`
+   for even.
+4. Guard with `left >= 0 and right < len(s)` **before** comparing characters, and
+   remember both pointers overshoot by one: the width is `right - left - 1` and
+   the start is `left + 1`.
+5. Test `"abba"` (even centre), `"abc"` (no palindrome longer than 1), `"aa"`
+   (the negative-index wrap), `"bananas"` (interior answer, catches the start
+   off-by-one), `"z"` (single character).
 
-Be able to justify out loud: **why breaking at the first mismatch cannot miss a
-longer palindrome at the same centre** — because any wider window has this one
-as its exact middle, and the middle of a palindrome is a palindrome. And the
-`2n - 1` count: which centre an even-length palindrome `s[i..j]` belongs to. If
-you can only recite the expansion code, the even-centre half will be the part
-that goes missing.
+Be able to justify out loud: **why there are exactly `2n - 1` centres and why
+that makes the enumeration exhaustive** — that every palindrome has a unique
+middle, a character if its length is odd and a gap if it is even. And second:
+**why stopping at the first mismatch is safe** — that any wider window at the
+same centre contains the failed one as its middle, and a palindrome's middle is
+always a palindrome, so nothing is lost by halting. If you can state both, the
+DP table and Manacher both become optimisations of a machine you already
+understand rather than separate things to memorise.
 
 ## Related problems
 
-- [Palindromic Substrings](../0647-palindromic-substrings/README.md) — already
-  solved, and the same code with one line changed: instead of tracking the
-  widest expansion, count every expansion. Read the two together; they make it
-  concrete that the expansion *enumerates* palindromes, and that what you do
-  with each one is a separate question.
+- [Palindromic Substrings](../0647-palindromic-substrings/README.md) — solved,
+  and the closest relative by far. It is *this exact loop* with the body changed
+  from "record if longest" to "add one to a counter", since every successful
+  expansion step is itself a distinct palindrome. Reading the two together is the
+  fastest way to see the centre expansion as a technique rather than a solution.
+- [Valid Palindrome](../0125-valid-palindrome/README.md) — solved. The
+  primitive: two pointers walking inward to test *one* window. This problem is
+  that check run outward from every centre instead of inward from the ends.
+- [Palindrome Number](../0009-palindrome-number/README.md) — solved. The same
+  symmetry idea on digits with no string at all. Unrelated mechanically, but it
+  is where the "compare from both ends" reflex comes from.
 - [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)
-  — not solved yet. One word different in the title and a completely different
-  algorithm: dropping contiguity destroys the centre argument, and you are back
-  to an interval DP. The best possible check on whether "substring" and
-  "subsequence" mean distinct things to you.
-- [Shortest Palindrome](https://leetcode.com/problems/shortest-palindrome/) —
-  not solved yet. Asks for the shortest prefix-extension that makes `s` a
-  palindrome, which reduces to finding the longest palindromic *prefix* — the
-  same centre machinery constrained to `left` reaching `0`, or a slicker KMP
-  failure-function trick.
-- [Palindrome Permutation](https://leetcode.com/problems/palindrome-permutation/)
-  — not solved yet. Palindromes viewed through character *counts* instead of
-  positions (at most one odd count). A useful reminder that "palindrome" admits
-  a counting characterisation as well as a two-pointer one.
+  — not solved yet, and the instructive contrast. Dropping the contiguity
+  requirement breaks the centre argument entirely: a subsequence has no centre to
+  expand from, so it needs a genuine interval DP. Doing it right after this one
+  makes clear exactly which property the expansion was exploiting.
+- [Shortest Palindrome](https://leetcode.com/problems/shortest-palindrome/) — not
+  solved yet. Asks for the shortest prefix-extension that makes the whole string
+  a palindrome, which reduces to finding the longest palindromic *prefix* — a
+  restricted version of this problem, usually solved with KMP. Good for seeing
+  the same question under a different constraint.
 - [Palindrome Pairs](https://leetcode.com/problems/palindrome-pairs/) — not
-  solved yet. Palindromicity across *pairs* of words, solved with a trie plus
-  the observation that one word must be the reverse of a prefix of another.
-  Uses "is this slice a palindrome?" as a subroutine, which is exactly what this
-  problem teaches you to answer cheaply.
-- [Maximum Number of Non-overlapping Palindrome Substrings](https://leetcode.com/problems/maximum-number-of-non-overlapping-palindrome-substrings/)
-  — not solved yet. Centre expansion feeding a greedy/DP selection on top.
-  The natural next step: this problem finds the best palindrome, that one has to
-  choose a whole set of them.
+  solved yet. The hard end of the family: palindromes formed by concatenating
+  pairs of words, which needs a trie plus this palindrome test as a subroutine.
+  Worth knowing it exists, not worth attempting until the above are automatic.

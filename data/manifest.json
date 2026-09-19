@@ -218,8 +218,8 @@
         "fruits-into-baskets-ii"
       ],
       "codeHash": "c5dc544b116c9a34c11cc59ba0621a3b87b1bb5321cc04b1e9a8f36d7190e8e1",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "c5dc544b116c9a34c11cc59ba0621a3b87b1bb5321cc04b1e9a8f36d7190e8e1",
+      "annotated": true
     },
     "group-anagrams": {
       "frontendId": "49",
@@ -335,8 +335,8 @@
         "maximum-number-of-non-overlapping-palindrome-substrings"
       ],
       "codeHash": "f8db3cf70546e9ea84dd993033d0c0db6eaf4a4d60ad9ae89e51a89902330a65",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "f8db3cf70546e9ea84dd993033d0c0db6eaf4a4d60ad9ae89e51a89902330a65",
+      "annotated": true
     },
     "longest-substring-without-repeating-characters": {
       "frontendId": "3",
@@ -442,8 +442,8 @@
         "maximize-subarray-sum-after-removing-all-occurrences-of-one-element"
       ],
       "codeHash": "52f26b2eb841e7a9fdd2ce7643dc49e17d5e6e2386ce50af7f3b3753bdfb056c",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "52f26b2eb841e7a9fdd2ce7643dc49e17d5e6e2386ce50af7f3b3753bdfb056c",
+      "annotated": true
     },
     "move-zeroes": {
       "frontendId": "283",
@@ -691,8 +691,8 @@
         "maximum-sum-score-of-array"
       ],
       "codeHash": "43822c3a08b4e8f49a681b9009a7c8a71f707fc51acb528e0cfa21363ea32b4c",
-      "annotationHash": null,
-      "annotated": false
+      "annotationHash": "43822c3a08b4e8f49a681b9009a7c8a71f707fc51acb528e0cfa21363ea32b4c",
+      "annotated": true
     },
     "top-k-frequent-elements": {
       "frontendId": "347",

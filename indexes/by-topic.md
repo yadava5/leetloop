@@ -9,7 +9,7 @@
 - [26. Remove Duplicates from Sorted Array](../problems/0026-remove-duplicates-from-sorted-array/README.md) — Easy
 - [27. Remove Element](../problems/0027-remove-element/README.md) — Easy
 - [49. Group Anagrams](../problems/0049-group-anagrams/README.md) — Medium
-- 53. Maximum Subarray — _awaiting annotation_ — Medium
+- [53. Maximum Subarray](../problems/0053-maximum-subarray/README.md) — Medium
 - [75. Sort Colors](../problems/0075-sort-colors/README.md) — Medium
 - [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy
 - [122. Best Time to Buy and Sell Stock II](../problems/0122-best-time-to-buy-and-sell-stock-ii/README.md) — Medium
@@ -20,11 +20,11 @@
 - [283. Move Zeroes](../problems/0283-move-zeroes/README.md) — Easy
 - [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
-- 560. Subarray Sum Equals K — _awaiting annotation_ — Medium
+- [560. Subarray Sum Equals K](../problems/0560-subarray-sum-equals-k/README.md) — Medium
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
 - [739. Daily Temperatures](../problems/0739-daily-temperatures/README.md) — Medium
-- 904. Fruit Into Baskets — _awaiting annotation_ — Medium
+- [904. Fruit Into Baskets](../problems/0904-fruit-into-baskets/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
 - [1929. Concatenation of Array](../problems/1929-concatenation-of-array/README.md) — Easy
 
@@ -38,10 +38,10 @@
 - [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy
 - [242. Valid Anagram](../problems/0242-valid-anagram/README.md) — Easy
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
-- 560. Subarray Sum Equals K — _awaiting annotation_ — Medium
+- [560. Subarray Sum Equals K](../problems/0560-subarray-sum-equals-k/README.md) — Medium
 - [705. Design HashSet](../problems/0705-design-hashset/README.md) — Easy
 - [706. Design HashMap](../problems/0706-design-hashmap/README.md) — Easy
-- 904. Fruit Into Baskets — _awaiting annotation_ — Medium
+- [904. Fruit Into Baskets](../problems/0904-fruit-into-baskets/README.md) — Medium
 
 ## String (8)
 
@@ -77,14 +77,14 @@
 ## Dynamic Programming (5)
 
 - [5. Longest Palindromic Substring](../problems/0005-longest-palindromic-substring/README.md) — Medium
-- 53. Maximum Subarray — _awaiting annotation_ — Medium
+- [53. Maximum Subarray](../problems/0053-maximum-subarray/README.md) — Medium
 - [121. Best Time to Buy and Sell Stock](../problems/0121-best-time-to-buy-and-sell-stock/README.md) — Easy
 - [122. Best Time to Buy and Sell Stock II](../problems/0122-best-time-to-buy-and-sell-stock-ii/README.md) — Medium
 - [647. Palindromic Substrings](../problems/0647-palindromic-substrings/README.md) — Medium
 
 ## Divide and Conquer (4)
 
-- 53. Maximum Subarray — _awaiting annotation_ — Medium
+- [53. Maximum Subarray](../problems/0053-maximum-subarray/README.md) — Medium
 - [169. Majority Element](../problems/0169-majority-element/README.md) — Easy
 - [347. Top K Frequent Elements](../problems/0347-top-k-frequent-elements/README.md) — Medium
 - [912. Sort an Array](../problems/0912-sort-an-array/README.md) — Medium
@@ -99,7 +99,7 @@
 
 - [3. Longest Substring Without Repeating Characters](../problems/0003-longest-substring-without-repeating-characters/README.md) — Medium
 - [219. Contains Duplicate II](../problems/0219-contains-duplicate-ii/README.md) — Easy
-- 904. Fruit Into Baskets — _awaiting annotation_ — Medium
+- [904. Fruit Into Baskets](../problems/0904-fruit-into-baskets/README.md) — Medium
 
 ## Bucket Sort (2)
 
@@ -129,7 +129,7 @@
 ## Prefix Sum (2)
 
 - [303. Range Sum Query - Immutable](../problems/0303-range-sum-query-immutable/README.md) — Easy
-- 560. Subarray Sum Equals K — _awaiting annotation_ — Medium
+- [560. Subarray Sum Equals K](../problems/0560-subarray-sum-equals-k/README.md) — Medium
 
 ## Stack (2)
 
